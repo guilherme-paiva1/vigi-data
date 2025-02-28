@@ -4,7 +4,7 @@ Cadastro de usuário precisa de uma tabela destino, padronizada da forma que est
 
 # Tabela necessária no Banco de Dados
 
-# Usuarios
+# Usuario
 | Campo | Tipo | Dado armazenado |
 |----------|----------|----------|
 | Id   | int - primary key - autoincrement | Identificação única do usuário em nosso sistema   |
@@ -15,6 +15,8 @@ Cadastro de usuário precisa de uma tabela destino, padronizada da forma que est
 | Email   | varchar(45)   | Endereço eletrônico para contato com o policial e também para futura funcionalidade de recuperar senha   |
 | Senha   | varchar(45)   | Senha de acesso do usuário (de preferência, criptografar no Banco)   |
 
+# DER - Modelagem
+<img width="249" alt="Screenshot_3" src="https://github.com/user-attachments/assets/54904727-fc0c-4c2f-9d6b-12e0a03ca3b2" />
 
 
 # Links:
