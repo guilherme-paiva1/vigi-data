@@ -4,7 +4,7 @@ Cadastro de usuário precisa de uma tabela destino, padronizada da forma que est
 
 # Tabela necessária no Banco de Dados
 
-# Usuarios
+# Usuario
 | Campo | Tipo | Dado armazenado |
 |----------|----------|----------|
 | Id   | int - primary key - autoincrement | Identificação única do usuário em nosso sistema   |
