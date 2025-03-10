@@ -71,13 +71,14 @@ body {
 }
 
 #container-sobre {
-    margin: 60px;
+    margin: 20px 60px;
 }
 
 .cards {
     display: flex;
     text-align: center;
-    gap: 80px;
+    /* gap: 80px; */
+    padding: 0px 40px;
 }
 
 .footer {
@@ -87,7 +88,7 @@ body {
     background-color: #040736;
     display: flex;
     flex-direction: column;
-    padding: 20px 60px 20px 60px;
+    padding: 50px 60px 0px 60px;
     font-size: 14px;
 }
 
@@ -99,4 +100,23 @@ body {
 
 .logo-footer img{
     height: 80px;
+}
+
+.sobre {
+    margin-top: 50px;
+    display: flex;
+}
+
+.sobre-texto {
+    width: 50%;
+}
+
+.sobre-imagem {
+    width: 50%;
+}
+
+.sobre-imagem img {
+    width: 100%;
+    border-radius: 7px;
+
 }
