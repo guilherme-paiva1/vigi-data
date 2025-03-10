@@ -7,6 +7,12 @@ body {
     font-family: "Inter", sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #F4F5F8;
+
+}
+
+.selecionado {
+    font-weight: 600;
 }
 
 .navbar, .navbar a {
@@ -28,7 +34,7 @@ body {
 }
 
 .container-navbar {
-    padding: 20px 20px 0px 20px;
+    padding: 20px 60px 0px 60px;
     display: flex;
     justify-content: space-between;
 }
@@ -42,11 +48,11 @@ body {
 }
 
 .banner {
-        height: 70%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .botao {
@@ -65,5 +71,32 @@ body {
 }
 
 #container-sobre {
-    margin: 40px;
+    margin: 60px;
+}
+
+.cards {
+    display: flex;
+    text-align: center;
+    gap: 80px;
+}
+
+.footer {
+    background-image: url(../assets/fundo-gradiente.png);
+    height: 220px;
+    color: #ffffff;
+    background-color: #040736;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 60px 20px 60px;
+    font-size: 14px;
+}
+
+.conteudo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-footer img{
+    height: 80px;
 }
