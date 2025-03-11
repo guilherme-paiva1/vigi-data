@@ -101,6 +101,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
+}
+
+#footer-ano {
+    text-align: center;
+}
+
+.footer hr {
+    width: 100%;
 }
 
 .logo-footer img{
@@ -119,7 +128,7 @@ body {
 }
 
 .sobre-imagem {
-    width: 40%;
+    width: 35%;
 }
 
 .sobre-imagem img {
