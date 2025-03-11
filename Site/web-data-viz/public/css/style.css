@@ -8,7 +8,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: #F4F5F8;
-
 }
 
 .selecionado {
@@ -21,7 +20,6 @@ body {
     color: #ffffff;
     display: flex;
     gap: 50px;
-    
 }
 
 .navbar a:hover {
@@ -71,7 +69,13 @@ body {
     transition: transform .2s;
 }
 
-.botao-branco:hover {
+.botao-azul {
+    color: #F4F5F8;
+    background-color: #040736;
+    transition: transform .2s;
+}
+
+.botao:hover {
     transform: scale(1.2);
 }
 
@@ -134,5 +138,51 @@ body {
 .sobre-imagem img {
     width: 100%;
     border-radius: 7px;
-
 }
+
+.banner-login {
+    height: 300px;
+    background-image: url(../assets/fundo-gradiente.png);
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 60px 0px 60px;
+}
+
+.div-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; 
+}
+
+.div-input label {
+    margin-bottom: 10px;
+}
+
+.input {
+    height: 32px;
+    padding: 0px 10px 0px 10px;
+    background-color: #F4F5F8;
+    border-radius: 5px;
+    border: 1px #959595 solid 
+}
+
+.texto-login {
+    align-items: center;
+    color: #ffffff;
+    width: 40%;
+}
+
+.container-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #F4F5F8;
+    width: 40%;
+    border-radius: 10px;
+}
+
+.texto-destacado {
+    font-weight: 600;
+}
+
