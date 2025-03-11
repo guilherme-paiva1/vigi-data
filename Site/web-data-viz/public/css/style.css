@@ -68,6 +68,11 @@ body {
 .botao-branco {
     color: #040736;
     background-color: #ffffff;
+    transition: transform .2s;
+}
+
+.botao-branco:hover {
+    transform: scale(1.2);
 }
 
 #container-sobre {
@@ -77,7 +82,7 @@ body {
 .cards {
     display: flex;
     text-align: center;
-    /* gap: 80px; */
+    gap: 80px;
     padding: 0px 40px;
 }
 
@@ -105,14 +110,16 @@ body {
 .sobre {
     margin-top: 50px;
     display: flex;
+    justify-content: space-between;
+    gap: 30px;
 }
 
 .sobre-texto {
-    width: 50%;
+    width: 60%;
 }
 
 .sobre-imagem {
-    width: 50%;
+    width: 40%;
 }
 
 .sobre-imagem img {
