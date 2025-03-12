@@ -2,12 +2,14 @@
 
 html {
     scroll-behavior: smooth;
+    height: 100%;
 }
 body {
     font-family: "Inter", sans-serif;
     margin: 0;
     padding: 0;
     background-color: #F4F5F8;
+    height: 100%;
 }
 
 .selecionado {
@@ -141,17 +143,31 @@ body {
 }
 
 .banner-login {
-    height: 300px;
     background-image: url(../assets/fundo-gradiente.png);
+    background-size: cover;
+    height: 500px;
+    color: #ffffff;
+    background-color: #040736;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
-    padding: 20px 60px 0px 60px;
+    flex-direction: column;
+}
+
+.conteudo-login {
+    color: #040736;
+    display: flex;
+    padding: 60px 60px 0px 60px;    
+    width: 80%;
+    height: 80%;
+    align-self: center;
+    justify-content: space-around;
 }
 
 .div-input {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px; 
+    width: 40%;
 }
 
 .div-input label {
@@ -163,23 +179,34 @@ body {
     padding: 0px 10px 0px 10px;
     background-color: #F4F5F8;
     border-radius: 5px;
-    border: 1px #959595 solid 
+    border: 1px #959595 solid;
+    width: 100%;
+    font-family: "Inter", sans-serif;
 }
 
 .texto-login {
-    align-items: center;
+    display: flex;
     color: #ffffff;
-    width: 40%;
+    width: 45%;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 160px;
 }
 
-.container-login {
+.texto-login h1 {
+    margin: 0;
+}
+
+.container-campos {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
     background-color: #F4F5F8;
+    height: 80%;
     width: 40%;
     border-radius: 10px;
+    justify-content: center;
+    flex-direction: column;
+ 
 }
 
 .texto-destacado {
