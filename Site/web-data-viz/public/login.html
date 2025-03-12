@@ -8,27 +8,55 @@
     <title>Login</title>
 </head>
 <body>
-    <div class="header">
-        <div class="container-navbar">
-            <div class="logo">
-                <a href="index.html">
-                    <img src="assets/logo-branco.svg" alt="">
-                </a>
+    
+
+    <div class="banner-login">
+        <div class="header">
+            <div class="container-navbar">
+                <div class="logo">
+                    <a href="index.html">
+                        <img src="assets/logo-branco.svg" alt="">
+                    </a>
+                </div>
+    
+                <ul class="navbar">
+                    <li>
+                        <a href="index.html">Página inicial</a>
+                    </li>
+                    <li>
+                        <a href="index.html#container-sobre">Sobre</a>
+                    </li>
+    
+                    <li class="selecionado">
+                        <a href="login.html">Login</a>
+                    </li>
+                </ul>
             </div>
-
-            <ul class="navbar">
-                <li>
-                    <a href="index.html">Página inicial</a>
-                </li>
-                <li>
-                    <a href="index.html#container-sobre">Sobre</a>
-                </li>
-
-                <li class="selecionado">
-                    <a href="login.html">Login</a>
-                </li>
-            </ul>
         </div>
+
+        <div class="conteudo-login">
+            <div class="texto-login">
+                <h1>Acesse sua conta</h1>
+                <p>
+                    Sua ferramenta estratégica para tornar São Paulo mais segura. <span class="texto-destacado">Acesse agora.</span>
+                </p>
+            </div>
+            <div class="container-campos">
+                <div class="div-input input-matricula">
+                    <label for="ipt_matricula">Matrícula</label>
+                    <input class="input" id="ipt_matricula" type="text" placeholder="1234567">
+                </div>
+            
+                <div class="div-input input-senha">
+                    <label for="ipt_senha">Senha</label>
+                    <input class="input" id="ipt_senha" type="password" placeholder="*********">
+                </div>
+                <button class="botao botao-azul">Entrar</button>
+            </div>
+        </div>
+
     </div>
+
+
 </body>
 </html>

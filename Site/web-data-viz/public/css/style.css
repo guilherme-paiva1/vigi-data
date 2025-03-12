@@ -2,13 +2,14 @@
 
 html {
     scroll-behavior: smooth;
+    height: 100%;
 }
 body {
     font-family: "Inter", sans-serif;
     margin: 0;
     padding: 0;
     background-color: #F4F5F8;
-
+    height: 100%;
 }
 
 .selecionado {
@@ -21,7 +22,6 @@ body {
     color: #ffffff;
     display: flex;
     gap: 50px;
-    
 }
 
 .navbar a:hover {
@@ -68,6 +68,17 @@ body {
 .botao-branco {
     color: #040736;
     background-color: #ffffff;
+    transition: transform .2s;
+}
+
+.botao-azul {
+    color: #F4F5F8;
+    background-color: #040736;
+    transition: transform .2s;
+}
+
+.botao:hover {
+    transform: scale(1.2);
 }
 
 #container-sobre {
@@ -77,7 +88,7 @@ body {
 .cards {
     display: flex;
     text-align: center;
-    /* gap: 80px; */
+    gap: 80px;
     padding: 0px 40px;
 }
 
@@ -96,6 +107,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 30px;
+}
+
+#footer-ano {
+    text-align: center;
+}
+
+.footer hr {
+    width: 100%;
 }
 
 .logo-footer img{
@@ -105,18 +125,91 @@ body {
 .sobre {
     margin-top: 50px;
     display: flex;
+    justify-content: space-between;
+    gap: 30px;
 }
 
 .sobre-texto {
-    width: 50%;
+    width: 60%;
 }
 
 .sobre-imagem {
-    width: 50%;
+    width: 35%;
 }
 
 .sobre-imagem img {
     width: 100%;
     border-radius: 7px;
-
 }
+
+.banner-login {
+    background-image: url(../assets/fundo-gradiente.png);
+    background-size: cover;
+    height: 500px;
+    color: #ffffff;
+    background-color: #040736;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo-login {
+    color: #040736;
+    display: flex;
+    padding: 60px 60px 0px 60px;    
+    width: 80%;
+    height: 80%;
+    align-self: center;
+    justify-content: space-around;
+}
+
+.div-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; 
+    width: 40%;
+}
+
+.div-input label {
+    margin-bottom: 10px;
+}
+
+.input {
+    height: 32px;
+    padding: 0px 10px 0px 10px;
+    background-color: #F4F5F8;
+    border-radius: 5px;
+    border: 1px #959595 solid;
+    width: 100%;
+    font-family: "Inter", sans-serif;
+}
+
+.texto-login {
+    display: flex;
+    color: #ffffff;
+    width: 45%;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 160px;
+}
+
+.texto-login h1 {
+    margin: 0;
+}
+
+.container-campos {
+    display: flex;
+    align-items: center;
+    background-color: #F4F5F8;
+    height: 80%;
+    width: 40%;
+    border-radius: 10px;
+    justify-content: center;
+    flex-direction: column;
+ 
+}
+
+.texto-destacado {
+    font-weight: 600;
+}
+
