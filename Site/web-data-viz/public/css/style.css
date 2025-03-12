@@ -94,6 +94,7 @@ body {
 
 .footer {
     background-image: url(../assets/fundo-gradiente.png);
+    background-size: cover;
     height: 220px;
     color: #ffffff;
     background-color: #040736;
@@ -145,7 +146,6 @@ body {
 .banner-login {
     background-image: url(../assets/fundo-gradiente.png);
     background-size: cover;
-    height: 500px;
     color: #ffffff;
     background-color: #040736;
     height: 100%;
@@ -167,7 +167,7 @@ body {
     display: flex;
     flex-direction: column;
     margin-bottom: 20px; 
-    width: 40%;
+    min-width: 40%;
 }
 
 .div-input label {
