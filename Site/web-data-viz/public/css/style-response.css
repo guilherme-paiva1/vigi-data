@@ -1,0 +1,104 @@
+@media (max-width: 768px) {
+    /* Tela inicial */
+    .banner-home {
+        height: 400px;
+    }
+
+    .container-texto {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container-texto h1, .container-texto p {
+        width: 90%;
+    }
+
+    .cards {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .sobre {
+        flex-direction: column;
+        gap: 20px;
+        width: 100%;
+    }
+
+    .sobre-texto, .sobre-imagem {
+        width: 100%;
+        text-align: center;
+    }
+
+    .conteudo {
+        flex-direction: column;
+    }
+
+    .logo-footer, .texto-footer {
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        display: flex;
+        text-align: center;
+    }
+
+    /* Login */
+    .conteudo-login {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .div-input {
+        width: 100%;
+    }
+
+    .texto-login {
+        width: 100%;
+        padding-bottom: 20px;
+    }
+
+    .container-campos {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Tela inicial */
+    .navbar, .navbar a {
+        gap: 10px;
+    }
+
+    .container-navbar {
+        padding: 5px 10px;
+    }
+
+    .cards {
+        padding: 0px 10px;
+    }
+
+    .sobre {
+        width: 100%;
+    }
+
+    .sobre-texto, .sobre-imagem {
+        width: 100%;
+    }
+
+    .conteudo {
+        flex-direction: column;
+    }
+
+    /* Login */
+    .conteudo-login {
+        padding: 10px;
+    }
+
+    .div-input {
+        margin-bottom: 10px;
+    }
+
+    .texto-login h1 {
+        font-size: 24px;
+    }
+}
