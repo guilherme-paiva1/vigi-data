@@ -84,6 +84,16 @@ body {
     transform: scale(1.2);
 }
 
+.botao-azul {
+    color: #F4F5F8;
+    background-color: #040736;
+    transition: transform .2s;
+}
+
+.botao:hover {
+    transform: scale(1.2);
+}
+
 /* Estilizações do conteúdo */
 #container-sobre {
     margin: 20px 60px;
@@ -119,6 +129,8 @@ body {
 /* Estilizações do footer */
 .footer {
     background-image: url(../assets/fundo-gradiente.png);
+    background-size: cover;
+    height: 220px;
     color: #ffffff;
     background-color: #040736;
     display: flex;
@@ -155,6 +167,16 @@ body {
     background-color: #040736;
     height: 100%;
     display: flex;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.sobre-texto {
+    width: 60%;
+}
+
+.sobre-imagem {
+    width: 35%;
     flex-direction: column;
 }
 
@@ -173,6 +195,47 @@ body {
     flex-direction: column;
     margin-bottom: 20px; 
     width: 40%;
+}
+
+.div-input label {
+    margin-bottom: 10px;
+}
+
+.input {
+    height: 32px;
+    padding: 0px 10px 0px 10px;
+    background-color: #F4F5F8;
+    border-radius: 5px;
+    border: 1px #959595 solid;
+    width: 100%;
+    border-radius: 7px;
+}
+
+.banner-login {
+    background-image: url(../assets/fundo-gradiente.png);
+    background-size: cover;
+    color: #ffffff;
+    background-color: #040736;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.conteudo-login {
+    color: #040736;
+    display: flex;
+    padding: 60px 60px 0px 60px;    
+    width: 80%;
+    height: 80%;
+    align-self: center;
+    justify-content: space-around;
+}
+
+.div-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px; 
+    min-width: 40%;
 }
 
 .div-input label {
