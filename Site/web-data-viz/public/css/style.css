@@ -130,7 +130,7 @@ body {
 .footer {
     background-image: url(../assets/fundo-gradiente.png);
     background-size: cover;
-    height: 220px;
+    /* height: 220px; */
     color: #ffffff;
     background-color: #040736;
     display: flex;
