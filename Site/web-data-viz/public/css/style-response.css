@@ -50,7 +50,7 @@
     }
 
     .div-input {
-        width: 100%;
+        max-width: 100%;
     }
 
     .texto-login {
