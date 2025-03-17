@@ -50,7 +50,7 @@
     }
 
     .div-input {
-        width: 100%;
+        max-width: 100%;
     }
 
     .texto-login {
@@ -96,9 +96,28 @@
 
     .div-input {
         margin-bottom: 10px;
+        display: flex;
+        margin-bottom: 10px;
+        align-items: center;
+    }
+
+    label {
+        align-self: flex-start;
+    }
+
+    .input {
+        max-width: 60%;
     }
 
     .texto-login h1 {
         font-size: 24px;
     }
+
+    .container-campos {
+        display: flex;
+        justify-content: center;
+        padding: 0px 20px 0px 20px;
+        align-self: center;
+    }
+
 }
