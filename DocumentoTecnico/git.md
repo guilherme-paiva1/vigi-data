@@ -3,7 +3,7 @@
 Git WorkFlow é uma abordagem de trabalho usando Git. Esse fluxo resolve problemas como conflitos, o famoso `git merge`.
 
 # Imagem explicativa (master é a main)
-<img width="500" src="https://edrawcloudpublicus.s3.amazonaws.com/work/1905656/2022-3-23/1647997801/main.png">
+<img width="500" src="imgs\git\workflow.png">
 
 Nós vamos nos adaptar a esse fluxo, usando a `main` para o código que sabemos que está funcionando, e a `develop` para avaliação e testagem de código desenvolvido.
 
