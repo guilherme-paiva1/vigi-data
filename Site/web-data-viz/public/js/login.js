@@ -15,10 +15,6 @@ function entrar() {
 
         if (resposta.ok) {
             resposta.json().then(json => {
-<<<<<<< HEAD
-=======
-                console.log(JSON.stringify(json));
->>>>>>> 81ced47232460ddc598a5f19c8e81a5ac30a1d6d
                 sessionStorage.ID_USUARIO = json.id_usuario;
                 sessionStorage.NOME_USUARIO = json.nome;
                 sessionStorage.EMAIL_USUARIO = json.email;
