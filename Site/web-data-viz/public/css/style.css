@@ -23,7 +23,8 @@ body {
     text-decoration: none;
     color: #ffffff;
     display: flex;
-    gap: 50px;
+    gap: 28px;
+    align-items: center;
 }
 
 .navbar a:hover {
@@ -39,6 +40,7 @@ body {
     padding: 20px 60px 0px 60px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 /* Estilizações do banner */
@@ -63,8 +65,8 @@ body {
     border: none;
     border-radius: 7px;
     margin: 10px 5px 10px 5px;
-    width: 100px;
-    height: 30px;
+    min-width: 100px;
+    min-height: 30px;
     font-family: "Inter", sans-serif;
 }
 
@@ -80,18 +82,23 @@ body {
     transition: transform .2s;
 }
 
-.botao:hover {
-    transform: scale(1.2);
-}
-
-.botao-azul {
+.botao-azul-claro {
+    width: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     color: #F4F5F8;
-    background-color: #040736;
+    background-color: #003DD4;
     transition: transform .2s;
 }
 
 .botao:hover {
     transform: scale(1.2);
+}
+
+.icon {
+    cursor: pointer;
 }
 
 /* Estilizações do conteúdo */
@@ -281,3 +288,21 @@ body {
     font-weight: 600;
 }
 
+.modal {
+    display: none;
+    /* display: flex; */
+    flex-direction: column;
+    background-color: #F4F5F8;
+    color: #1b1b1d;
+    width: 40%;
+    height: 40%; 
+    padding: 0px 40px;
+    border-radius: 10px;
+}
+
+.notificacao {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: #d9d9d9 1px solid;
+}
