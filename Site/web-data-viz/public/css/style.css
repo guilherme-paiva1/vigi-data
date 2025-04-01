@@ -13,6 +13,11 @@ body {
     height: 100%;
 }
 
+.header {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Estilizações da navbar */
 .selecionado {
     font-weight: 600;
@@ -37,7 +42,7 @@ body {
 }
 
 .container-navbar {
-    padding: 20px 60px 0px 60px;
+    padding: 20px 0px 0px 0px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -50,6 +55,7 @@ body {
     height: 500px;
     color: #ffffff;
     background-color: #040736;
+    padding: 0px 50px;
 }
 
 .banner {
@@ -176,6 +182,7 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 30px;
+    padding: 0px 50px;
 }
 
 .sobre-texto {
@@ -288,21 +295,50 @@ body {
     font-weight: 600;
 }
 
+.modal-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal-header svg {
+    cursor: pointer;
+}
+
 .modal {
     display: none;
-    /* display: flex; */
     flex-direction: column;
+    align-self: flex-end;
     background-color: #F4F5F8;
     color: #1b1b1d;
-    width: 40%;
-    height: 40%; 
+    width: 25%;
     padding: 0px 40px;
+    margin-top: 10px;
     border-radius: 10px;
+    padding-bottom: 30px;
+    font-size: 13px;
 }
 
 .notificacao {
     display: flex;
     align-items: center;
     gap: 10px;
-    border-bottom: #d9d9d9 1px solid;
+    border-top: #d9d9d9 1px solid;
+}
+
+.notificacao .icon {
+    margin-right: 10px;
+}
+
+.modal h3 {
+    font-size: 16px;
+}
+
+.notificacao h4 {
+    margin-bottom: 0px;
+    font-size: 14px;
+}
+
+.notificacao p {
+    margin-top: 10px;
 }
