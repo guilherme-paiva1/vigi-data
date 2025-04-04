@@ -8,9 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
@@ -19,15 +17,31 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class LeitorExcel {
 
-    public List<Dado> extrairDados(String nomeArquivo, InputStream arquivo) {
+    public List<Dado> extrairDados(String nomeArquivo, InputStream arquivo, Integer pagina) {
         try {
             IOUtils.setByteArrayMaxOverride(500000000);
             System.out.printf("\nIniciando leitura do arquivo %s\n%n", nomeArquivo);
 
+            Integer indexRubrica = 5;
+            Integer indexLatitude = 3;
+            Integer indexLongitude = 4;
+            Integer indexData = 0;
+            Integer indexHorario = 1;
+
+            if (Objects.equals(nomeArquivo, "SPDadosCriminais_2025.xlsx")) {
+                indexRubrica = 20;
+                indexLatitude  = 14;
+                indexLongitude = 15;
+                indexData = 7;
+                indexHorario = 8;
+            }
+
+            List<String> listaRubricasValidas = Arrays.asList("furto", "roubo", "tráfico drogas");
+
             // Criando um objeto Workbook a partir do arquivo recebido
             Workbook workbook = new XSSFWorkbook(arquivo);
 
-            Sheet sheet = workbook.getSheetAt(0);
+            Sheet sheet = workbook.getSheetAt(pagina);
 
             List<Dado> dadosExtraidos = new ArrayList<>();
 
@@ -38,17 +52,24 @@ public class LeitorExcel {
                     continue;
                 }
 
-                Cell celulaRubrica = row.getCell(20);
-                Cell celulaLatitude  = row.getCell(14);
-                Cell celulaLongitude = row.getCell(15);
-                Cell celulaData = row.getCell(7);
-                Cell celulaHorario = row.getCell(8);
+                Cell celulaRubrica = row.getCell(indexRubrica);
+                Cell celulaLatitude  = row.getCell(indexLatitude);
+                Cell celulaLongitude = row.getCell(indexLongitude);
+                Cell celulaData = row.getCell(indexData);
+                Cell celulaHorario = row.getCell(indexHorario);
 
                 String valorCelulaRubrica = getCellValue(celulaRubrica);
                 String valorCelulaLatitude = getCellValue(celulaLatitude);
                 String valorCelulaLongitude = getCellValue(celulaLongitude);
                 String valorCelulaData = getCellValue(celulaData);
                 String valorCelulaHorario = getCellValue(celulaHorario);
+
+                // Recupera o nome do crime, limpa os espaços vazios nele e leva tudo pra lowercase
+                String rubricaTratada = valorCelulaRubrica.split("\\(")[0].trim().toLowerCase();
+
+                Boolean rubricaInvalida = !listaRubricasValidas.contains(rubricaTratada);
+
+                if (rubricaInvalida) continue;
 
                 Boolean latLongStringInvalidas =
                                 valorCelulaLatitude.equals("NULL") ||
@@ -73,11 +94,10 @@ public class LeitorExcel {
 
                 LocalDateTime dataHoraTratada = converterDate(valorCelulaData, valorCelulaHorario);
 
-                if (valorCelulaRubrica != null && !valorCelulaRubrica.isEmpty() && dataHoraTratada != null ) {
-                    Dado dado = new Dado(valorCelulaRubrica, latitudeTratada, longitudeTratada, dataHoraTratada);
+                if (dataHoraTratada != null ) {
+                    Dado dado = new Dado(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada);
                     dadosExtraidos.add(dado);
                 }
-
             }
 
             // Fechando o workbook após a leitura
