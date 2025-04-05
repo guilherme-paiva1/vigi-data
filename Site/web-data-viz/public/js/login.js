@@ -23,6 +23,7 @@ function entrar() {
                 sessionStorage.SUPERIOR_USUARIO = json.superior;
 
                 setTimeout(function () {
+                    window.location = "../dashboard.html";
                 }, 1000);
 
             });

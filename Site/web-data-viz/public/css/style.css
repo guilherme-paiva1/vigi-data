@@ -13,6 +13,11 @@ body {
     height: 100%;
 }
 
+.header {
+    display: flex;
+    flex-direction: column;
+}
+
 /* Estilizações da navbar */
 .selecionado {
     font-weight: 600;
@@ -23,7 +28,8 @@ body {
     text-decoration: none;
     color: #ffffff;
     display: flex;
-    gap: 50px;
+    gap: 28px;
+    align-items: center;
 }
 
 .navbar a:hover {
@@ -36,9 +42,10 @@ body {
 }
 
 .container-navbar {
-    padding: 20px 60px 0px 60px;
+    padding: 20px 0px 0px 0px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 /* Estilizações do banner */
@@ -48,6 +55,7 @@ body {
     height: 500px;
     color: #ffffff;
     background-color: #040736;
+    padding: 0px 50px;
 }
 
 .banner {
@@ -63,8 +71,8 @@ body {
     border: none;
     border-radius: 7px;
     margin: 10px 5px 10px 5px;
-    width: 100px;
-    height: 30px;
+    min-width: 100px;
+    min-height: 30px;
     font-family: "Inter", sans-serif;
 }
 
@@ -77,21 +85,24 @@ body {
 .botao-azul {
     color: #F4F5F8;
     background-color: #040736;
-    transition: transform .2s;
 }
 
-.botao:hover {
-    transform: scale(1.2);
-}
-
-.botao-azul {
+.botao-azul-claro {
+    width: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
     color: #F4F5F8;
-    background-color: #040736;
-    transition: transform .2s;
+    background-color: #003DD4;
 }
 
-.botao:hover {
-    transform: scale(1.2);
+.botao-branco:hover {
+    transform: scale(1.1);
+}
+
+.navbar .icon, .fechar {
+    cursor: pointer;
 }
 
 /* Estilizações do conteúdo */
@@ -169,6 +180,7 @@ body {
     display: flex;
     justify-content: space-between;
     gap: 30px;
+    padding: 0px 50px;
 }
 
 .sobre-texto {
@@ -279,5 +291,126 @@ body {
 
 .texto-destacado {
     font-weight: 600;
+}
+
+#modal_notificacoes {
+    display: none;
+    position: fixed;
+    right: 50px;
+    padding: 0px;
+    align-self: flex-start;
+    justify-self: end;
+}
+
+#modal_usuario {
+    display: none;
+    position: fixed;
+    right: 50px;
+    padding: 0px;
+    align-self: flex-start;
+    justify-self: end;
+}
+
+.modal-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal {
+    flex-direction: column;
+    background-color: #fbfbfc;
+    color: #1b1b1d;
+    opacity: 0;
+    width: 25%;
+    padding: 0px 40px;
+    margin-top: 10px;
+    border-radius: 10px;
+    padding-bottom: 30px;
+    font-size: 13px;
+    transition: opacity 0.3s ease-in-out; 
+    box-shadow: -2px 3px 12px -1px rgba(0, 0, 0, 0.25);
+}
+
+.notificacao {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-top: #d9d9d9 1px solid;
+}
+
+.notificacao .icon {
+    margin-right: 10px;
+}
+
+.modal h3 {
+    font-size: 16px;
+}
+
+.notificacao h4 {
+    margin-bottom: 0px;
+    font-size: 14px;
+}
+
+.notificacao p {
+    margin-top: 10px;
+}
+
+.grupo-modal {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-header.header-azul{
+    padding: 10px 25px;
+    border-top-left-radius: 9px;
+    border-top-right-radius: 9px;
+    background-color: #040B5A;
+    color: #fbfbfc;
+}
+
+.conteudo-user {
+    margin-right: 20px;
+}
+
+.conteudo-user h3 {
+    margin-bottom: 0;
+}
+
+.conteudo-user p {
+    margin-top: 0;
+    color: #fbfbfc83;
+}
+
+.conteudo-opcao {
+    padding: 0px 25px 0px 25px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 500;
+}
+
+.conteudo-opcao p {
+    cursor: pointer;
+}
+
+.modal-conteudo {
+    padding: 10px 0px;
+}
+
+.modal-conteudo hr {
+    width: 90%;
+    align-self: center;
+    opacity: 40%;
+}
+
+.texto-sair {
+    color: #FF2020;
+}
+
+#btn_fechar {
+    align-self: flex-start;
+    justify-self: flex-end;
+    padding-top: 15px;
 }
 
