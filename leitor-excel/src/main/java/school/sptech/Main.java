@@ -28,5 +28,7 @@ public class Main {
         for (Dado dado : dadosExtraidos) {
             System.out.println(dado.toString());
         }
+
+        System.out.println(dadosExtraidos.size());
     }
 }
