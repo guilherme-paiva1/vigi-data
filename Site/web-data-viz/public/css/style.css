@@ -49,10 +49,19 @@ body {
 }
 
 /* Estilizações do banner */
-.banner-home {
+.banner-main.home {
     background-image: url(../assets/fundo-gradiente.png);
     background-size: cover;
     height: 500px;
+    color: #ffffff;
+    background-color: #040736;
+    padding: 0px 50px;
+}
+
+.banner-main.logado {
+    background-image: url(../assets/fundo-gradiente.png);
+    background-size: cover;
+    height: 100px;
     color: #ffffff;
     background-color: #040736;
     padding: 0px 50px;
@@ -181,6 +190,7 @@ body {
     justify-content: space-between;
     gap: 30px;
     padding: 0px 50px;
+    flex-direction: column;
 }
 
 .sobre-texto {
@@ -221,16 +231,6 @@ body {
     border: 1px #959595 solid;
     width: 100%;
     border-radius: 7px;
-}
-
-.banner-login {
-    background-image: url(../assets/fundo-gradiente.png);
-    background-size: cover;
-    color: #ffffff;
-    background-color: #040736;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
 .conteudo-login {
@@ -286,13 +286,13 @@ body {
     border-radius: 10px;
     justify-content: center;
     flex-direction: column;
- 
 }
 
 .texto-destacado {
     font-weight: 600;
 }
 
+/* Modal da navbar */
 #modal_notificacoes {
     display: none;
     position: fixed;
@@ -318,6 +318,7 @@ body {
 }
 
 .modal {
+    z-index: 1;
     flex-direction: column;
     background-color: #fbfbfc;
     color: #1b1b1d;
@@ -414,3 +415,67 @@ body {
     padding-top: 15px;
 }
 
+/* Tela de requisições */
+.linha-cards {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin: 2rem 4rem 2rem 4rem;
+    height: 5rem;
+}
+
+.card.pai {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    width: 12.5rem;
+    gap: 1.25rem;
+    padding: 0 1.875rem;
+    box-shadow: 5px 5px 5px -2px rgba(0, 0, 0, 0.10);
+}
+
+.card.pai.blue {
+    border-left: .3125rem solid #0075BE;
+}
+.card.pai.green {
+    border-left: .3125rem solid #00E031;
+}
+.card.pai.yellow {
+    border-left: .3125rem solid #EEEA00;
+}
+.card.pai.red {
+    border-left: .3125rem solid #F30000;
+}
+
+.img-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.125rem;
+    height: 100%;
+}
+
+.img-card svg {
+    width: 2.5rem;
+    height: 2.5rem;
+    height: 100%;
+}
+
+.card.info-requisicao {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border-radius: 0.625rem;
+}
+
+.card.info-requisicao .card-header{
+    font-size: 0.8rem;
+}
+
+.card.info-requisicao .card-conteudo{
+    font-size: 1rem;
+    font-weight: 800;
+}
