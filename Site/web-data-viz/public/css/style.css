@@ -49,10 +49,19 @@ body {
 }
 
 /* Estilizações do banner */
-.banner-home {
+.banner-main.home {
     background-image: url(../assets/fundo-gradiente.png);
     background-size: cover;
     height: 500px;
+    color: #ffffff;
+    background-color: #040736;
+    padding: 0px 50px;
+}
+
+.banner-main.logado {
+    background-image: url(../assets/fundo-gradiente.png);
+    background-size: cover;
+    height: 100px;
     color: #ffffff;
     background-color: #040736;
     padding: 0px 50px;
@@ -181,6 +190,7 @@ body {
     justify-content: space-between;
     gap: 30px;
     padding: 0px 50px;
+    flex-direction: column;
 }
 
 .sobre-texto {
@@ -221,16 +231,6 @@ body {
     border: 1px #959595 solid;
     width: 100%;
     border-radius: 7px;
-}
-
-.banner-login {
-    background-image: url(../assets/fundo-gradiente.png);
-    background-size: cover;
-    color: #ffffff;
-    background-color: #040736;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
 }
 
 .conteudo-login {
