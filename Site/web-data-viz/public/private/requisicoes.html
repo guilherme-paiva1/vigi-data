@@ -138,7 +138,110 @@
                 <div class="card-conteudo">127</div>
             </div>
         </div>
+    </div>
+
+    <!-- Lista de Requisições -->
+    <div class="container requisicoes">
+        <div class="requisitions-container">
+            <h2 class="title">Painel de Requisições</h2>
+    
+            <div class="requisitions-header">
+                <input type="text" id="ipt_pesquisa" placeholder="🔍 Buscar requisições..." class="search-input" />
+                <div class="actions">
+                    <button class="btn filter-btn">Filtrar</button>
+                    <button class="btn sort-btn">⇅ Ordenar</button>
+                </div>
+            </div>
         
+            <div class="filter-tabs">
+                <button class="tab active">Todos</button>
+                <button class="tab">Pendentes</button>
+                <button class="tab">Em Andamento</button>
+                <button class="tab">Concluídos</button>
+                <button class="tab">Urgentes</button>
+            </div>
+        
+            <table class="requisition-table">
+                <thead>
+                    <tr>
+                    <th>ID</th>
+                    <th>TÍTULO</th>
+                    <th>LOCAL</th>
+                    <th>DATA</th>
+                    <th>STATUS</th>
+                    <th>POLICIAIS</th>
+                    <th>RISCO</th>
+                    <th>PROGRESSO</th>
+                    <th>AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <td>REQ-001</td>
+                    <td>Furto</td>
+                    <td>Rua 123</td>
+                    <td>2022-01-02</td>
+                    <td><span class="badge status andamento">Em Andamento</span></td>
+                    <td>4</td>
+                    <td><span class="badge risco medio">Médio</span></td>
+                    <td>
+                        <div class="progress">
+                        <div class="progress-bar" style="width: 65%"></div>
+                        </div>
+                        <span class="progress-text">65%</span>
+                    </td>
+                    <td>
+                        <button class="btn action-btn">Inscrever-se</button>
+                        <a href="#" class="link">Ver Detalhes</a>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>REQ-002</td>
+                    <td>Roubo seguido de morte</td>
+                    <td>Avenida 1</td>
+                    <td>2022-01-02</td>
+                    <td><span class="badge status urgente">Urgente</span></td>
+                    <td>6</td>
+                    <td><span class="badge risco alto">Alto</span></td>
+                    <td>
+                        <div class="progress">
+                        <div class="progress-bar" style="width: 25%"></div>
+                        </div>
+                        <span class="progress-text">25%</span>
+                    </td>
+                    <td>
+                        <a href="#" class="link">Ver Detalhes</a>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>REQ-003</td>
+                    <td>Tráfico de drogas</td>
+                    <td>Rua 321</td>
+                    <td>2022-01-02</td>
+                    <td><span class="badge status pendente">Pendente</span></td>
+                    <td>2</td>
+                    <td><span class="badge risco baixo">Baixo</span></td>
+                    <td>
+                        <div class="progress">
+                        <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <span class="progress-text">0%</span>
+                    </td>
+                    <td>
+                        <a href="#" class="link">Ver Detalhes</a>
+                    </td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <div class="pagination">
+                <span>Mostrando 3 de 3 requisições</span>
+                <div>
+                    <button class="btn">Anterior</button>
+                    <button class="btn">Próximo</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
