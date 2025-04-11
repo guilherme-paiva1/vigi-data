@@ -27,6 +27,8 @@ public class LeitorExcel {
             Integer indexLongitude = 4;
             Integer indexData = 0;
             Integer indexHorario = 1;
+            Integer indexBairro = 2;
+            Integer indexRegiao = 7;
 
             if (Objects.equals(nomeArquivo, "SPDadosCriminais_2025.xlsx")) {
                 indexRubrica = 20;
@@ -34,6 +36,7 @@ public class LeitorExcel {
                 indexLongitude = 15;
                 indexData = 7;
                 indexHorario = 8;
+
             }
 
             List<String> listaRubricasValidas = Arrays.asList("furto", "roubo", "tráfico drogas");
@@ -57,12 +60,16 @@ public class LeitorExcel {
                 Cell celulaLongitude = row.getCell(indexLongitude);
                 Cell celulaData = row.getCell(indexData);
                 Cell celulaHorario = row.getCell(indexHorario);
+                Cell celulaBairro = row.getCell(indexBairro);
+                Cell celulaRegiao = row.getCell(indexRegiao);
 
                 String valorCelulaRubrica = getCellValue(celulaRubrica);
                 String valorCelulaLatitude = getCellValue(celulaLatitude);
                 String valorCelulaLongitude = getCellValue(celulaLongitude);
                 String valorCelulaData = getCellValue(celulaData);
                 String valorCelulaHorario = getCellValue(celulaHorario);
+                String valorcelulaBairro = getCellValue(celulaBairro);
+                String valorcelulaRegiao = getCellValue(celulaRegiao);
 
                 // Recupera o nome do crime, limpa os espaços vazios nele e leva tudo pra lowercase
                 String rubricaTratada = valorCelulaRubrica.split("\\(")[0].trim().toLowerCase();
@@ -95,7 +102,7 @@ public class LeitorExcel {
                 LocalDateTime dataHoraTratada = converterDate(valorCelulaData, valorCelulaHorario);
 
                 if (dataHoraTratada != null ) {
-                    Dado dado = new Dado(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada);
+                    Dado dado = new Dado(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada, valorcelulaBairro, valorcelulaRegiao);
                     dadosExtraidos.add(dado);
                 }
             }

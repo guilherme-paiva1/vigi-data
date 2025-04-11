@@ -10,11 +10,13 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) throws IOException {
-//        String nomeArquivo = "Dados_PI_99Bairros.xlsx";
-        String nomeArquivo = "SPDadosCriminais_2025.xlsx";
+        String nomeArquivo = "leitor-excel/Dados_PI_99Bairros.xlsx";
+        // String nomeArquivo = "SPDadosCriminais_2025.xlsx";
 
         // Carregando o arquivo excel
         Path caminho = Path.of(nomeArquivo);
+        System.out.println(caminho.toAbsolutePath());
+
         InputStream arquivo = Files.newInputStream(caminho);
 
         // Extraindo os livros do arquivo
