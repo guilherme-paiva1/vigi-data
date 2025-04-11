@@ -34,3 +34,21 @@ function mudarModalUsuario() {
     }, 100);
   }
 }
+
+function nomeSession(){
+  nome_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+}
+
+nomeSession()
+
+function distintivoSession(){
+  matricula_usuario.innerHTML = sessionStorage.MATRICULA_USUARIO;
+}
+
+distintivoSession()
+
+function perfilSession(){
+  perfil_usuario.innerHTML = sessionStorage.PERFIL_USUARIO;
+}
+
+perfilSession()
