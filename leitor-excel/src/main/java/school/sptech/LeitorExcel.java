@@ -16,30 +16,24 @@ import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class LeitorExcel {
-
     public List<Dado> extrairDados(String nomeArquivo, InputStream arquivo, Integer pagina) {
+
         try {
             IOUtils.setByteArrayMaxOverride(500000000);
             System.out.printf("\nIniciando leitura do arquivo %s\n%n", nomeArquivo);
 
-            Integer indexRubrica = 5;
-            Integer indexLatitude = 3;
-            Integer indexLongitude = 4;
             Integer indexData = 0;
             Integer indexHorario = 1;
             Integer indexBairro = 2;
-            Integer indexRegiao = 7;
+            Integer indexLatitude = 3;
+            Integer indexLongitude = 4;
+            Integer indexRubrica = 5;
+            Integer indexRegiao = 6;
 
-            if (Objects.equals(nomeArquivo, "SPDadosCriminais_2025.xlsx")) {
-                indexRubrica = 20;
-                indexLatitude  = 14;
-                indexLongitude = 15;
-                indexData = 7;
-                indexHorario = 8;
-
-            }
 
             List<String> listaRubricasValidas = Arrays.asList("furto", "roubo", "tráfico drogas");
+            List<String> listaRegioesValidas = Arrays.asList("norte", "oeste", "leste", "sul", "centro");
+
 
             // Criando um objeto Workbook a partir do arquivo recebido
             Workbook workbook = new XSSFWorkbook(arquivo);
@@ -90,19 +84,24 @@ public class LeitorExcel {
                                 valorCelulaData.equals("NULL") ||
                                 valorCelulaHorario.equals("NULL");
 
+                String bairroTratado = valorcelulaBairro.toLowerCase();
+
+                String regiaoTratada = valorcelulaRegiao.toLowerCase();
+                Boolean regiaoInvalida = !listaRegioesValidas.contains(regiaoTratada);
+
                 Double latitudeTratada = Double.valueOf(valorCelulaLatitude);
                 Double longitudeTratada = Double.valueOf(valorCelulaLongitude);
 
                 Boolean latLongInvalidas = latitudeTratada == 0d || longitudeTratada == 0d;
 
-                if (latLongInvalidas || dataHoraInvalidas) {
+                if (latLongInvalidas || dataHoraInvalidas || regiaoInvalida) {
                     continue;
                 }
 
                 LocalDateTime dataHoraTratada = converterDate(valorCelulaData, valorCelulaHorario);
 
                 if (dataHoraTratada != null ) {
-                    Dado dado = new Dado(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada, valorcelulaBairro, valorcelulaRegiao);
+                    Dado dado = new Dado(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada, bairroTratado, regiaoTratada);
                     dadosExtraidos.add(dado);
                 }
             }
