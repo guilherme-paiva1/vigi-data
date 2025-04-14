@@ -1,13 +1,15 @@
 package school.sptech;
 
+import org.springframework.jdbc.core.JdbcTemplate;
+import java.io.IOException;
 import software.amazon.awssdk.services.s3.S3Client;
-
 import java.io.InputStream;
 import java.util.List;
 
 public class Main {
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        Conexao conexao = new Conexao();
+        JdbcTemplate template = new JdbcTemplate(conexao.getConexao());
         try {
             // Nome do bucket e do arquivo
             String bucketName = "test-vida";
@@ -25,11 +27,12 @@ public class Main {
             LeitorExcel leitorExcel = new LeitorExcel();
             List<Dado> dados = leitorExcel.extrairDados(objectKey, arquivo, 0);
 
-            // Exibir os dados extraídos
-            System.out.println("Dados extraídos do S3:");
+            // Inserindo os dados extraídos no Banco
+            System.out.println("Inserindo os dados extraídos do S3 no Banco de Dados:");
             for (Dado dado : dados) {
-                System.out.println(dado);
-            }
+            template.update("INSERT INTO dado (rubrica, latitude, longitude, data_hora_crime, bairro, regiao) VALUES (?, ?, ?, ?, ?, ?)",
+                    dado.getRubrica(), dado.getLatitude(), dado.getLongitude(), dado.getDataHoraCrime(), dado.getBairro(), dado.getRegiao());
+        }
 
             // Fechar o stream após uso
             arquivo.close();
