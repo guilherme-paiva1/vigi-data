@@ -556,6 +556,8 @@ body {
     background-color: rgb(204, 204, 204, 0.18);
     gap: 10px;
     margin-bottom: 16px;
+    font-family: "Inter", sans-serif;
+
 }
 
 .filters {
@@ -569,12 +571,17 @@ body {
     border-radius: 6px;
     background: #f9f9f9;
     cursor: pointer;
+    font-family: "Inter", sans-serif;
 }
 
 .tab.active {
     background: #0052cc;
     color: white;
     border-color: transparent;
+}
+
+.requisitions-container h2, thead, th, td, title, .pagination, button  {
+    font-family: "Inter", sans-serif;
 }
 
 .requisition-table {
@@ -588,7 +595,7 @@ body {
 }
 
 .requisition-table th {
-    font-weight: lighter;
+    font-weight: light;
 }
 
 .requisition-table th,
