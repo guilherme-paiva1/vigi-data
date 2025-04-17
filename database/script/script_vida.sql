@@ -12,7 +12,7 @@ CREATE TABLE usuario (
     email VARCHAR(45),
     senha VARCHAR(45),
     
-    CONSTRAINT usuario_supervisor 
+    CONSTRAINT fk_usuario_supervisor 
 		FOREIGN KEY (fkSupervisor)
 			REFERENCES usuario(idUsuario)
 );
@@ -45,7 +45,7 @@ CREATE TABLE notificacao (
 		FOREIGN KEY (fkAlerta)
 			REFERENCES alerta(idAlerta),
 		
-	CONSTRAINT fk_alerta_usuario
+	CONSTRAINT fk_usuario_not
 		FOREIGN KEY (fkUsuario)
 			REFERENCES usuario(idUsuario)
 );
@@ -65,8 +65,13 @@ CREATE TABLE requisicao (
 CREATE TABLE historico_requisicao (
 	fkRequisicao INT,
     fkUsuario INT,
-    criador TINYINT
-);
+    criador TINYINT,
     
-
+    CONSTRAINT fk_req_hist
+		FOREIGN KEY (fkRequisicao)
+			REFERENCES requisicao(idRequisicao),
 		
+	CONSTRAINT fk_usuario_hist
+		FOREIGN KEY (fkUsuario)
+			REFERENCES usuario(idUsuario)
+);
