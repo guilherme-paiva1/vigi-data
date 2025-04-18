@@ -1,10 +1,8 @@
 package school.sptech;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
-public class Dado {
+public class Ocorrencia {
 
     private String rubrica;
     private Double latitude;
@@ -13,10 +11,10 @@ public class Dado {
     private String bairro;
     private String regiao;
 
-    public Dado() {
+    public Ocorrencia() {
     }
 
-    public Dado(String rubrica, Double latitude, Double longitude, LocalDateTime dataHoraCrime, String bairro, String regiao) {
+    public Ocorrencia(String rubrica, Double latitude, Double longitude, LocalDateTime dataHoraCrime, String bairro, String regiao) {
         this.rubrica = rubrica;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -75,7 +73,7 @@ public class Dado {
 
     @Override
     public String toString() {
-        return "Dado{" +
+        return "Ocorrencia{" +
                 "rubrica='" + rubrica + '\'' +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +

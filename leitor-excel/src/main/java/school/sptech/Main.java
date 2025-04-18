@@ -25,13 +25,13 @@ public class Main {
 
             // Extração dos dados via Apache POI
             LeitorExcel leitorExcel = new LeitorExcel();
-            List<Dado> dados = leitorExcel.extrairDados(objectKey, arquivo, 0);
+            List<Ocorrencia> ocorrencias = leitorExcel.extrairOcorrencias(objectKey, arquivo, 0);
 
             // Inserindo os dados extraídos no Banco
-            System.out.println("Inserindo os dados extraídos do S3 no Banco de Dados:");
-            for (Dado dado : dados) {
-            template.update("INSERT INTO dado (rubrica, latitude, longitude, data_hora_crime, bairro, regiao) VALUES (?, ?, ?, ?, ?, ?)",
-                    dado.getRubrica(), dado.getLatitude(), dado.getLongitude(), dado.getDataHoraCrime(), dado.getBairro(), dado.getRegiao());
+            System.out.println("Inserindo as ocorrencias extraídas do S3 no Banco de dadoss:");
+            for (Ocorrencia ocorrencia : ocorrencias) {
+            template.update("INSERT INTO ocorrencia (rubrica, latitude, longitude, data_hora_crime, bairro, regiao) VALUES (?, ?, ?, ?, ?, ?)",
+                    ocorrencia.getRubrica(), ocorrencia.getLatitude(), ocorrencia.getLongitude(), ocorrencia.getDataHoraCrime(), ocorrencia.getBairro(), ocorrencia.getRegiao());
         }
 
             // Fechar o stream após uso

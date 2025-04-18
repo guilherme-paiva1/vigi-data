@@ -14,7 +14,7 @@ public class S3Provider {
                 System.getenv("AWS_ACCESS_KEY_ID".toLowerCase()),
                 System.getenv("AWS_SECRET_ACCESS_KEY".toLowerCase()),
                 System.getenv("AWS_SESSION_TOKEN".toLowerCase())
-           );
+        );
     }
 
     public S3Client getS3Client() {
