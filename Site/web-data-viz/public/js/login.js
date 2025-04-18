@@ -22,19 +22,25 @@ function entrar() {
                 sessionStorage.PERFIL_USUARIO = json.perfil;
                 sessionStorage.SUPERIOR_USUARIO = json.superior;
 
-                setTimeout(function () {
-                    window.location = "../dashboard.html";
-                }, 1000);
+                if (sessionStorage.PERFIL_USUARIO == "policial") {
+                    setTimeout(function () {
+                        window.location = "../private/requisicoes.html";
+                    }, 1000);
+                    return;
+                } else if(sessionStorage.PERFIL_USUARIO == "delegado") {
+                    setTimeout(function () {
+                        window.location = "../private/dashboard.html";
+                    }, 1000);
+                }
+
 
             });
 
         } else {
-
             resposta.text().then(texto => {
                 console.error(texto);
             });
         }
-
     }).catch(function (erro) {
         console.log(erro);
     })

@@ -10,40 +10,36 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class LeitorExcel {
+    public List<Ocorrencia> extrairOcorrencias(String nomeArquivo, InputStream arquivo, Integer pagina) {
 
-    public List<Dado> extrairDados(String nomeArquivo, InputStream arquivo, Integer pagina) {
         try {
             IOUtils.setByteArrayMaxOverride(500000000);
             System.out.printf("\nIniciando leitura do arquivo %s\n%n", nomeArquivo);
 
-            Integer indexRubrica = 5;
-            Integer indexLatitude = 3;
-            Integer indexLongitude = 4;
             Integer indexData = 0;
             Integer indexHorario = 1;
+            Integer indexBairro = 2;
+            Integer indexLatitude = 3;
+            Integer indexLongitude = 4;
+            Integer indexRubrica = 5;
+            Integer indexRegiao = 6;
 
-            if (Objects.equals(nomeArquivo, "SPDadosCriminais_2025.xlsx")) {
-                indexRubrica = 20;
-                indexLatitude  = 14;
-                indexLongitude = 15;
-                indexData = 7;
-                indexHorario = 8;
-            }
 
             List<String> listaRubricasValidas = Arrays.asList("furto", "roubo", "tráfico drogas");
+            List<String> listaRegioesValidas = Arrays.asList("norte", "oeste", "leste", "sul", "centro");
+
 
             // Criando um objeto Workbook a partir do arquivo recebido
             Workbook workbook = new XSSFWorkbook(arquivo);
 
             Sheet sheet = workbook.getSheetAt(pagina);
 
-            List<Dado> dadosExtraidos = new ArrayList<>();
+            List<Ocorrencia> dadosExtraidos = new ArrayList<>();
 
             // Iterando sobre as linhas da planilha
             for (Row row : sheet) {
@@ -57,12 +53,16 @@ public class LeitorExcel {
                 Cell celulaLongitude = row.getCell(indexLongitude);
                 Cell celulaData = row.getCell(indexData);
                 Cell celulaHorario = row.getCell(indexHorario);
+                Cell celulaBairro = row.getCell(indexBairro);
+                Cell celulaRegiao = row.getCell(indexRegiao);
 
                 String valorCelulaRubrica = getCellValue(celulaRubrica);
                 String valorCelulaLatitude = getCellValue(celulaLatitude);
                 String valorCelulaLongitude = getCellValue(celulaLongitude);
                 String valorCelulaData = getCellValue(celulaData);
                 String valorCelulaHorario = getCellValue(celulaHorario);
+                String valorcelulaBairro = getCellValue(celulaBairro);
+                String valorcelulaRegiao = getCellValue(celulaRegiao);
 
                 // Recupera o nome do crime, limpa os espaços vazios nele e leva tudo pra lowercase
                 String rubricaTratada = valorCelulaRubrica.split("\\(")[0].trim().toLowerCase();
@@ -83,25 +83,27 @@ public class LeitorExcel {
                                 valorCelulaData.equals("NULL") ||
                                 valorCelulaHorario.equals("NULL");
 
+                String bairroTratado = valorcelulaBairro.toLowerCase();
+
+                String regiaoTratada = valorcelulaRegiao.toLowerCase();
+                Boolean regiaoInvalida = !listaRegioesValidas.contains(regiaoTratada);
+
                 Double latitudeTratada = Double.valueOf(valorCelulaLatitude);
                 Double longitudeTratada = Double.valueOf(valorCelulaLongitude);
 
                 Boolean latLongInvalidas = latitudeTratada == 0d || longitudeTratada == 0d;
 
-                if (latLongInvalidas || dataHoraInvalidas) {
+                if (latLongInvalidas || dataHoraInvalidas || regiaoInvalida) {
                     continue;
                 }
 
                 LocalDateTime dataHoraTratada = converterDate(valorCelulaData, valorCelulaHorario);
 
                 if (dataHoraTratada != null ) {
-                    Dado dado = new Dado(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada);
-                    dadosExtraidos.add(dado);
+                    Ocorrencia ocorrencia = new Ocorrencia(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada, bairroTratado, regiaoTratada);
+                    dadosExtraidos.add(ocorrencia);
                 }
             }
-
-            // Fechando o workbook após a leitura
-            workbook.close();
 
             System.out.println("\nLeitura do arquivo finalizada\n");
 
