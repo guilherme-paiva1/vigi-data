@@ -105,9 +105,6 @@ public class LeitorExcel {
                 }
             }
 
-            // Fechando o workbook após a leitura
-            workbook.close();
-
             System.out.println("\nLeitura do arquivo finalizada\n");
 
             return dadosExtraidos;
