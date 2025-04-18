@@ -27,11 +27,12 @@ function entrar() {
                         window.location = "../private/requisicoes.html";
                     }, 1000);
                     return;
+                } else if(sessionStorage.PERFIL_USUARIO == "delegado") {
+                    setTimeout(function () {
+                        window.location = "../private/dashboard.html";
+                    }, 1000);
                 }
 
-                setTimeout(function () {
-                    window.location = "../private/dashboard.html";
-                }, 1000);
 
             });
 

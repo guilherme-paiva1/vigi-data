@@ -375,8 +375,6 @@ body {
 
 .conteudo-user {
     margin: 0px 20px 15px 0px;
-    /* margin-right: 20px;
-    margin-bottom: 15px; */
 }
 
 .conteudo-user h3 {
@@ -408,6 +406,12 @@ body {
     width: 90%;
     align-self: center;
     opacity: 40%;
+}
+
+.modal-conteudo a {
+    list-style: none;
+    text-decoration: none;
+    color: #1b1b1d;
 }
 
 .texto-sair {
