@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         try {
             System.out.println("Estabelecendo conexão com o Banco de Dados...");
+
             Conexao conexao = new Conexao();
-            JdbcTemplate template = conexao.getTemplate();
-            Connection conn = conexao.getConnection();
+            Connection conn = conexao.criarConexao(conexao);
+            JdbcTemplate template = conexao.criarTemplate(conexao);
+
             System.out.println("Conexão bem sucedida!");
             // Nome do bucket e do arquivo
             System.out.println("Estabelecendo conexão com o Bucket S3...");
@@ -50,12 +52,19 @@ public class Main {
             System.out.println("Extração bem sucedida!");
             System.out.println("Quantidade de dados extraídos:" + ocorrencias.size());
 
+            // validar se qtd de dados extraidos eh igual qtd do banco
+
             // Inserindo os dados extraídos no Banco
             System.out.println("Inserindo as ocorrências extraídas do S3 no Banco de dados...");
             for (Ocorrencia ocorrencia : ocorrencias) {
             template.update("INSERT INTO ocorrencia (rubrica, latitude, longitude, data_hora_crime, bairro, regiao) VALUES (?, ?, ?, ?, ?, ?)",
                     ocorrencia.getRubrica(), ocorrencia.getLatitude(), ocorrencia.getLongitude(), ocorrencia.getDataHoraCrime(), ocorrencia.getBairro(), ocorrencia.getRegiao());
             }
+
+            String mensagem = "Extração finalizada, " + ocorrencias.size() + " ocorrências registradas";
+            template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "sucesso");
+
+
             // Commitar as alterações
             conn.commit();
             System.out.println("Inserção no banco de dados realizada com sucesso!");
@@ -65,16 +74,27 @@ public class Main {
                 arquivo.close();
             }
 
+
             System.out.println("Finalizando processo. Status: Sucesso.");
 
         } catch (SQLException e) {
+
             System.out.println("Conexão com o banco de dados falhou!");
             System.out.println("Finalizando processo. Status: Erro.");
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println("Erro ao acessar os arquivos!");
-            System.out.println("Finalizando processo. Status: Erro.");
-            System.out.println(e.getMessage());
+            Conexao conexao = new Conexao();
+            Connection conn = conexao.criarConexao(conexao);
+            JdbcTemplate template = conexao.criarTemplate(conexao);
+
+            String mensagem = "Erro ao acessar os arquivos! Finalizando processo. Status: Erro. " + e.getMessage();
+            template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "erro");
+
+            System.out.println(mensagem);
         }
     }
+
+
+
+
 }

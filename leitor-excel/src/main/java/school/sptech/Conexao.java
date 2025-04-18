@@ -23,6 +23,16 @@ public class Conexao {
         template = new JdbcTemplate(scds);
     }
 
+    public JdbcTemplate criarTemplate(Conexao conexao) throws SQLException {
+        JdbcTemplate template = conexao.getTemplate();
+        return template;
+    }
+
+    public Connection criarConexao(Conexao conexao) {
+        Connection conn = conexao.getConnection();
+        return conn;
+    }
+
     public JdbcTemplate getTemplate() {
         return template;
     }
