@@ -10,13 +10,12 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.*;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.util.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class LeitorExcel {
-    public List<Dado> extrairDados(String nomeArquivo, InputStream arquivo, Integer pagina) {
+    public List<Ocorrencia> extrairOcorrencias(String nomeArquivo, InputStream arquivo, Integer pagina) {
 
         try {
             IOUtils.setByteArrayMaxOverride(500000000);
@@ -40,7 +39,7 @@ public class LeitorExcel {
 
             Sheet sheet = workbook.getSheetAt(pagina);
 
-            List<Dado> dadosExtraidos = new ArrayList<>();
+            List<Ocorrencia> dadosExtraidos = new ArrayList<>();
 
             // Iterando sobre as linhas da planilha
             for (Row row : sheet) {
@@ -101,13 +100,10 @@ public class LeitorExcel {
                 LocalDateTime dataHoraTratada = converterDate(valorCelulaData, valorCelulaHorario);
 
                 if (dataHoraTratada != null ) {
-                    Dado dado = new Dado(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada, bairroTratado, regiaoTratada);
-                    dadosExtraidos.add(dado);
+                    Ocorrencia ocorrencia = new Ocorrencia(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada, bairroTratado, regiaoTratada);
+                    dadosExtraidos.add(ocorrencia);
                 }
             }
-
-            // Fechando o workbook após a leitura
-            workbook.close();
 
             System.out.println("\nLeitura do arquivo finalizada\n");
 

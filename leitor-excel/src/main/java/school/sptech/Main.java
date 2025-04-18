@@ -4,41 +4,77 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.io.IOException;
 import software.amazon.awssdk.services.s3.S3Client;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Conexao conexao = new Conexao();
-        JdbcTemplate template = new JdbcTemplate(conexao.getConexao());
+    public static void main(String[] args) {
         try {
+            System.out.println("Estabelecendo conexão com o Banco de Dados...");
+            Conexao conexao = new Conexao();
+            JdbcTemplate template = conexao.getTemplate();
+            Connection conn = conexao.getConnection();
+            System.out.println("Conexão bem sucedida!");
             // Nome do bucket e do arquivo
-            String bucketName = "test-vida";
-            String objectKey = "SPDadosCriminais_2025.xlsx";
+            System.out.println("Estabelecendo conexão com o Bucket S3...");
+            String bucketName = "s3-vida";
+            String[] objectKeys = {"SPDadosCriminais_2025.xlsx", "Dados_PI_99Bairros.xlsx", "Dados_PI_99Bairros.xlsx"};
 
             // Criando cliente S3
             S3Provider provider = new S3Provider();
             S3Client s3Client = provider.getS3Client();
+            System.out.println("Conexão com o bucket S3 bem sucedida!");
 
-            // Fazendo o download do arquivo como InputStream
+            // Fazendo o download dos arquivos com o InputStream
+            System.out.println("Iniciando download dos arquivos na S3...");
             S3Downloader downloader = new S3Downloader(s3Client);
-            InputStream arquivo = downloader.baixarArquivo(bucketName, objectKey);
+            List<InputStream> arquivos = new ArrayList<>();
+
+            for (String objectKey : objectKeys) {
+                arquivos.add(downloader.baixarArquivo(bucketName, objectKey));
+            }
+            System.out.println("Download dos arquivos bem sucedido!");
 
             // Extração dos dados via Apache POI
+            System.out.println("Iniciando extração dos dados nos arquivos...");
             LeitorExcel leitorExcel = new LeitorExcel();
-            List<Dado> dados = leitorExcel.extrairDados(objectKey, arquivo, 0);
+            List<Ocorrencia> ocorrencias = new ArrayList<>();
+            Integer pagina = 0;
+            for (int i = 0; i < arquivos.size(); i++) {
+                if (i == 2) pagina = 1;
+                ocorrencias.addAll(leitorExcel.extrairOcorrencias(objectKeys[i], arquivos.get(i), pagina));
+            }
+
+            System.out.println("Extração bem sucedida!");
+            System.out.println("Quantidade de dados extraídos:" + ocorrencias.size());
 
             // Inserindo os dados extraídos no Banco
-            System.out.println("Inserindo os dados extraídos do S3 no Banco de Dados:");
-            for (Dado dado : dados) {
-            template.update("INSERT INTO dado (rubrica, latitude, longitude, data_hora_crime, bairro, regiao) VALUES (?, ?, ?, ?, ?, ?)",
-                    dado.getRubrica(), dado.getLatitude(), dado.getLongitude(), dado.getDataHoraCrime(), dado.getBairro(), dado.getRegiao());
-        }
+            System.out.println("Inserindo as ocorrências extraídas do S3 no Banco de dados...");
+            for (Ocorrencia ocorrencia : ocorrencias) {
+            template.update("INSERT INTO ocorrencia (rubrica, latitude, longitude, data_hora_crime, bairro, regiao) VALUES (?, ?, ?, ?, ?, ?)",
+                    ocorrencia.getRubrica(), ocorrencia.getLatitude(), ocorrencia.getLongitude(), ocorrencia.getDataHoraCrime(), ocorrencia.getBairro(), ocorrencia.getRegiao());
+            }
+            // Commitar as alterações
+            conn.commit();
+            System.out.println("Inserção no banco de dados realizada com sucesso!");
 
-            // Fechar o stream após uso
-            arquivo.close();
+            // Fechar os streams após uso
+            for (InputStream arquivo : arquivos) {
+                arquivo.close();
+            }
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Finalizando processo. Status: Sucesso.");
+
+        } catch (SQLException e) {
+            System.out.println("Conexão com o banco de dados falhou!");
+            System.out.println("Finalizando processo. Status: Erro.");
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println("Erro ao acessar os arquivos!");
+            System.out.println("Finalizando processo. Status: Erro.");
+            System.out.println(e.getMessage());
         }
     }
 }

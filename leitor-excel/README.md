@@ -56,7 +56,7 @@ InputStream arquivo = Files.newInputStream(caminho);
 Workbook workbook = new XSSFWorkbook(arquivo);
 ```
 
-### 3. Manipule os dados do Workbook
+### 3. Manipule os ocorrencias do Workbook
 
 Para acessar uma planilha específica, utilizamos o método `getSheetAt()`, passando o índice da
 planilha desejada.
@@ -78,7 +78,7 @@ Cell cell = row.getCell(0);
 ```
 
 Para pegar o valor de uma célula, podemos utilizar vários métodos. Temos métodos diferentes para
-tipos de dados diferentes.
+tipos de ocorrencias diferentes.
 
 Por exemplo, se quisermos pegar o valor de uma célula que é uma String, podemos utilizar o
 método `getStringCellValue()`.
