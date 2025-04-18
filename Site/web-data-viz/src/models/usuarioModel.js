@@ -2,10 +2,10 @@ var database = require("../database/config")
 
 function entrar(matricula, senha) {
     var instrucaoSql = `
-        SELECT u.id_usuario, u.nome, u.email, u.matricula, u.perfil, s.nome AS superior
+        SELECT u.idUsuario, u.nome, u.email, u.matricula, u.perfil, s.nome AS superior
             FROM Usuario AS u
-            JOIN Usuario AS s
-                WHERE u.matricula = '${matricula}' AND u.senha = '${senha}';;
+            JOIN Usuario AS s ON u.fkSupervisor = s.idUsuario
+                WHERE u.matricula = '${matricula}' AND u.senha = '${senha}';
     `;
 
     return database.executar(instrucaoSql);

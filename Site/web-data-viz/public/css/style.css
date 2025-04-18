@@ -374,7 +374,7 @@ body {
 }
 
 .conteudo-user {
-    margin-right: 20px;
+    margin: 0px 20px 15px 0px;
 }
 
 .conteudo-user h3 {
@@ -382,7 +382,7 @@ body {
 }
 
 .conteudo-user p {
-    margin-top: 0;
+    margin: 0;
     color: #fbfbfc83;
 }
 
@@ -406,6 +406,12 @@ body {
     width: 90%;
     align-self: center;
     opacity: 40%;
+}
+
+.modal-conteudo a {
+    list-style: none;
+    text-decoration: none;
+    color: #1b1b1d;
 }
 
 .texto-sair {
@@ -556,6 +562,8 @@ body {
     background-color: rgb(204, 204, 204, 0.18);
     gap: 10px;
     margin-bottom: 16px;
+    font-family: "Inter", sans-serif;
+
 }
 
 .filters {
@@ -569,12 +577,17 @@ body {
     border-radius: 6px;
     background: #f9f9f9;
     cursor: pointer;
+    font-family: "Inter", sans-serif;
 }
 
 .tab.active {
     background: #0052cc;
     color: white;
     border-color: transparent;
+}
+
+.requisitions-container h2, thead, th, td, title, .pagination, button  {
+    font-family: "Inter", sans-serif;
 }
 
 .requisition-table {
@@ -588,7 +601,7 @@ body {
 }
 
 .requisition-table th {
-    font-weight: lighter;
+    font-weight: light;
 }
 
 .requisition-table th,
