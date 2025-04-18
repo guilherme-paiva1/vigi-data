@@ -16,8 +16,8 @@ CREATE TABLE usuario (
 			REFERENCES usuario(idUsuario)
 );
 
-CREATE TABLE dado (
-    idDado INT PRIMARY KEY AUTO_INCREMENT,
+CREATE TABLE ocorrencia (
+    idOcorrencia INT PRIMARY KEY AUTO_INCREMENT,
     rubrica VARCHAR(45),
     regiao VARCHAR(10),
     bairro VARCHAR(70),
