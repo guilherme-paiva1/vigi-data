@@ -15,7 +15,7 @@ public class Main {
             JdbcTemplate template = conexao.getTemplate();
             Connection conn = conexao.getConnection();
             // Nome do bucket e do arquivo
-            String bucketName = "test-vida";
+            String bucketName = "s3-vida";
             String objectKey = "SPDadosCriminais_2025.xlsx";
 
             // Criando cliente S3
@@ -29,18 +29,19 @@ public class Main {
             // Extração dos dados via Apache POI
             LeitorExcel leitorExcel = new LeitorExcel();
             List<Ocorrencia> ocorrencias = leitorExcel.extrairOcorrencias(objectKey, arquivo, 0);
+            System.out.println(ocorrencias.size());
 
             // Inserindo os dados extraídos no Banco
-            System.out.println("Inserindo as ocorrencias extraídas do S3 no Banco de dadoss:");
+            System.out.println("Inserindo as ocorrências extraídas do S3 no Banco de dados:");
             for (Ocorrencia ocorrencia : ocorrencias) {
             template.update("INSERT INTO ocorrencia (rubrica, latitude, longitude, data_hora_crime, bairro, regiao) VALUES (?, ?, ?, ?, ?, ?)",
                     ocorrencia.getRubrica(), ocorrencia.getLatitude(), ocorrencia.getLongitude(), ocorrencia.getDataHoraCrime(), ocorrencia.getBairro(), ocorrencia.getRegiao());
-        }
+            }
+            // Commitar as alterações
+            conn.commit();
 
             // Fechar o stream após uso
             arquivo.close();
-            // Commitar as alterações
-            conn.commit();
 
         } catch (Exception e) {
             e.printStackTrace();
