@@ -48,7 +48,7 @@ function distintivoSession(){
 distintivoSession()
 
 function perfilSession(){
-  perfil_usuario.innerHTML = sessionStorage.PERFIL_USUARIO;
+  perfil_usuario.innerHTML  = sessionStorage.PERFIL_USUARIO.charAt(0).toUpperCase() + sessionStorage.PERFIL_USUARIO.slice(1);
 }
 
 perfilSession()

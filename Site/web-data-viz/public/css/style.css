@@ -374,7 +374,9 @@ body {
 }
 
 .conteudo-user {
-    margin-right: 20px;
+    margin: 0px 20px 15px 0px;
+    /* margin-right: 20px;
+    margin-bottom: 15px; */
 }
 
 .conteudo-user h3 {
@@ -382,7 +384,7 @@ body {
 }
 
 .conteudo-user p {
-    margin-top: 0;
+    margin: 0;
     color: #fbfbfc83;
 }
 
