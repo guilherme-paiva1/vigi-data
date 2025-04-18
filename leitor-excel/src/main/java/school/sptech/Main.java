@@ -4,13 +4,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.io.IOException;
 import software.amazon.awssdk.services.s3.S3Client;
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        Conexao conexao = new Conexao();
-        JdbcTemplate template = new JdbcTemplate(conexao.getConexao());
+    public static void main(String[] args) {
         try {
+            Conexao conexao = new Conexao();
+            JdbcTemplate template = conexao.getTemplate();
+            Connection conn = conexao.getConnection();
             // Nome do bucket e do arquivo
             String bucketName = "test-vida";
             String objectKey = "SPDadosCriminais_2025.xlsx";
@@ -36,6 +39,8 @@ public class Main {
 
             // Fechar o stream após uso
             arquivo.close();
+            // Commitar as alterações
+            conn.commit();
 
         } catch (Exception e) {
             e.printStackTrace();

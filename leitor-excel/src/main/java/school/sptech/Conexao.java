@@ -1,24 +1,33 @@
 package school.sptech;
 
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
-import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class Conexao {
-    private DataSource conexao;
+    private Connection conn;
+    private JdbcTemplate template;
 
-    public Conexao() {
-        DriverManagerDataSource driver = new DriverManagerDataSource();
+    public Conexao() throws SQLException {
+        conn = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/vida",
+                "svc_vida",
+                "urubu100"
+        );
 
-        driver.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        driver.setUsername("svc_vida");
-        driver.setPassword("urubu100");
-        driver.setUrl("jdbc:mysql://localhost:3306/vida");
-
-        this.conexao = driver;
+        conn.setAutoCommit(false);
+        SingleConnectionDataSource scds = new SingleConnectionDataSource(conn, true);
+        template = new JdbcTemplate(scds);
     }
 
-    public DataSource getConexao() {
-        return this.conexao;
+    public JdbcTemplate getTemplate() {
+        return template;
+    }
+
+    public Connection getConnection() {
+        return conn;
     }
 }
