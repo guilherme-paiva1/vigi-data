@@ -10,7 +10,7 @@
     <title>Requisições</title>
 </head>
 
-<body>
+<body onload="carregarRequisicoes()">
     <div class="banner-main logado">
         <div class="header">
             <div class="container-navbar">
@@ -159,53 +159,7 @@
                     <th>AÇÕES</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>REQ-001</td>
-                        <td>Furto</td>
-                        <td>Rua 123</td>
-                        <td>02/01/2024</td>
-                        <td><span class="badge status andamento">Em Andamento</span></td>
-                        <td>4</td>
-                        <td><span class="badge risco medio">Médio</span></td>
-                        <td>
-                            <div class="progress-cell">
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: 65%"></div>
-                                </div>
-                                <span class="progress-text">65%</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="actions">
-                                <button class="botao botao-azul-claro">Inscrever-se</button>
-                                <a href="#" class="botao botao-secundario">Ver Detalhes</a>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>REQ-002</td>
-                        <td>Roubo</td>
-                        <td>Rua 123</td>
-                        <td>05/07/2025</td>
-                        <td><span class="badge status andamento">Em Andamento</span></td>
-                        <td>4</td>
-                        <td><span class="badge risco medio">Médio</span></td>
-                        <td>
-                            <div class="progress-cell">
-                                <div class="progress">
-                                    <div class="progress-bar" style="width: 65%"></div>
-                                </div>
-                                <span class="progress-text">65%</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="actions">
-                                <button disabled class="botao botao-azul-claro">Inscrever-se</button>
-                                <a href="#" class="botao botao-secundario">Ver Detalhes</a>
-                            </div>
-                        </td>
-                    </tr>
+                <tbody id="tabela_requisicoes">
                 </tbody>
             </table>
         
@@ -223,3 +177,4 @@
 </html>
 
 <script src="../js/modal.js"></script>
+<script src="../js/requisicoes.js"></script>
