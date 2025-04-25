@@ -58,6 +58,8 @@ public class Main {
                     Integer.class
             );
 
+            if (totalOcorrencias == null) totalOcorrencias = 0;
+
             if (ocorrencias.size() == totalOcorrencias) {
                 throw new SemNovasOcorrenciasException();
             }
