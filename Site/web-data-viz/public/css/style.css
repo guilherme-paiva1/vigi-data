@@ -495,7 +495,7 @@ body {
 
 /* Tabela investigações */
 
-.container.investigations {
+.container.investigacoes {
     display: flex;
     justify-content: center;
     align-items: center;
