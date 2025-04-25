@@ -1,9 +1,13 @@
-function carregarRequisicoes() {
-    var tabela_requisicoes = document.getElementById("tabela_requisicoes");
+window.onload = function () {
+    carregarInvestigacoes();
+}
+
+function carregarInvestigacoes() {
+    var tabela_investigacoes = document.getElementById("tabela_investigacoes");
 
     // Mockado por enquanto, depois substituir por fetch
     if (sessionStorage.PERFIL_USUARIO == "policial") {
-        tabela_requisicoes.innerHTML = `
+        tabela_investigacoes.innerHTML = `
         <tr>
             <td>REQ-002</td>
             <td>Roubo</td>
@@ -54,7 +58,7 @@ function carregarRequisicoes() {
         return;
     }
 
-    tabela_requisicoes.innerHTML = `
+    tabela_investigacoes.innerHTML = `
         <tr>
             <td>REQ-002</td>
             <td>Roubo</td>
