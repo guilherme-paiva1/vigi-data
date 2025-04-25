@@ -1,6 +1,14 @@
-var modalNotificacao = document.getElementById("modal_notificacao");
-var modalUsuario = document.getElementById("modal_usuario");
-var conteudoModal = document.getElementById("modal_conteudo");
+var modalNotificacao, modalUsuario, conteudoModal;
+
+window.onload = function () {
+  modalNotificacao = document.getElementById("modal_notificacao");
+  modalUsuario = document.getElementById("modal_usuario");
+  conteudoModal = document.getElementById("modal_conteudo");
+
+  nomeSession();
+  distintivoSession();
+  perfilSession();
+};
 
 function mudarModalNotificacao() {
   if (modalNotificacao.style.display == "none") {
@@ -40,13 +48,9 @@ function nomeSession() {
   nome_usuario.innerHTML = sessionStorage.NOME_USUARIO;
 }
 
-nomeSession()
-
 function distintivoSession() {
   matricula_usuario.innerHTML = sessionStorage.MATRICULA_USUARIO;
 }
-
-distintivoSession()
 
 function perfilSession() {
   perfil_usuario.innerHTML = sessionStorage.PERFIL_USUARIO.charAt(0).toUpperCase() + sessionStorage.PERFIL_USUARIO.slice(1);
@@ -142,9 +146,5 @@ function perfilSession() {
         </div>
       </a>
     `
-  
   }
-  
 }
-
-perfilSession()

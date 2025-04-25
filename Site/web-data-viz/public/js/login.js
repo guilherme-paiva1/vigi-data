@@ -38,7 +38,7 @@ function entrar() {
 
         } else {
             resposta.text().then(texto => {
-                console.error(texto);
+                span_mensagem.innerHTML = texto;
             });
         }
     }).catch(function (erro) {

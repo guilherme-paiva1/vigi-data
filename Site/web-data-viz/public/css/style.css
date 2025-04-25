@@ -425,7 +425,7 @@ body {
 }
 
 
-/* Tela de requisições */
+/* Tela de investigações */
 .linha-cards {
     display: flex;
     justify-content: space-between;
@@ -476,7 +476,7 @@ body {
     height: 100%;
 }
 
-.card.info-requisicao {
+.card.info-investigacao {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -484,18 +484,18 @@ body {
     border-radius: 0.625rem;
 }
 
-.card.info-requisicao .card-header {
+.card.info-investigacao .card-header {
     font-size: 0.8rem;
 }
 
-.card.info-requisicao .card-conteudo {
+.card.info-investigacao .card-conteudo {
     font-size: 1rem;
     font-weight: 800;
 }
 
-/* Tabela requisições */
+/* Tabela investigações */
 
-.container.requisicoes {
+.container.investigations {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -503,7 +503,7 @@ body {
     width: 100%;
 }
 
-.requisitions-container {
+.investigations-container {
     font-family: sans-serif;
     background: #fff;
     padding: 20px;
@@ -518,7 +518,7 @@ body {
     font-weight: bold;
 }
 
-.requisitions-header {
+.investigations-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -526,7 +526,7 @@ body {
     gap: 10px;
 }
 
-.requisitions-header label {
+.investigations-header label {
     display: flex;
     align-items: center;
 }
@@ -586,26 +586,26 @@ body {
     border-color: transparent;
 }
 
-.requisitions-container h2, thead, th, td, title, .pagination, button  {
+.investigations-container h2, thead, th, td, title, .pagination, button  {
     font-family: "Inter", sans-serif;
 }
 
-.requisition-table {
+.investigation-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
 }
 
-.requisition-table thead {
+.investigation-table thead {
     background-color: rgb(204, 204, 204, 0.18);
 }
 
-.requisition-table th {
+.investigation-table th {
     font-weight: light;
 }
 
-.requisition-table th,
-.requisition-table td {
+.investigation-table th,
+.investigation-table td {
     flex-direction: column;
     align-items: center;
     justify-content: center;

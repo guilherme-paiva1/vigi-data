@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/style-response.css">
     <link rel="shortcut icon" href="../assets/logo-branco-simples.ico" type="image/x-icon">
-    <title>Requisições</title>
+    <title>Investigações</title>
 </head>
 
-<body onload="carregarRequisicoes()">
+<body onload="carregarInvestigacoes()">
     <div class="banner-main logado">
         <div class="header">
             <div class="container-navbar">
@@ -20,10 +20,10 @@
                     </a>
                 </div>
                 <div class="navbar">
-                    <a href="requisicoes.html">
+                    <a href="investigacoes.html">
                         <button class="botao botao-azul-claro">
                             <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M21,4a1,1,0,0,0-1-1H17V2a1,1,0,0,0-1-1H8A1,1,0,0,0,7,2V3H4A1,1,0,0,0,3,4V22a1,1,0,0,0,1,1H20a1,1,0,0,0,1-1ZM9,3h6V5H9ZM19,21H5V5H7V6A1,1,0,0,0,8,7h8a1,1,0,0,0,1-1V5h2Zm-6-3a1,1,0,0,1-1,1H8a1,1,0,0,1,0-2h4A1,1,0,0,1,13,18Zm4-4a1,1,0,0,1-1,1H8a1,1,0,0,1,0-2h8A1,1,0,0,1,17,14Zm0-4a1,1,0,0,1-1,1H8A1,1,0,0,1,8,9h8A1,1,0,0,1,17,10Z"></path></g></svg>
-                            Requisições
+                            Investigações
                         </button>
                     </a>
                     
@@ -73,7 +73,7 @@
                         <svg width="60px" height="60px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="0.5" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" fill="#ffffff"></path> <path d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z" fill="#ffffff"></path> <path d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z" fill="#ffffff"></path> </g></svg>
                         <div class="conteudo-user">
                             <h3><span id="nome_usuario">Nome</span></h3>
-                            <p>Distintivo: <span id="matricula_usuario">123456</span> </p>
+                            <p>Matrícula: <span id="matricula_usuario">123456</span> </p>
                             <p><span id="perfil_usuario"></span> </p>
                         </div>
                         <svg id="btn_fechar" class="fechar" onclick="mudarModalUsuario()" viewBox="0 0 24 24" width="25px" height="25px" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#8a8a8a"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Edit / Close_Circle"> <path id="Vector" d="M9 9L11.9999 11.9999M11.9999 11.9999L14.9999 14.9999M11.9999 11.9999L9 14.9999M11.9999 11.9999L14.9999 9M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" stroke="#636b9b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
@@ -89,8 +89,8 @@
             <div class="img-card">
                 <img src="../assets/icons/icon-file.svg" alt="">
             </div>
-            <div class="card info-requisicao">
-                <span class="card-header">Total de requisições</span>
+            <div class="card info-investigacao">
+                <span class="card-header">Total de Investigações</span>
                 <span class="card-conteudo">127</span>
             </div>
         </div>
@@ -98,7 +98,7 @@
             <div class="img-card">
                 <img src="../assets/icons/icon-done.svg" alt="">
             </div>
-            <div class="card info-requisicao">
+            <div class="card info-investigacao">
                 <div class="card-header">Concluídas</div>
                 <div class="card-conteudo">127</div>
             </div>
@@ -107,7 +107,7 @@
             <div class="img-card">
                 <img src="../assets/icons/icon-time.svg" alt="">
             </div>
-            <div class="card info-requisicao">
+            <div class="card info-investigacao">
                 <div class="card-header">Em andamento</div>
                 <div class="card-conteudo">127</div>
             </div>
@@ -116,22 +116,22 @@
             <div class="img-card">
                 <img src="../assets/icons/icon-warning-triangle.svg" alt="">
             </div>
-            <div class="card info-requisicao">
+            <div class="card info-investigacao">
                 <div class="card-header">Urgentes</div>
                 <div class="card-conteudo">127</div>
             </div>
         </div>
     </div>
 
-    <!-- Lista de Requisições -->
-    <div class="container requisicoes">
-        <div class="requisitions-container">
-            <h2 class="title">Lista de Requisições</h2>
+    <!-- Lista de Investigações -->
+    <div class="container investigacoes">
+        <div class="investigations-container">
+            <h2 class="title">Lista de Investigações</h2>
     
             <hr> 
-            <div class="requisitions-header">
+            <div class="investigations-header">
                 <label for="ipt_pesquisa"><img src="../assets/icons/icon-search.svg"></label>
-                <input type="text" id="ipt_pesquisa" placeholder="Buscar requisições..." class="search-input" />
+                <input type="text" id="ipt_pesquisa" placeholder="Buscar Investigações..." class="search-input" />
                 <div class="filters">
                     <button class="btn filter-btn"><img src="../assets/icons/icon-filter.svg"> Filtrar</button>
                     <button class="btn sort-btn"><img src="../assets/icons/icon-reorder.svg"> Ordenar</button>
@@ -145,7 +145,7 @@
                 <button class="tab">Urgentes</button>
             </div>
         
-            <table class="requisition-table">
+            <table class="investigation-table">
                 <thead>
                     <tr>
                     <th>ID</th>
@@ -159,12 +159,12 @@
                     <th>AÇÕES</th>
                     </tr>
                 </thead>
-                <tbody id="tabela_requisicoes">
+                <tbody id="tabela_investigacoes">
                 </tbody>
             </table>
         
             <div class="pagination">
-                <span>Mostrando 1 de 1 requisições</span>
+                <span>Mostrando 1 de 1 Investigações</span>
                 <div>
                     <button class="btn">Anterior</button>
                     <button class="btn">Próximo</button>
@@ -177,4 +177,4 @@
 </html>
 
 <script src="../js/modal.js"></script>
-<script src="../js/requisicoes.js"></script>
+<script src="../js/investigacoes.js"></script>
