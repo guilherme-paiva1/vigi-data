@@ -1,14 +1,17 @@
 var modalNotificacao, modalUsuario, conteudoModal;
 
-window.onload = function () {
-  modalNotificacao = document.getElementById("modal_notificacao");
-  modalUsuario = document.getElementById("modal_usuario");
-  conteudoModal = document.getElementById("modal_conteudo");
+modalNotificacao = document.getElementById("modal_notificacao");
+modalUsuario = document.getElementById("modal_usuario");
+conteudoModal = document.getElementById("modal_conteudo");
 
-  nomeSession();
-  distintivoSession();
-  perfilSession();
-};
+nomeSession();
+distintivoSession();
+perfilSession();
+
+function sair() {
+  sessionStorage.clear();
+  window.location.href = "../index.html";
+}
 
 function mudarModalNotificacao() {
   if (modalNotificacao.style.display == "none") {
@@ -100,7 +103,7 @@ function perfilSession() {
             <div class="icon">
                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17" stroke="#FF2020" stroke-width="1.5" stroke-linecap="round"></path> <path d="M15 12L2 12M2 12L5.5 9M2 12L5.5 15" stroke="#FF2020" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
             </div>
-            <p><span class="texto-sair">Sair do sistema</span></p>
+            <p><span class="texto-sair" onclick="sair()">Sair do sistema</span></p>
         </div>
       </a>
     `
@@ -142,7 +145,7 @@ function perfilSession() {
             <div class="icon">
                 <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M9.00195 7C9.01406 4.82497 9.11051 3.64706 9.87889 2.87868C10.7576 2 12.1718 2 15.0002 2L16.0002 2C18.8286 2 20.2429 2 21.1215 2.87868C22.0002 3.75736 22.0002 5.17157 22.0002 8L22.0002 16C22.0002 18.8284 22.0002 20.2426 21.1215 21.1213C20.2429 22 18.8286 22 16.0002 22H15.0002C12.1718 22 10.7576 22 9.87889 21.1213C9.11051 20.3529 9.01406 19.175 9.00195 17" stroke="#FF2020" stroke-width="1.5" stroke-linecap="round"></path> <path d="M15 12L2 12M2 12L5.5 9M2 12L5.5 15" stroke="#FF2020" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
             </div>
-            <p><span class="texto-sair">Sair do sistema</span></p>
+            <p><span class="texto-sair" onclick="sair()>Sair do sistema</span></p>
         </div>
       </a>
     `

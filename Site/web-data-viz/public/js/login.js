@@ -12,7 +12,6 @@ function entrar() {
             senhaServer: senha
         })
     }).then(function (resposta) {
-
         if (resposta.ok) {
             resposta.json().then(json => {
                 sessionStorage.ID_USUARIO = json.id_usuario;
@@ -24,7 +23,7 @@ function entrar() {
 
                 if (sessionStorage.PERFIL_USUARIO == "policial") {
                     setTimeout(function () {
-                        window.location = "../private/requisicoes.html";
+                        window.location = "../private/investigacoes.html";
                     }, 1000);
                     return;
                 } else if(sessionStorage.PERFIL_USUARIO == "delegado") {
@@ -32,10 +31,7 @@ function entrar() {
                         window.location = "../private/dashboard.html";
                     }, 1000);
                 }
-
-
             });
-
         } else {
             resposta.text().then(texto => {
                 span_mensagem.innerHTML = texto;
@@ -44,6 +40,5 @@ function entrar() {
     }).catch(function (erro) {
         console.log(erro);
     })
-
     return false;
 }

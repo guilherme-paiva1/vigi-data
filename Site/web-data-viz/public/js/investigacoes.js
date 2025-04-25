@@ -7,6 +7,7 @@ function carregarInvestigacoes() {
 
     // Mockado por enquanto, depois substituir por fetch
     if (sessionStorage.PERFIL_USUARIO == "policial") {
+        linha_cards.style.display = "none";
         tabela_investigacoes.innerHTML = `
         <tr>
             <td>REQ-002</td>
@@ -58,6 +59,7 @@ function carregarInvestigacoes() {
         return;
     }
 
+    linha_cards.style.display = "flex";
     tabela_investigacoes.innerHTML = `
         <tr>
             <td>REQ-002</td>
