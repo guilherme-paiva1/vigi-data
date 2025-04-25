@@ -53,6 +53,16 @@ public class Main {
             System.out.println("Quantidade de dados extraídos:" + ocorrencias.size());
 
             // validar se qtd de dados extraidos eh igual qtd do banco
+            Integer totalOcorrencias = template.queryForObject(
+                    "SELECT count(*) FROM ocorrencia",
+                    Integer.class
+            );
+
+            if (totalOcorrencias == null) totalOcorrencias = 0;
+
+            if (ocorrencias.size() == totalOcorrencias) {
+                throw new SemNovasOcorrenciasException();
+            }
 
             // Inserindo os dados extraídos no Banco
             System.out.println("Inserindo as ocorrências extraídas do S3 no Banco de dados...");
@@ -84,11 +94,18 @@ public class Main {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             Conexao conexao = new Conexao();
-            Connection conn = conexao.criarConexao(conexao);
             JdbcTemplate template = conexao.criarTemplate(conexao);
 
             String mensagem = "Erro ao acessar os arquivos! Finalizando processo. Status: Erro. " + e.getMessage();
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "erro");
+
+            System.out.println(mensagem);
+        } catch (SemNovasOcorrenciasException e) {
+            Conexao conexao = new Conexao();
+            JdbcTemplate template = conexao.criarTemplate(conexao);
+
+            String mensagem = e.getMessage();
+            template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "sucesso");
 
             System.out.println(mensagem);
         }
