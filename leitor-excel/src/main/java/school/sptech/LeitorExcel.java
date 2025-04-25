@@ -83,19 +83,21 @@ public class LeitorExcel {
                                 valorCelulaData.equals("NULL") ||
                                 valorCelulaHorario.equals("NULL");
 
+                if (dataHoraInvalidas) continue;
+
                 String bairroTratado = valorcelulaBairro.toLowerCase();
 
                 String regiaoTratada = valorcelulaRegiao.toLowerCase();
                 Boolean regiaoInvalida = !listaRegioesValidas.contains(regiaoTratada);
+
+                if (regiaoInvalida) continue;
 
                 Double latitudeTratada = Double.valueOf(valorCelulaLatitude);
                 Double longitudeTratada = Double.valueOf(valorCelulaLongitude);
 
                 Boolean latLongInvalidas = latitudeTratada == 0d || longitudeTratada == 0d;
 
-                if (latLongInvalidas || dataHoraInvalidas || regiaoInvalida) {
-                    continue;
-                }
+                if (latLongInvalidas) continue;
 
                 LocalDateTime dataHoraTratada = converterDate(valorCelulaData, valorCelulaHorario);
 
