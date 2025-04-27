@@ -85,11 +85,11 @@
         </div>
     </div>
     <div class="conteudo">
-        <div class="modal" id="modal_novo_usuario">
+        <div class="modal modal-gestao" id="modal_novo_usuario">
             
-            <div class="modal-novo-usuario-header">
+            <div class="modal-gestao-header">
                 <h2>Novo usuário</h2>
-                <svg id="btn_fechar" class="fechar" onclick="mudarModalNovoUsuario()" viewBox="0 0 24 24" width="25px" height="25px" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#8a8a8a"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Edit / Close_Circle"> <path id="Vector" d="M9 9L11.9999 11.9999M11.9999 11.9999L14.9999 14.9999M11.9999 11.9999L9 14.9999M11.9999 11.9999L14.9999 9M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" stroke="#636b9b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>    
+                <svg class="fechar" onclick="mudarModalNovoUsuario()" viewBox="0 0 24 24" width="25px" height="25px" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#8a8a8a"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Edit / Close_Circle"> <path id="Vector" d="M9 9L11.9999 11.9999M11.9999 11.9999L14.9999 14.9999M11.9999 11.9999L9 14.9999M11.9999 11.9999L14.9999 9M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" stroke="#ababab" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
             </div>
 
             <hr class="hr-modal">
@@ -121,8 +121,62 @@
         
             </div>
             <div class="container-botoes">
-                <button class="botao botao-secundario-cinza" onclick="">Cancelar</button>
+                <button class="botao botao-secundario-cinza" onclick="mudarModalNovoUsuario()">Cancelar</button>
                 <button class="botao botao-azul-claro" onclick="">Adicionar Usuário</button>
+                <span id="span_mensagem"></span>
+            </div>
+        </div>
+
+
+        <div class="modal modal-gestao" id="modal_editar_usuario">
+            
+            <div class="modal-gestao-header">
+                <h2>Editar usuário</h2>
+                <svg class="fechar" onclick="mudarModalEditarUsuario()" viewBox="0 0 24 24" width="25px" height="25px" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#8a8a8a"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Edit / Close_Circle"> <path id="Vector" d="M9 9L11.9999 11.9999M11.9999 11.9999L14.9999 14.9999M11.9999 11.9999L9 14.9999M11.9999 11.9999L14.9999 9M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" stroke="#ababab" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
+            </div>
+
+            <hr class="hr-modal">
+
+            <div class="container-campos">
+                <div class="div-input">
+                    <label for="ipt_nome">Nome completo</label>
+                    <input class="input input-branco" id="ipt_nome" type="text" placeholder="Digite o nome completo do usuário">
+                    <span class="mensagem-erro" id="erro_nome"></span>
+                </div>
+                
+                <div class="div-input">
+                    <label for="ipt_matricula_usuario">Número de matrícula</label>
+                    <input class="input input-branco" id="ipt_matricula_usuario" type="number" placeholder="Digite o número de matrícula do usuário">
+                    <span class="mensagem-erro" id="erro_matricula"></span>
+                </div>
+                
+                <div class="div-input">
+                    <label for="ipt_email">Email</label>
+                    <input class="input input-branco" id="ipt_email" type="email" placeholder="Digite o email do usuário">
+                    <span class="mensagem-erro" id="erro_email"></span>
+                </div>
+                
+                <div class="grupo-input">
+                    <div class="div-input">
+                        <label for="ipt_telefone">Telefone</label>
+                        <input class="input input-branco" id="ipt_telefone" type="text" placeholder="Digite o telefone do usuário">
+                        <span class="mensagem-erro" id="erro_telefone"></span>
+                    </div>
+
+                    <div class="div-input">
+                        <label for="input_status">Status</label>
+                        <select id="input_status">
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                            <option value="ferias">Em férias</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container-botoes">
+                <button class="botao botao-secundario-cinza" onclick="mudarModalEditarUsuario()">Cancelar</button>
+                <button class="botao botao-azul-claro" onclick="">Salvar</button>
                 <span id="span_mensagem"></span>
             </div>
         </div>
