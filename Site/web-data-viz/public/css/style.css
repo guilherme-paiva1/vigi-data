@@ -484,13 +484,15 @@ body {
     border-radius: 0.625rem;
 }
 
-.card.info-investigacao .card-header {
+.card.info-requisicao .card-header {
     font-size: 0.8rem;
+    color: #2c3e50;
 }
 
-.card.info-investigacao .card-conteudo {
+.card.info-requisicao .card-conteudo {
     font-size: 1rem;
     font-weight: 800;
+    color: #2c3e50;
 }
 
 /* Tabela investigações */
@@ -516,6 +518,7 @@ body {
     margin-bottom: 16px;
     font-size: 20px;
     font-weight: bold;
+    color: #2c3e50;
 }
 
 .investigations-header {
@@ -536,6 +539,7 @@ body {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
+    outline: none;
 }
 
 .btn {
@@ -588,6 +592,7 @@ body {
 
 .investigations-container h2, thead, th, td, title, .pagination, button  {
     font-family: "Inter", sans-serif;
+    color: #2c3e50; 
 }
 
 .investigation-table {
