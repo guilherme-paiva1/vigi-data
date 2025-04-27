@@ -85,7 +85,7 @@
     </div>
 
 
-    <!-- Lista de Usuários -->
+    <!-- Lista de Investigações -->
     <div class="container investigacoes">
         <div class="investigations-container">
             <div class="header-section">
@@ -116,7 +116,80 @@
                 </div>
             </div>
         </div>
-        
+
+<!-- Modal New User -->
+<div id="newUserModal" class="modal-overlay">    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Novo Policial</h3>
+            <button class="close-modal" id="closeNewModal">&times;</button>
+        </div>
+        <form id="newUserForm">
+            <div class="form-group">
+                <label for="newUserName">Nome Completo</label>
+                <input type="text" id="newUserName" required placeholder="Digite o nome completo">
+            </div>
+            <div class="form-group">
+                <label for="newUserBadge">Matrícula</label>
+                <input type="text" id="newUserBadge" required placeholder="Digite o número da matrícula">
+            </div>
+            <div class="form-group">
+                <label for="newUserEmail">E-mail Institucional</label>
+                <input type="email" id="newUserEmail" required placeholder="exemplo@policia.gov.br">
+            </div>
+            <div class="form-group">
+                <label for="newUserPhone">Telefone</label>
+                <input type="tel" id="newUserPhone" required placeholder="(00) 00000-0000">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" id="cancelNewUser">Cancelar</button>
+                <button type="submit" class="btn-save">Cadastrar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+        <!-- Edit User Modal -->
+        <div class="modal-overlay" id="editUserModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Editar Policial</h3>
+                    <button class="close-modal" id="closeEditModal">&times;</button>
+                </div>
+                <form id="editUserForm">
+                    <input type="hidden" id="editUserId">
+                    <div class="form-group">
+                        <label for="editUserName">Nome Completo*</label>
+                        <input type="text" id="editUserName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserBadge">Matrícula*</label>
+                        <input type="text" id="editUserBadge" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserEmail">E-mail Institucional*</label>
+                        <input type="email" id="editUserEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserPhone">Telefone*</label>
+                        <input type="tel" id="editUserPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserStatus">Status*</label>
+                        <select id="editUserStatus" required>
+                            <option value="active">Ativo</option>
+                            <option value="inactive">Inativo</option>
+                            <option value="vacation">Férias</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" id="cancelEditUser">Cancelar</button>
+                        <button type="submit" class="btn-save">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/usuarios.js"></script>
     <script src="../js/modal.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
