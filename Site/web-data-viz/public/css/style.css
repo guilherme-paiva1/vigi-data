@@ -323,7 +323,7 @@ body {
     flex-direction: column;
     background-color: #fbfbfc;
     color: #1b1b1d;
-    opacity: 100;
+    opacity: 0;
     width: 25%;
     padding: 0px 40px;
     margin-top: 10px;
