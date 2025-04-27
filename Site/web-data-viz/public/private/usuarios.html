@@ -84,5 +84,42 @@
         </div>
     </div>
 
+
+    <!-- Lista de Usuários -->
+    <div class="container investigacoes">
+        <div class="investigations-container">
+            <div class="header-section">
+                <div class="header-text">
+                    <h2>Gestão de Usuários</h2>
+                    <p class="subtitle">Gerencie todos os policiais</p>
+                </div>
+                <button id="btnNewUser" type="button" class="btn-new-user">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Novo Policial
+                </button>            </div>
+            
+            <div class="search-and-select">
+                <input type="text" placeholder="Buscar usuários..." class="search-input" id="searchInput">
+                <select class="role-select" id="statusSelect">
+                    <option value="all">Todos os Status</option>
+                    <option value="active">Ativo</option>
+                    <option value="inactive">Inativo</option>
+                    <option value="vacation">Férias</option>
+                </select>
+            </div>
+            
+            <div class="user-cards" id="userCardsContainer">
+                <div class="monthly-chart-container">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+    <script src="../js/usuarios.js"></script>
+    <script src="../js/modal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </body>
 </html>
