@@ -484,12 +484,12 @@ body {
     border-radius: 0.625rem;
 }
 
-.card.info-requisicao .card-header {
+.card.info-investigacao .card-header {
     font-size: 0.8rem;
     color: #2c3e50;
 }
 
-.card.info-requisicao .card-conteudo {
+.card.info-investigacao .card-conteudo {
     font-size: 1rem;
     font-weight: 800;
     color: #2c3e50;
