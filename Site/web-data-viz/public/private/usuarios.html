@@ -246,7 +246,7 @@
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-cancel" onclick="mudarModalNovoUsuario()">Cancelar</button>
-                    <button type="submit" class="btn-save">Cadastrar</button>
+                    <button type="submit" class="btn-save" onclick="adicionarUsuario()">Cadastrar</button>
                 </div>
             </div>
         </div>
@@ -256,7 +256,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>Editar Policial</h3>
-                    <button class="close-modal" onclick="mudarModalEditarUsuario(idUsuario)">&times;</button>
+                    <button class="close-modal" onclick="mudarModalEditarUsuario()">&times;</button>
                 </div>
                 <div class="form-group">
                     <label for="nome_editar_usuario">Nome Completo*</label>
@@ -277,13 +277,52 @@
                 <div class="form-group">
                     <label for="status_editar_usuario">Status*</label>
                     <select id="status_editar_usuario" required>
-                        <option value="active">Ativo</option>
-                        <option value="inactive">Inativo</option>
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                        <option value="ferias">Férias</option>
                     </select>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-cancel" onclick="mudarModalEditarUsuario()">Cancelar</button>
-                    <button type="submit" class="btn-save">Salvar Alterações</button>
+                    <button type="submit" class="btn-save" onclick="editarUsuario(idUsuario)">Salvar Alterações</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- modal de desempenho do usuário -->
+        <div id="modal_desempenho_usuario" class="modal-desempenho">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Desempenho do Policial</h3>
+                    <button class="close-modal" onclick="mudarModalDesempenhoUsuario()">&times;</button>
+                </div>
+                <div class="form-group">
+                    <label for="nome_editar_usuario">Nome Completo*</label>
+                    <input type="text" id="nome_editar_usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="matricula_editar_usuario">Matrícula*</label>
+                    <input type="text" id="matricula_editar_usuario" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="email_editar_usuario">E-mail Institucional*</label>
+                    <input type="email" id="email_editar_usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefone_editar_usuario">Telefone*</label>
+                    <input type="tel" id="telefone_editar_usuario" required>
+                </div>
+                <div class="form-group">
+                    <label for="status_editar_usuario">Status*</label>
+                    <select id="status_editar_usuario" required>
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                        <option value="ferias">Férias</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="mudarModalDesempenhoUsuario()">Fechar</button>
                 </div>
             </div>
         </div>
