@@ -63,7 +63,6 @@ function mudarModalEditarUsuario() {
   }
 }
 
-
 function mudarModalUsuario() {
   if (modalUsuario.style.display == "none") {
     modalNotificacao.style.display = "none";
