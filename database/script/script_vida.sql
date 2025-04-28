@@ -74,3 +74,10 @@ CREATE TABLE historico_requisicao (
 		FOREIGN KEY (fkUsuario)
 			REFERENCES usuario(idUsuario)
 );
+
+CREATE TABLE log (
+    idLog INT PRIMARY KEY AUTO_INCREMENT,
+    dataHora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    mensagem VARCHAR(255),
+    categoria VARCHAR(7)
+);
