@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/style-response.css">
     <link rel="shortcut icon" href="../assets/logo-branco-simples.ico" type="image/x-icon">
-    <title>Investigações</title>
+    <title>Usuários</title>
 </head>
 
 <body>
@@ -27,7 +27,7 @@
                         </button>
                     </a>
                     
-                    <a href="usuarios.html" id="nav_usuarios">
+                    <a href="usuarios.html">
                         <button class="botao botao-azul-claro">
                             <svg height="27px" viewBox="0 -0.5 25 25" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 7.333C12.5 8.62148 11.4555 9.666 10.167 9.666C8.8785 9.666 7.83398 8.62148 7.83398 7.333C7.83398 6.04452 8.8785 5 10.167 5C11.4555 5 12.5 6.04452 12.5 7.333Z" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M14.833 15.733C14.833 17.533 12.744 19 10.166 19C7.588 19 5.5 17.537 5.5 15.733C5.5 13.929 7.589 12.467 10.167 12.467C12.745 12.467 14.833 13.929 14.833 15.733Z" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path fill-rule="evenodd" clip-rule="evenodd" d="M17.439 9.51102C17.439 10.2842 16.8122 10.911 16.039 10.911C15.2658 10.911 14.639 10.2842 14.639 9.51102C14.639 8.73782 15.2658 8.11102 16.039 8.11102C16.4103 8.11102 16.7664 8.25852 17.0289 8.52107C17.2915 8.78362 17.439 9.13972 17.439 9.51102Z" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M16.7 18.067C18.1138 18.1831 19.3596 17.1445 19.5 15.733C19.3591 14.3218 18.1134 13.2839 16.7 13.4" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
                             Usuários
@@ -73,7 +73,7 @@
                         <svg width="60px" height="60px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path opacity="0.5" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" fill="#ffffff"></path> <path d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z" fill="#ffffff"></path> <path d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z" fill="#ffffff"></path> </g></svg>
                         <div class="conteudo-user">
                             <h3><span id="nome_usuario">Nome</span></h3>
-                            <p>Matrícula: <span id="matricula_usuario">123456</span> </p>
+                            <p>Distintivo: <span id="matricula_usuario">123456</span> </p>
                             <p><span id="perfil_usuario"></span> </p>
                         </div>
                         <svg id="btn_fechar" class="fechar" onclick="mudarModalUsuario()" viewBox="0 0 24 24" width="25px" height="25px" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#8a8a8a"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g id="Edit / Close_Circle"> <path id="Vector" d="M9 9L11.9999 11.9999M11.9999 11.9999L14.9999 14.9999M11.9999 11.9999L9 14.9999M11.9999 11.9999L14.9999 9M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z" stroke="#636b9b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g> </g></svg>
@@ -84,97 +84,115 @@
         </div>
     </div>
 
-    <div class="linha-cards" id="linha_cards">
-        <div class="card pai blue">
-            <div class="img-card">
-                <img src="../assets/icons/icon-file.svg" alt="">
-            </div>
-            <div class="card info-investigacao">
-                <span class="card-header">Total de Investigações</span>
-                <span class="card-conteudo">127</span>
-            </div>
-        </div>
-        <div class="card pai green">
-            <div class="img-card">
-                <img src="../assets/icons/icon-done.svg" alt="">
-            </div>
-            <div class="card info-investigacao">
-                <div class="card-header">Concluídas</div>
-                <div class="card-conteudo">127</div>
-            </div>
-        </div>
-        <div class="card pai yellow">
-            <div class="img-card">
-                <img src="../assets/icons/icon-time.svg" alt="">
-            </div>
-            <div class="card info-investigacao">
-                <div class="card-header">Em andamento</div>
-                <div class="card-conteudo">127</div>
-            </div>
-        </div>
-        <div class="card pai red">
-            <div class="img-card">
-                <img src="../assets/icons/icon-warning-triangle.svg" alt="">
-            </div>
-            <div class="card info-investigacao">
-                <div class="card-header">Urgentes</div>
-                <div class="card-conteudo">127</div>
-            </div>
-        </div>
-    </div>
 
     <!-- Lista de Investigações -->
     <div class="container investigacoes">
         <div class="investigations-container">
-            <h2 class="title">Lista de Investigações</h2>
-    
-            <hr> 
-            <div class="investigations-header">
-                <label for="ipt_pesquisa"><img src="../assets/icons/icon-search.svg"></label>
-                <input type="text" id="ipt_pesquisa" placeholder="Buscar Investigações..." class="search-input" />
-                <div class="filters">
-                    <button class="btn filter-btn"><img src="../assets/icons/icon-filter.svg"> Filtrar</button>
-                    <button class="btn sort-btn"><img src="../assets/icons/icon-reorder.svg"> Ordenar</button>
+            <div class="header-section">
+                <div class="header-text">
+                    <h2>Gestão de Usuários</h2>
+                    <p class="subtitle">Gerencie todos os policiais</p>
                 </div>
+                <button id="btnNewUser" type="button" class="btn-new-user">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Novo Policial
+                </button>            </div>
+            
+            <div class="search-and-select">
+                <input type="text" placeholder="Buscar usuários..." class="search-input" id="searchInput">
+                <select class="role-select" id="statusSelect">
+                    <option value="all">Todos os Status</option>
+                    <option value="active">Ativo</option>
+                    <option value="inactive">Inativo</option>
+                    <option value="vacation">Férias</option>
+                </select>
             </div>
-            <div class="filter-tabs">
-                <button class="tab active">Todos</button>
-                <button class="tab">Pendentes</button>
-                <button class="tab">Em Andamento</button>
-                <button class="tab">Concluídos</button>
-                <button class="tab">Urgentes</button>
-            </div>
-        
-            <table class="investigation-table">
-                <thead>
-                    <tr>
-                    <th>ID</th>
-                    <th>TÍTULO</th>
-                    <th>LOCAL</th>
-                    <th>DATA</th>
-                    <th>STATUS</th>
-                    <th>POLICIAIS</th>
-                    <th>RISCO</th>
-                    <th>PROGRESSO</th>
-                    <th>AÇÕES</th>
-                    </tr>
-                </thead>
-                <tbody id="tabela_investigacoes">
-                </tbody>
-            </table>
-        
-            <div class="pagination">
-                <span>Mostrando 1 de 1 Investigações</span>
-                <div>
-                    <button class="btn">Anterior</button>
-                    <button class="btn">Próximo</button>
+            
+            <div class="user-cards" id="userCardsContainer">
+                <div class="monthly-chart-container">
+                    <canvas id="monthlyChart"></canvas>
                 </div>
             </div>
         </div>
+
+<!-- Modal New User -->
+<div id="newUserModal" class="modal-overlay">    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Novo Policial</h3>
+            <button class="close-modal" id="closeNewModal">&times;</button>
+        </div>
+        <form id="newUserForm">
+            <div class="form-group">
+                <label for="newUserName">Nome Completo</label>
+                <input type="text" id="newUserName" required placeholder="Digite o nome completo">
+            </div>
+            <div class="form-group">
+                <label for="newUserBadge">Matrícula</label>
+                <input type="text" id="newUserBadge" required placeholder="Digite o número da matrícula">
+            </div>
+            <div class="form-group">
+                <label for="newUserEmail">E-mail Institucional</label>
+                <input type="email" id="newUserEmail" required placeholder="exemplo@policia.gov.br">
+            </div>
+            <div class="form-group">
+                <label for="newUserPhone">Telefone</label>
+                <input type="tel" id="newUserPhone" required placeholder="(00) 00000-0000">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" id="cancelNewUser">Cancelar</button>
+                <button type="submit" class="btn-save">Cadastrar</button>
+            </div>
+        </form>
     </div>
+</div>
+
+        <!-- Edit User Modal -->
+        <div class="modal-overlay" id="editUserModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Editar Policial</h3>
+                    <button class="close-modal" id="closeEditModal">&times;</button>
+                </div>
+                <form id="editUserForm">
+                    <input type="hidden" id="editUserId">
+                    <div class="form-group">
+                        <label for="editUserName">Nome Completo*</label>
+                        <input type="text" id="editUserName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserBadge">Matrícula*</label>
+                        <input type="text" id="editUserBadge" required readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserEmail">E-mail Institucional*</label>
+                        <input type="email" id="editUserEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserPhone">Telefone*</label>
+                        <input type="tel" id="editUserPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editUserStatus">Status*</label>
+                        <select id="editUserStatus" required>
+                            <option value="active">Ativo</option>
+                            <option value="inactive">Inativo</option>
+                            <option value="vacation">Férias</option>
+                        </select>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-cancel" id="cancelEditUser">Cancelar</button>
+                        <button type="submit" class="btn-save">Salvar Alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/usuarios.js"></script>
+    <script src="../js/modal.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </body>
-
 </html>
-
-<script src="../js/modal.js"></script>
-<script src="../js/investigacoes.js"></script>
