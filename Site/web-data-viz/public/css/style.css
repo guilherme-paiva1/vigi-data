@@ -226,16 +226,6 @@ body {
     margin-bottom: 10px;
 }
 
-.input {
-    height: 32px;
-    padding: 0px 10px 0px 10px;
-    background-color: #F4F5F8;
-    border-radius: 5px;
-    border: 1px #959595 solid;
-    width: 100%;
-    border-radius: 7px;
-}
-
 .conteudo-login {
     color: #040736;
     display: flex;
@@ -246,13 +236,6 @@ body {
     justify-content: space-around;
 }
 
-.div-input {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-    min-width: 40%;
-}
-
 .div-input label {
     margin-bottom: 10px;
 }
@@ -260,11 +243,26 @@ body {
 .input {
     height: 32px;
     padding: 0px 10px 0px 10px;
-    background-color: #F4F5F8;
     border-radius: 5px;
-    border: 1px #959595 solid;
     width: 100%;
     font-family: "Inter", sans-serif;
+}
+
+.input::placeholder {
+    opacity: 1;
+    color: #959595;
+}
+
+.input-cinza {
+    background-color: #F4F5F8;
+    border: 1px #959595 solid;
+}
+
+.input-branco {
+    background-color: #fbfbfc;
+    color: #D8D8D8;
+    border: 1px #D8D8D8 solid;
+
 }
 
 .texto-login {
@@ -403,6 +401,12 @@ body {
 }
 
 .modal-conteudo hr {
+    width: 90%;
+    align-self: center;
+    opacity: 40%;
+}
+
+.hr-modal {
     width: 90%;
     align-self: center;
     opacity: 40%;
@@ -703,6 +707,17 @@ body {
     background-color: rgb(0, 61, 212, 0.08);
 }
 
+.botao-secundario-cinza {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: .75rem;
+    width: fit-content;
+    color: #666666;
+    text-decoration: none;
+    background-color: #d8d8d800;
+}
+
 .link:hover {
     text-decoration: underline;
 }
@@ -726,6 +741,65 @@ body {
     border-radius: 0;
 }
 
+.modal-gestao {
+    justify-self: center;
+    width: 35%;
+    max-height: fit-content;
+    padding: 0;
+}
+
+.container-botoes {
+    display: flex;
+    background-color: #d9d9d93f;
+    width: 97%;
+    justify-self: flex-end;
+    justify-content: flex-end;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding-right: 15px;
+}
+
+.modal-gestao .container-campos {
+    margin-top: 10px;
+    background-color: #fbfbfc;
+    width: 100%;
+    height: 20%;
+}
+
+.modal-gestao-header {
+    display: flex;
+    padding: 10px 20px 0px 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-gestao .div-input {
+    width: 80%;
+}
+
+.mensagem-erro {
+    margin-top: 5px;
+    color: #c01313;
+}
+
+.grupo-input {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.grupo-input .div-input {
+    width: 45%;
+}
+
+.grupo-input select {
+    height: 32px;
+    padding: 0px 10px 0px 10px;
+    border-radius: 5px;
+    background-color: #fbfbfc;
+    color: #959595;
+    border: 1px #D8D8D8 solid;
+    font-family: "Inter", sans-serif;
 
 .btn-new-user {
     background-color: #007bff;

@@ -3,6 +3,8 @@ var modalNotificacao, modalUsuario, conteudoModal;
 modalNotificacao = document.getElementById("modal_notificacao");
 modalUsuario = document.getElementById("modal_usuario");
 conteudoModal = document.getElementById("modal_conteudo");
+modalNovoUsuario = document.getElementById("modal_novo_usuario");
+modalEditarUsuario = document.getElementById("modal_editar_usuario");
 
 nomeSession();
 distintivoSession();
@@ -29,6 +31,38 @@ function mudarModalNotificacao() {
     }, 100);
   }
 }
+
+function mudarModalNovoUsuario() {
+  if (modalNovoUsuario.style.display == "none") {
+    setTimeout(function () {
+      modalNovoUsuario.style.opacity = "1";
+    }, 100);
+    modalNovoUsuario.style.display = "flex";
+  } else {
+    modalNovoUsuario.style.opacity = "0";
+
+    setTimeout(function () {
+      modalNovoUsuario.style.display = "none";
+    }, 100);
+  }
+}
+
+function mudarModalEditarUsuario() {
+  if (modalEditarUsuario.style.display == "none") {
+    setTimeout(function () {
+      modalEditarUsuario.style.opacity = "1";
+    }, 100);
+    modalEditarUsuario.style.display = "flex";
+
+  } else {
+    modalEditarUsuario.style.opacity = "0";
+
+    setTimeout(function () {
+      modalEditarUsuario.style.display = "none";
+    }, 100);
+  }
+}
+
 
 function mudarModalUsuario() {
   if (modalUsuario.style.display == "none") {
