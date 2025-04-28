@@ -800,6 +800,7 @@ body {
     color: #959595;
     border: 1px #D8D8D8 solid;
     font-family: "Inter", sans-serif;
+}
 
 .btn-new-user {
     background-color: #007bff;
@@ -1251,40 +1252,7 @@ hr {
 
 
 /* Responsividade */
-@media (max-width: 768px) {
-    .container.usuarios {
-        padding: 0 15px;
-    }
-    
-    .search-and-select {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .user-cards {
-        grid-template-columns: 1fr;
-    }
-    
-    .role-select {
-        width: 100%;
-    }
-    
-    .modal-content {
-        width: 95%;
-        padding: 15px;
-    }
-    
-    .card-buttons {
-        justify-content: center;
-    }
-    
-    .btn-performance, 
-    .btn-edit, 
-    .btn-toggle {
-        width: 100%;
-        justify-content: center;
-    }
-}
+
 
 .modal-overlay {
     position: fixed;
