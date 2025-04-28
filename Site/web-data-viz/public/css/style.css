@@ -1288,27 +1288,6 @@ body {
 }
 
 /* Estilos para o modal de desempenho */
-.modal {
-    display: flex;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
-}
-
-.modal.active {
-    opacity: 1;
-    visibility: visible;
-}
-
 .performance-content {
     background-color: white;
     border-radius: 16px;
