@@ -9,43 +9,6 @@
         justify-content: center;
     }
 
-    #btn_menu {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 40px;
-        height: 40px;
-        background-color: white;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
-    #btn_menu img {
-        width: 30px;
-        height: 30px;
-    }
-
-    .navbar {
-        display: none;
-        position: absolute;
-        flex-direction: column-reverse;
-        gap: 10px;
-        top: 8%; /* Posiciona abaixo do ícone */
-        left: 80%; /* Centraliza horizontalmente */
-        transform: translateX(-50%);
-        z-index: 1000;
-        background-color: rgb(25, 43, 115);
-        padding: 2%;
-        border-radius: 15px;
-    }
-
-    .navbar.show {
-        display: flex;
-        top: 70px;
-        flex-direction: column;
-        gap: 10px;
-    }
-
     .requisitions-container {
         font-family: sans-serif;
         background: #fff;
@@ -164,6 +127,62 @@
     .btn-toggle {
         width: 100%;
         justify-content: center;
+    }
+
+    /* responsividade da navbar */
+    #btn_menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+
+    #btn_menu img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .navbar {
+        display: none;
+        position: absolute;
+        flex-direction: column-reverse;
+        gap: 10px;
+        top: 8%; /* Posiciona abaixo do ícone */
+        left: 80%; /* Centraliza horizontalmente */
+        transform: translateX(-50%);
+        z-index: 1000;
+        background-color: rgb(25, 43, 115);
+        padding: 2%;
+        border-radius: 15px;
+    }
+
+    .navbar.show {
+        display: flex;
+        top: 70px;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal {
+        position: fixed;
+        width: 50%;
+        padding: 20px;
+        overflow: visible;
+        top: 300px;
+    }
+
+    #modal_usuario {
+        z-index: 1000;
+        overflow: visible;
+    }
+    
+    #modal_notificacao {
+        z-index: 1000;
+        overflow: visible;
     }
 }
 
