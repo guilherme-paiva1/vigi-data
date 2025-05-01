@@ -81,3 +81,10 @@ CREATE TABLE log (
     mensagem VARCHAR(255),
     categoria VARCHAR(7)
 );
+
+CREATE TABLE regiao (
+	idRegiao INT PRIMARY KEY auto_increment,
+    nome VARCHAR(6),
+    populacao INT
+);
+
