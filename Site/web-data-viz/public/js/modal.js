@@ -1,4 +1,4 @@
-var modalNotificacao, modalUsuario, conteudoModal;
+var modalNotificacao, modalUsuario, conteudoModal, modalNovoUsuario, modalEditarUsuario, modalDesempenhoUsuario;
 
 modalNotificacao = document.getElementById("modal_notificacao");
 modalUsuario = document.getElementById("modal_usuario");
@@ -16,7 +16,7 @@ function sair() {
   window.location.href = "../index.html";
 }
 
-var btnUsuario = document.getElementById("btn_usuario");
+var btnUsuario = document.getElementById("btn_menu");
 var navbar = document.querySelector(".navbar");
 
 
