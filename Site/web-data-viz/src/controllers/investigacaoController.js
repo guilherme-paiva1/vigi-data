@@ -8,7 +8,6 @@ function cadastrar(req, res) {
     var dt_investigacao = req.body.dt_investigacaoServer
     var status_atual = req.body.status_atualServer
     var incidencia = req.body.incidenciaServer
-    var qtdPoliciais = req.body.qtdPoliciaisServer
 
     if (titulo == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
@@ -22,10 +21,8 @@ function cadastrar(req, res) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else if (incidencia == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
-    } else if (qtdPoliciais == undefined) {
-        res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
-        investigacaoModel.cadastrar(titulo, descricao, localidade, dt_investigacao, status_atual, incidencia, qtdPoliciais)
+        investigacaoModel.cadastrar(titulo, descricao, localidade, dt_investigacao, status_atual, incidencia)
             .then(
                 function (resultado) {
                     res.json(resultado);
