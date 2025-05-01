@@ -13,7 +13,7 @@ public class Conexao {
 
     public Conexao() throws SQLException {
         conn = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/vida",
+                "jdbc:mysql://meu-container:3306/vida",
                 "svc_vida",
                 "urubu100"
         );
