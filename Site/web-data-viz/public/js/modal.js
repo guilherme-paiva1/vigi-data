@@ -2,6 +2,25 @@ var modalNotificacao = document.getElementById("modal_notificacao");
 var modalUsuario = document.getElementById("modal_usuario");
 var conteudoModal = document.getElementById("modal_conteudo");
 
+var btnUsuario = document.getElementById("btn_usuario");
+var navbar = document.querySelector(".navbar");
+
+
+btnUsuario.addEventListener("click", function () {
+  if (navbar.classList.contains("show")) {
+      navbar.classList.remove("show"); // fecha a navbar
+  } else {
+      navbar.classList.add("show"); // abre a navbar
+  }
+});
+
+document.addEventListener("click", function (event) {
+  if (!btnUsuario.contains(event.target) && !navbar.contains(event.target)) {
+      navbar.classList.remove("show"); // fecha a navbar se clicar fora
+  }
+});
+
+
 function mudarModalNotificacao() {
   if (modalNotificacao.style.display == "none") {
     modalUsuario.style.display = "none";

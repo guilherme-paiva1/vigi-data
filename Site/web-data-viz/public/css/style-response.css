@@ -1,4 +1,57 @@
-@media (max-width: 768px) {
+
+
+
+@media (max-width: 620px) {
+
+    .container-navbar{
+        align-items: start;
+        
+    }
+
+    .menu{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .navbar{
+        display: none; 
+        position: absolute;
+        flex-direction: column-reverse;
+        gap: 10px;
+        top: 8%; /* Posiciona abaixo do ícone */
+        left: 80%; /* Centraliza horizontalmente */
+        transform: translateX(-50%);
+        z-index: 1000;
+        background-color: rgb(25, 43, 115);
+        padding: 2%;
+        border-radius: 15px;
+    }
+
+    .navbar.show {
+        display: flex; 
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .requisitions-container {
+        width: 100%;
+        overflow-x: auto; 
+        overflow-y: hidden; 
+        white-space: nowrap; 
+    }
+
+    .requisition-table {
+        width: 1200px; 
+        border-collapse: collapse;
+    }
+
+    .requisition-table th,
+    .requisition-table td {
+        white-space: nowrap; /* Impede quebra de linha */
+        text-align: center;
+        padding: 8px;
+    }
+
     /* Tela inicial */
     .banner-home {
         height: 400px;
@@ -11,7 +64,8 @@
         align-items: center;
     }
 
-    .container-texto h1, .container-texto p {
+    .container-texto h1,
+    .container-texto p {
         width: 90%;
     }
 
@@ -26,7 +80,8 @@
         width: 100%;
     }
 
-    .sobre-texto, .sobre-imagem {
+    .sobre-texto,
+    .sobre-imagem {
         width: 100%;
         text-align: center;
     }
@@ -35,7 +90,8 @@
         flex-direction: column;
     }
 
-    .logo-footer, .texto-footer {
+    .logo-footer,
+    .texto-footer {
         justify-content: center;
         flex-direction: column;
         align-items: center;
@@ -64,8 +120,11 @@
 }
 
 @media (max-width: 480px) {
+
+
     /* Tela inicial */
-    .navbar, .navbar a {
+    .navbar,
+    .navbar a {
         gap: 10px;
     }
 
@@ -81,7 +140,8 @@
         width: 100%;
     }
 
-    .sobre-texto, .sobre-imagem {
+    .sobre-texto,
+    .sobre-imagem {
         width: 100%;
     }
 
