@@ -7,7 +7,10 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/style-response.css">
     <link rel="shortcut icon" href="../assets/logo-branco-simples.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <title>Dashboard</title>
 </head>
 
@@ -121,11 +124,14 @@
         <!-- Mapa de Calor -->
         <div class="dashboard-main">
           <div class="dashboard-left">
-            <div class="map-placeholder"></div>
+            <div class="map-placeholder">
+              <div id="div_mapa"></div>
+            </div>
             <div class="legend">
-              <div class="legend-item red">Alta<br><small>7+ Investigações/dia</small></div>
-              <div class="legend-item yellow">Média<br><small>4–6 Investigações/dia</small></div>
-              <div class="legend-item green">Baixa<br><small>1–3 Investigações/dia</small></div>
+              <div class="legend-item">Métrica: Ocorrências por 10 mil habitantes (ocorr/hab)</div>
+              <div class="legend-item red">Alta<br><small>20+ <br> (ocorr/hab)</small></div>
+              <div class="legend-item yellow">Média<br><small>10-20 <br> (ocorr/hab)</small></div>
+              <div class="legend-item green">Baixa<br><small>0-10 <br> (ocorr/hab)</small></div>
             </div>
           </div>
       
@@ -140,10 +146,13 @@
                     <span class="variation-value">-15.5%</span>
                 </div>
 
+                <h3>Ocorrências totais</h3>
+                <div class="total-crimes">98.000</div>
+
                 <h3>Investigações totais</h3>
                 <div class="total-crimes">245</div>
                 
-                <h3>Taxa de criminalidade por 100 mil habitantes</h3>
+                <h3>Taxa de ocorrências por 10 mil habitantes</h3>
                 <div class="crime-rate"> 9.8
                     <span class="rate-label">(Baixo)</span>
                 </div>
@@ -172,6 +181,6 @@
 </body>
 
 </html>
-<script src="grafico.js"></script>
+<script src="../js/grafico.js"></script>
 <script src="../js/modal.js">
 </script>
