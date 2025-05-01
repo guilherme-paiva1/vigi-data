@@ -87,3 +87,4 @@ CREATE TABLE regiao (
     nome VARCHAR(6),
     populacao INT
 );
+
