@@ -101,20 +101,24 @@ public class Main {
             String ipAddress = ip.getHostAddress();
             Conexao conexao = new Conexao(ipAddress);
             JdbcTemplate template = conexao.criarTemplate(conexao);
+            Connection conn = conexao.criarConexao(conexao);
 
             String mensagem = "Erro ao acessar os arquivos! Finalizando processo. Status: Erro. " + e.getMessage();
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "erro");
 
+            conn.commit();
             System.out.println(mensagem);
         } catch (SemNovasOcorrenciasException e) {
             InetAddress ip = InetAddress.getLocalHost();
             String ipAddress = ip.getHostAddress();
             Conexao conexao = new Conexao(ipAddress);
             JdbcTemplate template = conexao.criarTemplate(conexao);
+            Connection conn = conexao.criarConexao(conexao);
 
             String mensagem = e.getMessage();
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "sucesso");
 
+            conn.commit();
             System.out.println(mensagem);
         }
     }
