@@ -66,15 +66,25 @@ function renderizarHistoricoDeInvestigacoes() {
     data: {
       labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
       datasets: [{
-        label: 'Ocorrências',
+        label: 'Investigações abertas',
         data: [120, 190, 170, 160, 220, 240, 195, 210, 180, 230, 250, 280],
-        borderColor: '#002ea8',
-        backgroundColor: 'rgba(5, 0, 82, 0.25)',
+        borderColor: '#1400D8',
+        // backgroundColor: 'rgba(7, 218, 0, 0.25)',
         borderWidth: 2,
-        fill: true,
-        tension: 0.3
+        fill: false
+        // tension: 0.3
+      },
+      {
+        label: 'Investigações esclarecidas',
+        data: [100, 120, 170, 150, 215, 220, 145, 210, 180, 220, 200, 280],
+        borderColor: '#15CDB8',
+        // backgroundColor: 'rgba(23, 82, 0, 0.25)',
+        borderWidth: 2,
+        fill: false
+        // tension: 0.3
       }]
     },
+
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -132,7 +142,7 @@ function renderizarMapaDeCalor() {
     { name: 'zona_norte', color: '#00FF00', ocorr_por_hab: 9.8 }, // verde
     { name: 'zona_sul', color: '#00FF00', ocorr_por_hab: 5.3 }, // verde
     { name: 'zona_leste', color: '#FFFF00', ocorr_por_hab: 12.6 }, // amarelo
-    { name: 'zona_oeste', color: '#FF0000', ocorr_por_hab: 10.7 }, // vermelho
+    { name: 'zona_oeste', color: '#FF0000', ocorr_por_hab: 21.7 }, // vermelho
     { name: 'centro', color: '#00FF00', ocorr_por_hab: 4.0 } // verde
   ];
   // Mapa de calor - Ocorrências por zona
