@@ -49,17 +49,15 @@ CREATE TABLE notificacao (
 			REFERENCES usuario(idUsuario)
 );
 
-CREATE TABLE requisicao (
-	idRequisicao INT PRIMARY KEY,
+CREATE TABLE investigacao (
+    idInvestigacao INT PRIMARY KEY AUTO_INCREMENT,
     titulo VARCHAR(45),
-    descricao VARCHAR(45),
+    descricao VARCHAR(255),
     localidade VARCHAR(45),
-    dt_requisicao DATE,
-    status_atual VARCHAR(45),
-    risco VARCHAR(45),
-    progresso INT,
-    ativo TINYINT
-);
+    dt_investigacao DATE,
+    status_atual VARCHAR(15),
+	regiao VARCHAR(6)
+)  AUTO_INCREMENT=100;
 
 CREATE TABLE historico_requisicao (
 	fkRequisicao INT,

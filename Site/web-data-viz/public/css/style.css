@@ -1495,10 +1495,9 @@ body {
 /* Filtros da dashboard */
 .dashboard-filters {
     display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    justify-content: flex-end;
     width: 100%;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .dashboard-filters label {
@@ -1510,6 +1509,7 @@ body {
 }
 
 .dashboard-filters select {
+    font-family: "Inter", sans-serif;
     margin-top: 4px;
     padding: 8px 10px;
     border-radius: 8px;
@@ -1609,6 +1609,14 @@ body {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     overflow-wrap: break-word;
     height: 100%;
+    text-align: center;
+}
+
+.crime-card-header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 25px;
 }
 
 .status {
@@ -1630,15 +1638,15 @@ body {
 
 .crime-card h3 {
     font-size: 0.875rem;
-    margin: 25px 0 5px 0;
     color: #666;
     font-weight: normal;
+    justify-self: center;
 }
 
 .total-crimes {
     font-size: 1.875rem;
     font-weight: bold;
-    margin: 10px 0 20px 0;
+    /* margin: 10px 0 20px 0; */
     color: #222;
 }
 
@@ -1647,6 +1655,7 @@ body {
     font-weight: bold;
     margin: 5px 0;
     color: #28a745;
+    
 }
 
 .rate-label {
@@ -1656,19 +1665,17 @@ body {
     display: inline-block;
 }
 
-.variation {
-    position: absolute;
-    top: 65px;
-    right: 20px;
-    margin-top: 15px;
-    font-size: 0.875rem;
-    color: #555;
-}
-
 .variation-value {
-    font-size: 1rem;
+    font-size: 1.875rem;
     font-weight: bold;
     color: #28a745;
+}
+
+.linha-card {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    gap: 75px
 }
 
 /* Chart Card Styles */

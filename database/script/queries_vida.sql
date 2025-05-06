@@ -14,8 +14,8 @@ SELECT u.idUsuario, u.nome, u.email, u.matricula, u.perfil, s.nome AS superior
 
 INSERT INTO regiao (nome, populacao) VALUES 
 	("Norte", 2208963),
-	("Oeste", 3991262),
-	("Leste", 2208963),
+	("Oeste", 1092684),
+	("Leste", 3991262),
 	("Centro", 423536),
 	("Sul", 3735554);
     

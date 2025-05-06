@@ -37,7 +37,7 @@
                                     </path>
                                 </g>
                             </svg>
-                            Requisições
+                            Investigações
                         </button>
                     </a>
 
@@ -146,32 +146,34 @@
     <!-- Filtros de Período, Zona e Tipo de Crime -->
     <div class="dashboard-container">
         <div class="dashboard-header">
-          <h2>Dashboard</h2>
-          <div class="dashboard-filters">
-            <label>Período:
-              <select>
-                <option>Últimos 90 dias</option>
-                <option>Últimos 30 dias</option>
-                <option>Últimos 7 dias</option>
-              </select>
-            </label>
-            <label>Zona:
-              <select>
-                <option>Zona Norte</option>
-                <option>Zona Sul</option>
-                <option>Zona Leste</option>
-                <option>Zona Oeste</option>
-                <option>Centro</option>
-              </select>
-            </label>
-            <label>Tipo de Crime:
-              <select>
-                <option>Todos</option>
-                <option>Furto</option>
-                <option>Roubo</option>
-                <option>Tráfico de Drogas</option>
-              </select>
-            </label>
+            <div class="dashboard-filters">
+              <h2>Dashboard</h2>
+            <div class="filters">
+                <label>Período:
+                  <select>
+                    <option>Últimos 90 dias</option>
+                    <option>Últimos 30 dias</option>
+                    <option>Últimos 7 dias</option>
+                  </select>
+                </label>
+                <label>Zona:
+                  <select>
+                    <option>Zona Norte</option>
+                    <option>Zona Sul</option>
+                    <option>Zona Leste</option>
+                    <option>Zona Oeste</option>
+                    <option>Centro</option>
+                  </select>
+                </label>
+                <label>Tipo de Crime:
+                  <select>
+                    <option>Todos</option>
+                    <option>Furto</option>
+                    <option>Roubo</option>
+                    <option>Tráfico de Drogas</option>
+                  </select>
+                </label>
+            </div>
           </div>
         </div>
       
@@ -182,40 +184,48 @@
               <div id="div_mapa"></div>
             </div>
             <div class="legend">
-              <div class="legend-item">Métrica: Ocorrências por 10 mil habitantes (ocorr/hab)</div>
-              <div class="legend-item red">Alta<br><small>20+ <br> (ocorr/hab)</small></div>
-              <div class="legend-item yellow">Média<br><small>10-20 <br> (ocorr/hab)</small></div>
-              <div class="legend-item green">Baixa<br><small>0-10 <br> (ocorr/hab)</small></div>
+              <div class="legend-item">Métrica: <br> Ocorrências por 100 mil habitantes (ocorr/hab)</div>
+              <div class="legend-item red">Alta<br><small>20+ ocorrências</small></div>
+              <div class="legend-item yellow">Média<br><small>10-20 ocorrências</small></div>
+              <div class="legend-item green">Baixa<br><small>0-10 ocorrências</small></div>
             </div>
           </div>
       
         <!-- Analise por Zona -->
           <div class="dashboard-right">
             <div class="crime-card">
-                <h1>Zona Norte</h1>
-                <div class="status">Normal</div>
+                <div class="crime-card-header">
+                    <h1>Zona Norte</h1>
+                    <div class="status">Normal</div>
+                </div>
                 
-                <div class="variation">
-                    <span>Variação</span><br>
-                    <span class="variation-value">-15.5%</span>
+                <div class="linha-card">
+                    <div>
+                        <h3>Ocorrências totais</h3>
+                        <div class="total-crimes">8.000</div>
+                    </div>
+                    <div class="variation">
+                        <h3>Variação de ocorrências</h3>
+                        <div class="variation-value">-15.5%</div>
+                    </div>
                 </div>
 
-                <h3>Ocorrências totais</h3>
-                <div class="total-crimes">98.000</div>
-
-                <h3>Investigações totais</h3>
-                <div class="total-crimes">245</div>
-                
-                <h3>Taxa de ocorrências por 10 mil habitantes</h3>
-                <div class="crime-rate"> 9.8
-                    <span class="rate-label">(Baixo)</span>
+                <div class="linha-card">
+                    <div>
+                        <h3>Investigações totais</h3>
+                        <div class="total-crimes">245</div>
+                    </div>
+                    <div>
+                        <h3>Ocorrências por 100 mil habitantes</h3>
+                        <div class="crime-rate">9.8</div>
+                    </div>
                 </div>
                 
             </div>
       
         <!-- Gráfico de Quantidade de Investigações por Tipo de Crime -->
             <div class="chart-card">
-              <h3>Investigações por Tipo</h3>
+              <h3>Investigações por Tipo - Zona Norte</h3>
               <canvas id="crime-chart"></canvas>
             </div>
           </div>
@@ -224,7 +234,7 @@
         <!-- Histórico de Investigações -->
         <div class="chart-container-wide">
             <div class="investigation-history">
-              <h3>Histórico de Investigações</h3>
+              <h3>Histórico de Investigações - Criadas x Esclarecidas</h3>
               <p class="subtitle">Últimos 12 meses</p>
               <div class="chart-wrapper">
                 <canvas id="investigation-chart"></canvas>
