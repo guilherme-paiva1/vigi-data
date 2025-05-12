@@ -54,6 +54,27 @@ function cadastrar(req, res) {
     }
 }
 
+function visualizarRequisicoes(req, res){
+    var fkUsuario = req.body.fkUsuarioServer
+
+    investigacaoModel.visualizarRequisicoes(fkUsuario)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao visualizar as investigações! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+}
+
 module.exports = {
-    cadastrar
+    cadastrar,
+    visualizarRequisicoes
 }

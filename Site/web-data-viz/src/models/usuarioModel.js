@@ -20,7 +20,16 @@ function cadastrar(nome, email, matricula, perfil, idSuperior, senha) {
     return database.executar(instrucaoSql);
 }
 
+function listar(idSuperior) {
+    var instrucaoSql = `
+        SELECT nome, email, matricula FROM usuario WHERE fkSupervisor = ${idSuperior} AND perfil = 'policial';
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     entrar,
-    cadastrar
+    cadastrar,
+    listar
 };

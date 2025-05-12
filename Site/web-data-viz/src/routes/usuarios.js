@@ -11,4 +11,8 @@ router.post("/entrar", function (req, res) {
     usuarioController.entrar(req, res);
 });
 
+router.post("/listar", function (req, res) {
+    usuarioController.listar(req, res);
+});
+
 module.exports = router;
