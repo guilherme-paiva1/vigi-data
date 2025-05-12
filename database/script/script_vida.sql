@@ -59,14 +59,14 @@ CREATE TABLE investigacao (
 	regiao VARCHAR(6)
 )  AUTO_INCREMENT=100;
 
-CREATE TABLE historico_requisicao (
-	fkRequisicao INT,
+CREATE TABLE historico_investigacao (
+	fkInvestigacao INT,
     fkUsuario INT,
     criador TINYINT,
     
-    CONSTRAINT fk_req_hist
-		FOREIGN KEY (fkRequisicao)
-			REFERENCES requisicao(idRequisicao),
+    CONSTRAINT fk_inv_hist
+		FOREIGN KEY (fkInvestigacao)
+			REFERENCES investigacao(idInvestigacao),
 		
 	CONSTRAINT fk_usuario_hist
 		FOREIGN KEY (fkUsuario)
