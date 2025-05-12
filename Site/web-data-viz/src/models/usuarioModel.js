@@ -20,16 +20,35 @@ function cadastrar(nome, email, matricula, perfil, idSuperior, senha) {
     return database.executar(instrucaoSql);
 }
 
+
 function listar(idSuperior) {
     var instrucaoSql = `
-        SELECT nome, email, matricula FROM usuario WHERE fkSupervisor = ${idSuperior} AND perfil = 'policial';
+        SELECT 
+            idUsuario, nome, email, matricula  
+        FROM
+            usuario 
+        WHERE fkSupervisor = ${idSuperior} AND perfil = 'policial';
     `;
+    
+    return database.executar(instrucaoSql);
+}
 
+function editar(idUsuario, nome, email, matricula) {
+    var instrucaoSql = `
+        UPDATE usuario 
+        SET 
+            nome = '${nome}',
+            email = '${email}'
+            matricula = '${matricula}',
+        WHERE
+            idUsuario = ${idUsuario};
+    `
     return database.executar(instrucaoSql);
 }
 
 module.exports = {
     entrar,
     cadastrar,
-    listar
+    listar,
+    editar
 };

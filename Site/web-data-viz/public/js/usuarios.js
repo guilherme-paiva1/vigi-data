@@ -8,10 +8,10 @@ function buscarUsuarios() {
     // Adicionar fetch para buscar os usuários e preencher a tela com esse padrão HTML abaixo
 
     let users = [
-        { id:1, matricula: '12345', nome: 'Carlos Silva', email: 'carlos.silva@policia.gov.br', telefone: '(11) 98765-4321', status: 'ativo' },
-        { id:2, matricula: '12346', nome: 'Ana Oliveira', email: 'ana.oliveira@policia.gov.br', telefone: '(11) 98765-4322', status: 'inativo' },
-        { id:3, matricula: '12347', nome: 'Marcos Rocha', email: 'marcos.rocha@policia.gov.br', telefone: '(11) 98765-4323', status: 'inativo' },
-        { id:4, matricula: '12348', nome: 'Juliana Costa', email: 'juliana.costa@policia.gov.br', telefone: '(11) 98765-4324', status: 'ferias' }
+        { id:1, matricula: '12345', nome: 'Carlos Silva', email: 'carlos.silva@policia.gov.br', status: 'ativo' },
+        { id:2, matricula: '12346', nome: 'Ana Oliveira', email: 'ana.oliveira@policia.gov.br', status: 'inativo' },
+        { id:3, matricula: '12347', nome: 'Marcos Rocha', email: 'marcos.rocha@policia.gov.br', status: 'inativo' },
+        { id:4, matricula: '12348', nome: 'Juliana Costa', email: 'juliana.costa@policia.gov.br', status: 'ferias' }
     ];
 
     var estruturaHTML = '';
@@ -48,7 +48,6 @@ function buscarUsuarios() {
                 </div>
                 <div class="user-details">
                     <p>${user.email}</p>
-                    <p>${user.telefone}</p>
                 </div>
                 <div class="user-actions">
                     <button class="btn-performance" onclick="mudarModalDesempenhoUsuario(${user.id})">
@@ -80,7 +79,6 @@ function adicionarUsuario() {
     console.log(nome_novo_usuario.value);
     console.log(matricula_novo_usuario.value);
     console.log(email_novo_usuario.value);
-    console.log(telefone_novo_usuario.value);
     console.log(status_novo_usuario.value);
 }
 
@@ -88,7 +86,6 @@ function carregarInformacoesEditarUsuario(idUsuario) {
     nome_editar_usuario.value = "exemplo_nome";
     matricula_editar_usuario.value = "exemplo_matricula";
     email_editar_usuario.value = "exemplo_email";
-    telefone_editar_usuario.value = "exemplo_telefone";
     status_editar_usuario.value = "exemplo_status";
 
     // Adicionar Fetch pelo id recebido pra carregar as informações do usuário e preencher os campos do modal de edição
@@ -96,12 +93,11 @@ function carregarInformacoesEditarUsuario(idUsuario) {
     // nome_editar_usuario.value = usuario.nome;
     // matricula_editar_usuario.value = usuario.matricula;
     // email_editar_usuario.value = usuario.email;
-    // telefone_editar_usuario.value = usuario.telefone;
     // status_editar_usuario.value = usuario.status;
 
 }
 
-function editarUsuario(idUsuario) {
+function editarUsuario() {
     // Adicionar fetch para editar o usuário com os dados recebidos
 }
 
@@ -109,7 +105,6 @@ function carregarInformacoesDesempenhoUsuario(idUsuario) {
     nome_editar_usuario.value = "exemplo_nome";
     matricula_editar_usuario.value = "exemplo_matricula";
     email_editar_usuario.value = "exemplo_email";
-    telefone_editar_usuario.value = "exemplo_telefone";
     status_editar_usuario.value = "exemplo_status";
 
     // Adicionar Fetch pelo id recebido pra carregar as informações do usuário e preencher os campos do modal de edição
