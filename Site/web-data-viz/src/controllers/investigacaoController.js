@@ -7,6 +7,7 @@ function cadastrar(req, res) {
     var localidade = req.body.localidadeServer
     var dt_investigacao = req.body.dt_investigacaoServer
     var incidencia = req.body.incidenciaServer
+    var fkDelegado = req.body.fkDelegadoServer
 
     if (titulo == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
@@ -20,6 +21,22 @@ function cadastrar(req, res) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
         investigacaoModel.cadastrar(titulo, descricao, localidade, dt_investigacao, incidencia)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao criar a investigação! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+
+        investigacaoModel.registrarHistoricoDoDelegado(fkDelegado, titulo, descricao, localidade, dt_investigacao)
             .then(
                 function (resultado) {
                     res.json(resultado);
