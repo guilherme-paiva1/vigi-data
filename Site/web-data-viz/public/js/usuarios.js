@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     buscarUsuarios();
 });
 
+
+
 function buscarUsuarios() {
     // Adicionar fetch para buscar os usuários e preencher a tela com esse padrão HTML abaixo
 
