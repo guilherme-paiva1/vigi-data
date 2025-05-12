@@ -76,7 +76,33 @@ function cadastrar(req, res) {
     }
 }
 
+function listar(req, res) {
+    var idSuperior = req.body.idSuperiorServer;
+
+    if (idSuperior == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else {
+        usuarioModel.listar(idSuperior)
+        .then(
+            function (resultadoAutenticar) {
+                if (resultadoAutenticar.length > 0) {
+                    res.json(resultadoAutenticar);
+                } else {
+                    res.status(403).send("Policiais não encontrados");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+    }
+}
+
 module.exports = {
     entrar,
-    cadastrar
+    cadastrar,
+    listar
 }
