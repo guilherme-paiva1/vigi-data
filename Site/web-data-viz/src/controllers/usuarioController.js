@@ -84,9 +84,9 @@ function listar(req, res) {
     } else {
         usuarioModel.listar(idSuperior)
         .then(
-            function (resultadoAutenticar) {
-                if (resultadoAutenticar.length > 0) {
-                    res.json(resultadoAutenticar);
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.json(resultado);
                 } else {
                     res.status(403).send("Policiais não encontrados");
                 }
