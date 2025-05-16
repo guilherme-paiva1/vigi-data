@@ -1,4 +1,4 @@
-var modalNotificacao, modalUsuario, conteudoModal;
+var modalNotificacao, modalUsuario, conteudoModal, modalNovoUsuario, modalEditarUsuario, modalDesempenhoUsuario;
 
 modalNotificacao = document.getElementById("modal_notificacao");
 modalUsuario = document.getElementById("modal_usuario");
@@ -16,20 +16,21 @@ function sair() {
   window.location.href = "../index.html";
 }
 
-var btnUsuario = document.getElementById("btn_usuario");
+var btnMenu = document.getElementById("btn_menu");
 var navbar = document.querySelector(".navbar");
 
-
-btnUsuario.addEventListener("click", function () {
+btnMenu.addEventListener("click", function () {
   if (navbar.classList.contains("show")) {
       navbar.classList.remove("show"); // fecha a navbar
+      modalNotificacao.style.display = "none";
+      modalUsuario.style.display = "none";
   } else {
       navbar.classList.add("show"); // abre a navbar
   }
 });
 
 document.addEventListener("click", function (event) {
-  if (!btnUsuario.contains(event.target) && !navbar.contains(event.target)) {
+  if (!btnMenu.contains(event.target) && !navbar.contains(event.target)) {
       navbar.classList.remove("show"); // fecha a navbar se clicar fora
   }
 });

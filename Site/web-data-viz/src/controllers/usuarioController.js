@@ -76,7 +76,67 @@ function cadastrar(req, res) {
     }
 }
 
+function listar(req, res) {
+    var idSuperior = req.body.idSuperiorServer;
+
+    if (idSuperior == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else {
+        usuarioModel.listar(idSuperior)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.json(resultado);
+                } else {
+                    res.status(403).send("Policiais não encontrados");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+    }
+}
+
+function excluirUsuario(req, res) {
+    var id_usuario = req.body.idUsuarioServer;
+
+    if (idSuperior == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else {
+        usuarioModel.excluirUsuario(id_usuario)
+        .then(
+                function (excluirUsuario) {
+                    if (excluirUsuario.length >= 1) {
+                        res.json({
+                            id_usuario: excluirUsuario[0].id_usuario,
+                            nome: excluirUsuario[0].nome,
+                            email: excluirUsuario[0].email,
+                            id: excluirUsuario[0].id,
+                            perfil: excluirUsuario[0].perfil,
+                            superior: excluirUsuario[0].superior,
+                        });
+                    } else if (excluirUsuario.length == 0) {
+                        res.status(403).send("id inválido.");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao excluir o usuário! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
 module.exports = {
     entrar,
-    cadastrar
+    cadastrar,
+    listar,
+    excluirUsuario
 }

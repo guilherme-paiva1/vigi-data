@@ -4,17 +4,21 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import java.io.IOException;
 import software.amazon.awssdk.services.s3.S3Client;
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, UnknownHostException {
         try {
             System.out.println("Estabelecendo conexão com o Banco de Dados...");
+            InetAddress ip = InetAddress.getLocalHost();
+            String ipAddress = ip.getHostAddress();
 
-            Conexao conexao = new Conexao();
+            Conexao conexao = new Conexao(ipAddress);
             Connection conn = conexao.criarConexao(conexao);
             JdbcTemplate template = conexao.criarTemplate(conexao);
 
@@ -67,7 +71,7 @@ public class Main {
             // Inserindo os dados extraídos no Banco
             System.out.println("Inserindo as ocorrências extraídas do S3 no Banco de dados...");
             for (Ocorrencia ocorrencia : ocorrencias) {
-            template.update("INSERT INTO ocorrencia (rubrica, latitude, longitude, data_hora_crime, bairro, regiao) VALUES (?, ?, ?, ?, ?, ?)",
+            template.update("INSERT INTO ocorrencia (rubrica, latitude, longitude, data_hora_crime, bairro, fkRegiao) VALUES (?, ?, ?, ?, ?, ?)",
                     ocorrencia.getRubrica(), ocorrencia.getLatitude(), ocorrencia.getLongitude(), ocorrencia.getDataHoraCrime(), ocorrencia.getBairro(), ocorrencia.getRegiao());
             }
 
@@ -93,20 +97,28 @@ public class Main {
             System.out.println("Finalizando processo. Status: Erro.");
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            Conexao conexao = new Conexao();
+            InetAddress ip = InetAddress.getLocalHost();
+            String ipAddress = ip.getHostAddress();
+            Conexao conexao = new Conexao(ipAddress);
             JdbcTemplate template = conexao.criarTemplate(conexao);
+            Connection conn = conexao.criarConexao(conexao);
 
             String mensagem = "Erro ao acessar os arquivos! Finalizando processo. Status: Erro. " + e.getMessage();
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "erro");
 
+            conn.commit();
             System.out.println(mensagem);
         } catch (SemNovasOcorrenciasException e) {
-            Conexao conexao = new Conexao();
+            InetAddress ip = InetAddress.getLocalHost();
+            String ipAddress = ip.getHostAddress();
+            Conexao conexao = new Conexao(ipAddress);
             JdbcTemplate template = conexao.criarTemplate(conexao);
+            Connection conn = conexao.criarConexao(conexao);
 
             String mensagem = e.getMessage();
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "sucesso");
 
+            conn.commit();
             System.out.println(mensagem);
         }
     }

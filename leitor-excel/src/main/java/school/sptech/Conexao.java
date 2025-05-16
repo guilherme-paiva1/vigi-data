@@ -3,6 +3,7 @@ package school.sptech;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
+import java.net.InetAddress;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,9 +12,10 @@ public class Conexao {
     private Connection conn;
     private JdbcTemplate template;
 
-    public Conexao() throws SQLException {
+    public Conexao(String ip) throws SQLException {
+
         conn = DriverManager.getConnection(
-                "jdbc:mysql://meu-container:3306/vida",
+                "jdbc:mysql://" + ip + ":3306/vida",
                 "svc_vida",
                 "urubu100"
         );
