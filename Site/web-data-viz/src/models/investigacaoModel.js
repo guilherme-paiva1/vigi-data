@@ -51,5 +51,4 @@ module.exports = {
     cadastrar,
     registrarHistoricoDoDelegado,
     visualizarRequisicoes
-
 };
