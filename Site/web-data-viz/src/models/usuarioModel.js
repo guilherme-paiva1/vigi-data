@@ -28,8 +28,18 @@ function listar(idSuperior) {
     return database.executar(instrucaoSql);
 }
 
+function excluirUsuario(id_usuario) {
+    var instrucaoSql = `
+        DELETE FROM usuario
+        WHERE id = ${id_usuario};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     entrar,
     cadastrar,
-    listar
+    listar,
+    excluirUsuario
 };

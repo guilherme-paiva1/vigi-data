@@ -20,13 +20,13 @@ function exibir(req, res) {
                             superior: resultadoInvestigacoes[0].superior,
                         });
                     } else if (resultadoInvestigacoes.length == 0) {
-                        res.status(403).send("Matrícula ou senha inválidos.");
+                        res.status(403).send("id inválido.");
                     }
                 }
             ).catch(
                 function (erro) {
                     console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                    console.log("\nHouve um erro ao exibir as investigações! Erro: ", erro.sqlMessage);
                     res.status(500).json(erro.sqlMessage);
                 }
             );
