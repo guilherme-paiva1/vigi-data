@@ -9,12 +9,12 @@ public class Ocorrencia {
     private Double longitude;
     private LocalDateTime dataHoraCrime;
     private String bairro;
-    private String regiao;
+    private Integer regiao;
 
     public Ocorrencia() {
     }
 
-    public Ocorrencia(String rubrica, Double latitude, Double longitude, LocalDateTime dataHoraCrime, String bairro, String regiao) {
+    public Ocorrencia(String rubrica, Double latitude, Double longitude, LocalDateTime dataHoraCrime, String bairro, Integer regiao) {
         this.rubrica = rubrica;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -63,11 +63,11 @@ public class Ocorrencia {
         this.bairro = bairro;
     }
 
-    public String getRegiao() {
+    public Integer getRegiao() {
         return regiao;
     }
 
-    public void setRegiao(String regiao) {
+    public void setRegiao(Integer regiao) {
         this.regiao = regiao;
     }
 
