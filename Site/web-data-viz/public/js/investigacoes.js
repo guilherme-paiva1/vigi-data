@@ -4,6 +4,23 @@ window.onload = function () {
 
 function carregarInvestigacoes() {
     var tabela_investigacoes = document.getElementById("tabela_investigacoes");
+    var id = sessionStorage.ID_USUARIO;
+
+    fetch("investigacoes/exibir", {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idServer: id
+        })
+    }).then(function (resposta){
+        if(resposta.ok) {
+            resposta.json().then(json => {
+                
+            })
+        }
+    })
 
     // Mockado por enquanto, depois substituir por fetch
     if (sessionStorage.PERFIL_USUARIO == "policial") {
@@ -85,9 +102,11 @@ function carregarInvestigacoes() {
             <td>4</td>
             <td><span class="badge risco medio">Médio</span></td>
             <td>
-                <div class="actions">
-                    <button disabled class="botao botao-azul-claro">Editar</button>
-                    <a href="#" class="botao botao-secundario">Excluir</a>
+                <div class="progress-cell">
+                    <div class="progress">
+                        <div class="progress-bar" style="width: 65%"></div>
+                    </div>
+                    <span class="progress-text">65%</span>
                 </div>
             </td>
         </tr>
