@@ -87,14 +87,6 @@ function carregarInvestigacoes() {
             <td>4</td>
             <td><span class="badge risco medio">Médio</span></td>
             <td>
-                <div class="progress-cell">
-                    <div class="progress">
-                        <div class="progress-bar" style="width: 65%"></div>
-                    </div>
-                    <span class="progress-text">65%</span>
-                </div>
-            </td>
-            <td>
                 <div class="actions">
                     <button disabled class="botao botao-azul-claro">Editar</button>
                     <a href="#" class="botao botao-secundario">Excluir</a>
@@ -115,12 +107,6 @@ function carregarInvestigacoes() {
                         <div class="progress-bar" style="width: 65%"></div>
                     </div>
                     <span class="progress-text">65%</span>
-                </div>
-            </td>
-            <td>
-                <div class="actions">
-                    <button disabled class="botao botao-azul-claro">Editar</button>
-                    <a href="#" class="botao botao-secundario">Excluir</a>
                 </div>
             </td>
         </tr>
