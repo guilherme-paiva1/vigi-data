@@ -894,6 +894,10 @@ button {
     color: white;
 }
 
+#matricula_editar_usuario {
+    cursor: not-allowed;
+}
+
 /* Estilos base para a página de usuários */
 .container.usuarios {
     max-width: 1200px;

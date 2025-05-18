@@ -14,7 +14,7 @@ function entrar() {
     }).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(json => {
-                sessionStorage.ID_USUARIO = json.id_usuario;
+                sessionStorage.ID_USUARIO = json.idUsuario;
                 sessionStorage.NOME_USUARIO = json.nome;
                 sessionStorage.EMAIL_USUARIO = json.email;
                 sessionStorage.MATRICULA_USUARIO = json.matricula;

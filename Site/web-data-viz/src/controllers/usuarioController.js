@@ -15,7 +15,7 @@ function entrar(req, res) {
                 function (resultadoAutenticar) {
                     if (resultadoAutenticar.length == 1) {
                         res.json({
-                            id_usuario: resultadoAutenticar[0].id_usuario,
+                            idUsuario: resultadoAutenticar[0].idUsuario,
                             nome: resultadoAutenticar[0].nome,
                             email: resultadoAutenticar[0].email,
                             matricula: resultadoAutenticar[0].matricula,
