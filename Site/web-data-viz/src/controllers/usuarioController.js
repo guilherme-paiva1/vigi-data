@@ -40,10 +40,9 @@ function entrar(req, res) {
 function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
-    var matricula = req.body.matriculaServer
-    var perfil = req.body.perfil;
+    var matricula = req.body.matriculaServer;
     var idSuperior = req.body.idSuperiorServer;
-    var senha = req.body.senhaServer 
+    var senha = req.body.senhaServer;
 
     if (nome == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
@@ -51,14 +50,12 @@ function cadastrar(req, res) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else if (idSuperior == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
-    } else if (perfil == undefined) {
-        res.status(400).send("Erro. Tente novamente mais tarde.");
     } else if (matricula == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else if (senha == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
-        usuarioModel.cadastrar(nome, email, matricula, perfil, idSuperior, senha)
+        usuarioModel.cadastrar(nome, email, matricula, idSuperior, senha)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -88,7 +85,7 @@ function listar(req, res) {
                 if (resultado.length > 0) {
                     res.json(resultado);
                 } else {
-                    res.status(403).send("Policiais não encontrados");
+                    res.status(204).send("Policiais não encontrados");
                 }
             }
         ).catch(
@@ -154,7 +151,7 @@ function listarPorId(req, res) {
                 if (resultado.length > 0) {
                     res.json(resultado);
                 } else {
-                    res.status(403).send("Policial não encontrado");
+                    res.status(204).send("Policial não encontrado");
                 }
             }
         ).catch(
@@ -177,7 +174,7 @@ function excluirUsuario(req, res) {
         .then(
             function (resposta) {
                 if (resposta.ok) {
-                    res.status(200).send("Usuário excluído com sucesso!");
+                    res.status(202).send("Usuário excluído com sucesso!");
                 } else {
                     res.status(403).send("Erro ao excluir usuário.");
                 }

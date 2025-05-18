@@ -11,10 +11,10 @@ function entrar(matricula, senha) {
     return database.executar(instrucaoSql);
 }
 
-function cadastrar(nome, email, matricula, perfil, idSuperior, senha) {
+function cadastrar(nome, email, matricula, idSuperior, senha) {
     var instrucaoSql = `
-        INSERT INTO usuario (nome, email, matricula, perfil, superior, senha) VALUES
-	        ('${nome}', '${email}', '${matricula}', '${perfil}', ${idSuperior}, '${senha}');
+        INSERT INTO usuario (nome, email, matricula, perfil, fkSupervisor, ativo, senha) VALUES
+	        ('${nome}', '${email}', '${matricula}', 'policial', ${idSuperior}, 1, '${senha}');
     `;
 
     return database.executar(instrucaoSql);

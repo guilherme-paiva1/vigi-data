@@ -81,15 +81,34 @@ function buscarUsuarios() {
 
 
 function adicionarUsuario() {
-    // Adicionar fetch para adicionar o usuário com os dados recebidos
-    console.log(nome_novo_usuario.value);
-    console.log(matricula_novo_usuario.value);
-    console.log(email_novo_usuario.value);
-    console.log(status_novo_usuario.value);
+    var nome_novo_usuario = document.getElementById('nome_novo_usuario');
+    var matricula_novo_usuario = document.getElementById('matricula_novo_usuario');
+    var email_novo_usuario = document.getElementById('email_novo_usuario');
+    var senha_novo_usuario = document.getElementById('senha_novo_usuario');
+
+    fetch('/usuarios/cadastrar', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            nomeServer: nome_novo_usuario.value,
+            matriculaServer: matricula_novo_usuario.value,
+            emailServer: email_novo_usuario.value,
+            senhaServer: senha_novo_usuario.value,
+            idSuperiorServer: sessionStorage.ID_USUARIO
+        })
+    }).then(function (resposta) {
+        if(resposta.ok) {
+            console.log("Usuário adicionado com sucesso!");
+            window.location.reload(); 
+        } else {
+            console.log("Erro ao adicionar usuário");
+        }
+    });
 }
 
 function carregarInformacoesEditarUsuario(idUsuario) {
-    console.log("carregar informações do usuário com id: " + idUsuario);
     var id_usuario_editar = document.getElementById('id_usuario_editar');
     var nome_editar_usuario = document.getElementById('nome_editar_usuario');
     var matricula_editar_usuario = document.getElementById('matricula_editar_usuario');
