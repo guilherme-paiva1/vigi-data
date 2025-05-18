@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     buscarUsuarios();
 });
 
-
-
 function buscarUsuarios() {
     // Adicionar fetch para buscar os usuários e preencher a tela com esse padrão HTML abaixo
     var idSuperior = sessionStorage.ID_USUARIO;
@@ -24,15 +22,12 @@ function buscarUsuarios() {
                 let estruturaHTML = '';
                 let statusExibicao = '';
                 users.forEach(user => {
-                    switch (user.status) {
-                        case 'ativo':
+                    switch (user.ativo) {
+                        case 1:
                             statusExibicao = 'Ativo';
                             break;
-                        case 'inativo':
+                        case 0:
                             statusExibicao = 'Inativo';
-                            break;
-                        case 'ferias':
-                            statusExibicao = 'Férias';
                             break;
                     }
 
@@ -48,7 +43,7 @@ function buscarUsuarios() {
                                         <h3 style="color: #2c3e50;">${user.nome}</h3>
                                         <small class="badge-number">Matrícula: ${user.matricula}</small>
                                     </div>
-                                    <span class="user-status ${user.status}">
+                                    <span class="user-status ${statusExibicao.toLowerCase()}">
                                         ${statusExibicao}
                                     </span>
                                 </div>
@@ -99,21 +94,29 @@ function carregarInformacoesEditarUsuario(idUsuario) {
     var email_editar_usuario = document.getElementById('email_editar_usuario');
     var status_editar_usuario = document.getElementById('status_editar_usuario');
 
-    id_usuario_editar.value = 2;
-    nome_editar_usuario.value = "exemplo_nome";
-    matricula_editar_usuario.value = "exemplo_matricula";
-    email_editar_usuario.value = "exemplo_email";
-    status_editar_usuario.value = "exemplo_status";
-
-    // Adicionar Fetch pelo id recebido pra carregar as informações do usuário e preencher os campos do modal de edição
-    // Deve ser assim ao finalizar o fetch:
-    // nome_editar_usuario.value = usuario.nome;
-    // matricula_editar_usuario.value = usuario.matricula;
-    // email_editar_usuario.value = usuario.email;
-    // status_editar_usuario.value = usuario.status;
-
+    fetch('/usuarios/listarPorId', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuario   
+        })
+    }).then(function (resposta) {
+        resposta.json().then(json => {
+            let usuario = json[0];
+            id_usuario_editar.value = usuario.idUsuario;
+            nome_editar_usuario.value = usuario.nome;
+            matricula_editar_usuario.value = usuario.matricula;
+            email_editar_usuario.value = usuario.email;
+            if (usuario.ativo == 1) {
+                status_editar_usuario.value = 'ativo';
+            } else {
+                status_editar_usuario.value = 'inativo';
+            }
+        });
+    });
 }
-
 
 function editarUsuario(idUsuario) {
     // Adicionar fetch para editar o usuário com os dados recebidos
@@ -129,16 +132,23 @@ function fecharConfirmacaoExclusao() {
 
 function confirmarExclusaoUsuario() {
     // Aqui você coloca sua lógica de exclusão, como chamada para API etc.
-    console.log('Usuário excluído');
+    let idUsuario = document.getElementById('id_usuario_editar').value;
 
-    // Fecha o modal de confirmação
-    fecharConfirmacaoExclusao();
-
-    // Fecha também o modal de edição do usuário
-    document.getElementById('modal_edicao_usuario').classList.add('oculto');
-
-    // (Opcional) Redirecionar, atualizar a lista ou mostrar um alerta
-    // window.location.href = '/usuarios'; // se quiser redirecionar
+    fetch('/usuarios/excluir', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuario   
+        })
+    }).then(function (resposta) {
+        if(resposta.ok) {
+            fecharConfirmacaoExclusao();
+            document.getElementById('modal_edicao_usuario').classList.add('oculto');
+        }
+    });
+    window.location.href = '/usuarios.html'; // Recarrega a página após exclusão
 }
 
 

@@ -135,13 +135,38 @@ function editar(req, res) {
                     res.status(500).json(erro.sqlMessage);
                 }
             );
+        }
+    }
+
+function listarPorId(req, res) {
+    var idUsuario = req.body.idUsuarioServer;
+
+    if (idUsuario == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else {
+        usuarioModel.listarPorId(idUsuario)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.json(resultado);
+                } else {
+                    res.status(403).send("Policial não encontrado");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
     }
 }
 
 function excluirUsuario(req, res) {
     var id_usuario = req.body.idUsuarioServer;
 
-    if (idSuperior == undefined) {
+    if (id_usuario == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
         usuarioModel.excluirUsuario(id_usuario)
@@ -176,5 +201,6 @@ module.exports = {
     cadastrar,
     listar,
     editar,
+    listarPorId,
     excluirUsuario
 }

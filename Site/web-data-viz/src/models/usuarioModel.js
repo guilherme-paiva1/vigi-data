@@ -24,7 +24,7 @@ function cadastrar(nome, email, matricula, perfil, idSuperior, senha) {
 function listar(idSuperior) {
     var instrucaoSql = `
         SELECT 
-            idUsuario, nome, email, matricula  
+            idUsuario, nome, email, matricula, ativo
         FROM
             usuario 
         WHERE fkSupervisor = ${idSuperior} AND perfil = 'policial';
@@ -33,13 +33,14 @@ function listar(idSuperior) {
     return database.executar(instrucaoSql);
 }
 
-function editar(idUsuario, nome, email, matricula) {
+function editar(idUsuario, nome, email, matricula, ativo) {
     var instrucaoSql = `
         UPDATE usuario 
         SET 
             nome = '${nome}',
-            email = '${email}'
+            email = '${email}',
             matricula = '${matricula}',
+            ativo = ${ativo}
         WHERE
             idUsuario = ${idUsuario};
     `
@@ -60,5 +61,6 @@ module.exports = {
     cadastrar,
     listar,
     editar,
+    listarPorId,
     excluirUsuario
 };
