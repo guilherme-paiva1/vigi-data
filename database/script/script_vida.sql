@@ -10,6 +10,7 @@ CREATE TABLE usuario (
     perfil VARCHAR(8),
     email VARCHAR(45),
     senha VARCHAR(45),
+    ativo TINYINT,
     
     CONSTRAINT fk_usuario_supervisor 
 		FOREIGN KEY (fkSupervisor)
