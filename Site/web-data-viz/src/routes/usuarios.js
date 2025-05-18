@@ -15,6 +15,10 @@ router.post("/listar", function (req, res) {
     usuarioController.listar(req, res);
 });
 
+router.post("/listarPorId", function (req, res) {
+    usuarioController.listarPorId(req, res);
+});
+
 router.post("/excluirUsuario", function (req, res) {
     investigacoesController.exibir(req, res);
 });

@@ -37,85 +37,84 @@ document.addEventListener("click", function (event) {
 
 
 function mudarModalNotificacao() {
-  if (modalNotificacao.style.display == "none") {
+  if (modalNotificacao.style.display == "flex") {
+    modalNotificacao.style.opacity = "0";
+
+    setTimeout(function () {
+      modalNotificacao.style.display = "none";
+    }, 100);
+  } else {
     modalUsuario.style.display = "none";
 
     setTimeout(function () {
       modalNotificacao.style.opacity = "1";
     }, 100);
     modalNotificacao.style.display = "flex";
-  } else {
-    modalNotificacao.style.opacity = "0";
-
-    setTimeout(function () {
-      modalNotificacao.style.display = "none";
-    }, 100);
   }
 }
 
 function mudarModalNovoUsuario() {
-  if (modalNovoUsuario.style.display == "none") {
-    setTimeout(function () {
-      modalNovoUsuario.style.opacity = "1";
-    }, 100);
-    modalNovoUsuario.style.display = "flex";
-  } else {
+  if (modalNovoUsuario.style.display == "flex") {
     modalNovoUsuario.style.opacity = "0";
 
     setTimeout(function () {
       modalNovoUsuario.style.display = "none";
     }, 100);
+  } else {
+    setTimeout(function () {
+      modalNovoUsuario.style.opacity = "1";
+    }, 100);
+    modalNovoUsuario.style.display = "flex";
   }
 }
 
 function mudarModalEditarUsuario(idUsuario) {
-  if (modalEditarUsuario.style.display == "none") {
+  if (modalEditarUsuario.style.display == "flex") {
+    modalEditarUsuario.style.opacity = "0";
+    
+    setTimeout(function () {
+      modalEditarUsuario.style.display = "none";
+    }, 100);
+  } else {
     carregarInformacoesEditarUsuario(idUsuario);
+
     setTimeout(function () {
       modalEditarUsuario.style.opacity = "1";
     }, 100);
     modalEditarUsuario.style.display = "flex";
-
-  } else {
-    modalEditarUsuario.style.opacity = "0";
-
-    setTimeout(function () {
-      modalEditarUsuario.style.display = "none";
-    }, 100);
   }
 }
 
 function mudarModalDesempenhoUsuario(idUsuario) {
-  if (modalDesempenhoUsuario.style.display == "none") {
-    carregarInformacoesDesempenhoUsuario(idUsuario);
-    setTimeout(function () {
-      modalDesempenhoUsuario.style.opacity = "1";
-    }, 100);
-    modalDesempenhoUsuario.style.display = "flex";
-
-  } else {
+  if (modalDesempenhoUsuario.style.display == "flex") {
     modalDesempenhoUsuario.style.opacity = "0";
 
     setTimeout(function () {
       modalDesempenhoUsuario.style.display = "none";
     }, 100);
+  } else {
+    carregarInformacoesDesempenhoUsuario(idUsuario);
+    setTimeout(function () {
+      modalDesempenhoUsuario.style.opacity = "1";
+    }, 100);
+    modalDesempenhoUsuario.style.display = "flex";
   }
 }
 
 function mudarModalUsuario() {
-  if (modalUsuario.style.display == "none") {
+  if (modalUsuario.style.display == "flex") {
+    modalUsuario.style.opacity = "0";
+
+    setTimeout(function () {
+      modalUsuario.style.display = "none";
+    }, 100);
+  } else {
     modalNotificacao.style.display = "none";
 
     setTimeout(function () {
       modalUsuario.style.opacity = "1";
     }, 100);
     modalUsuario.style.display = "flex";
-  } else {
-    modalUsuario.style.opacity = "0";
-
-    setTimeout(function () {
-      modalUsuario.style.display = "none";
-    }, 100);
   }
 }
 
