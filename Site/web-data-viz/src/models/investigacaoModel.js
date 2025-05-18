@@ -47,8 +47,18 @@ function visualizarRequisicoes(fkUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function excluirInvestigacao(id_investigacao) {
+    var instrucaoSql = `
+        DELETE FROM investigacao
+        WHERE id = ${id_investigacao};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrar,
     registrarHistoricoDoDelegado,
-    visualizarRequisicoes
+    visualizarRequisicoes,
+    excluirInvestigacao
 };
