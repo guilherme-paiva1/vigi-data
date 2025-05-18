@@ -10,7 +10,7 @@ function cadastrar(titulo, descricao, localidade, dt_investigacao,  incidencia) 
 }
 
 function registrarHistoricoDoDelegado(fkDelegado, titulo, descricao, localidade, dt_investigacao) {
-    var intrucaoSqlRequisicao = `
+    var intrucaoSqlInvestigacao = `
         SELECT idInvestigacao FROM investigacao 
             WHERE 
                 dt_investigacao = '${dt_investigacao}' 
@@ -20,7 +20,7 @@ function registrarHistoricoDoDelegado(fkDelegado, titulo, descricao, localidade,
                 AND localidade = '${localidade}';
     `;
 
-    database.executar(intrucaoSqlRequisicao)
+    database.executar(intrucaoSqlInvestigacao)
         .then((resultado) => {
             if (resultado.length > 0) {
                 var idInvestigacao = resultado[0].idInvestigacao;
@@ -33,7 +33,7 @@ function registrarHistoricoDoDelegado(fkDelegado, titulo, descricao, localidade,
         });
 }
 
-function visualizarRequisicoes(fkUsuario) {
+function visualizarInvestigacoes(fkUsuario) {
     var instrucaoSql = `
         SELECT titulo, descricao, localidade, dt_investigacao, status_atual,
         (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais
@@ -47,8 +47,19 @@ function visualizarRequisicoes(fkUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function excluirInvestigacao(id_investigacao) {
+    var instrucaoSql = `
+        DELETE FROM investigacao
+        WHERE id = ${id_investigacao};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrar,
     registrarHistoricoDoDelegado,
-    visualizarRequisicoes
+    excluirInvestigacao,
+    visualizarInvestigacoes
+
 };
