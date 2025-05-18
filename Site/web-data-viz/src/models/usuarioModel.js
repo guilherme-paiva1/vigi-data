@@ -22,7 +22,7 @@ function cadastrar(nome, email, matricula, perfil, idSuperior, senha) {
 
 function listar(idSuperior) {
     var instrucaoSql = `
-        SELECT nome, email, matricula FROM usuario WHERE fkSupervisor = ${idSuperior} AND perfil = 'policial';
+        SELECT idUsuario, nome, email, matricula FROM usuario WHERE fkSupervisor = ${idSuperior} AND perfil = 'policial';
     `;
 
     return database.executar(instrucaoSql);
