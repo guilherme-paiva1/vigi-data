@@ -174,5 +174,7 @@ function excluirUsuario(req, res) {
 module.exports = {
     entrar,
     cadastrar,
-    listar
+    listar,
+    editar,
+    excluirUsuario
 }

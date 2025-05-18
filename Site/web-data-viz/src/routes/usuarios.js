@@ -16,7 +16,7 @@ router.post("/listar", function (req, res) {
 });
 
 router.post("/excluirUsuario", function (req, res) {
-    investigacoesController.exibir(req, res);
+    usuarioController.excluirUsuario(req, res);
 });
 
 module.exports = router;

@@ -46,10 +46,10 @@ function editar(idUsuario, nome, email, matricula) {
     return database.executar(instrucaoSql);
 }
 
-function excluirUsuario(id_usuario) {
+function excluirUsuario(idUsuario) {
     var instrucaoSql = `
         DELETE FROM usuario
-        WHERE id = ${id_usuario};
+        WHERE idUsuario = ${idUsuario};
     `;
 
     return database.executar(instrucaoSql);
