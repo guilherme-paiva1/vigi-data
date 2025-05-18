@@ -101,6 +101,43 @@ function listar(req, res) {
     }
 }
 
+function editar(req, res) {
+    var idUsuario = req.body.idUsuarioServer;
+    var nome = req.body.nomeServer;
+    var email = req.body.emailServer;
+    var matricula = req.body.matriculaServer
+    var idSuperior = req.body.idSuperiorServer;
+
+    
+    if (idUsuario == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else if (nome == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else if (email == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else if (matricula == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else if (idSuperior == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else {
+        usuarioModel.editar(idUsuario, nome, email, matricula)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao atualizar o cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+        }
+    }
+
 function listarPorId(req, res) {
     var idUsuario = req.body.idUsuarioServer;
 
@@ -129,7 +166,7 @@ function listarPorId(req, res) {
 function excluirUsuario(req, res) {
     var id_usuario = req.body.idUsuarioServer;
 
-    if (idSuperior == undefined) {
+    if (id_usuario == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
         usuarioModel.excluirUsuario(id_usuario)
@@ -163,6 +200,7 @@ module.exports = {
     entrar,
     cadastrar,
     listar,
+    editar,
     listarPorId,
     excluirUsuario
 }

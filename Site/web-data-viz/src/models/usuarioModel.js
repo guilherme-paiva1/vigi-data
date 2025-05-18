@@ -20,11 +20,16 @@ function cadastrar(nome, email, matricula, perfil, idSuperior, senha) {
     return database.executar(instrucaoSql);
 }
 
+
 function listar(idSuperior) {
     var instrucaoSql = `
-        SELECT idUsuario, nome, email, matricula, ativo FROM usuario WHERE fkSupervisor = ${idSuperior} AND perfil = 'policial';
+        SELECT 
+            idUsuario, nome, email, matricula, ativo
+        FROM
+            usuario 
+        WHERE fkSupervisor = ${idSuperior} AND perfil = 'policial';
     `;
-
+    
     return database.executar(instrucaoSql);
 }
 
@@ -36,10 +41,24 @@ function listarPorId(idUsuario) {
     return database.executar(instrucaoSql);
 }
 
-function excluirUsuario(id_usuario) {
+function editar(idUsuario, nome, email, matricula, ativo) {
+    var instrucaoSql = `
+        UPDATE usuario 
+        SET 
+            nome = '${nome}',
+            email = '${email}',
+            matricula = '${matricula}',
+            ativo = ${ativo}
+        WHERE
+            idUsuario = ${idUsuario};
+    `
+    return database.executar(instrucaoSql);
+}
+
+function excluirUsuario(idUsuario) {
     var instrucaoSql = `
         DELETE FROM usuario
-        WHERE idUsuario = ${id_usuario};
+        WHERE idUsuario = ${idUsuario};
     `;
 
     return database.executar(instrucaoSql);
@@ -49,6 +68,7 @@ module.exports = {
     entrar,
     cadastrar,
     listar,
+    editar,
     listarPorId,
     excluirUsuario
 };

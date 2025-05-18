@@ -2,8 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     buscarUsuarios();
 });
 
-
-
 function buscarUsuarios() {
     // Adicionar fetch para buscar os usuários e preencher a tela com esse padrão HTML abaixo
     var idSuperior = sessionStorage.ID_USUARIO;
@@ -85,7 +83,6 @@ function adicionarUsuario() {
     console.log(nome_novo_usuario.value);
     console.log(matricula_novo_usuario.value);
     console.log(email_novo_usuario.value);
-    console.log(telefone_novo_usuario.value);
     console.log(status_novo_usuario.value);
 }
 
