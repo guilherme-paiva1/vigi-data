@@ -135,16 +135,23 @@ function fecharConfirmacaoExclusao() {
 
 function confirmarExclusaoUsuario() {
     // Aqui você coloca sua lógica de exclusão, como chamada para API etc.
-    console.log('Usuário excluído');
+    let idUsuario = document.getElementById('id_usuario_editar').value;
 
-    // Fecha o modal de confirmação
-    fecharConfirmacaoExclusao();
-
-    // Fecha também o modal de edição do usuário
-    document.getElementById('modal_edicao_usuario').classList.add('oculto');
-
-    // (Opcional) Redirecionar, atualizar a lista ou mostrar um alerta
-    // window.location.href = '/usuarios'; // se quiser redirecionar
+    fetch('/usuarios/excluir', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: idUsuario   
+        })
+    }).then(function (resposta) {
+        if(resposta.ok) {
+            fecharConfirmacaoExclusao();
+            document.getElementById('modal_edicao_usuario').classList.add('oculto');
+        }
+    });
+    window.location.href = '/usuarios.html'; // Recarrega a página após exclusão
 }
 
 
