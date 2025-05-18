@@ -28,10 +28,18 @@ function listar(idSuperior) {
     return database.executar(instrucaoSql);
 }
 
+function listarPorId(idUsuario) {
+    var instrucaoSql = `
+        SELECT idUsuario, nome, email, matricula FROM usuario WHERE idUsuario = ${idUsuario};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 function excluirUsuario(id_usuario) {
     var instrucaoSql = `
         DELETE FROM usuario
-        WHERE id = ${id_usuario};
+        WHERE idUsuario = ${id_usuario};
     `;
 
     return database.executar(instrucaoSql);
@@ -41,5 +49,6 @@ module.exports = {
     entrar,
     cadastrar,
     listar,
+    listarPorId,
     excluirUsuario
 };

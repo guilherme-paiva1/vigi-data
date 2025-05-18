@@ -101,6 +101,31 @@ function listar(req, res) {
     }
 }
 
+function listarPorId(req, res) {
+    var idUsuario = req.body.idUsuarioServer;
+
+    if (idUsuario == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else {
+        usuarioModel.listarPorId(idUsuario)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.json(resultado);
+                } else {
+                    res.status(403).send("Policial não encontrado");
+                }
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+    }
+}
+
 function excluirUsuario(req, res) {
     var id_usuario = req.body.idUsuarioServer;
 
@@ -138,5 +163,6 @@ module.exports = {
     entrar,
     cadastrar,
     listar,
+    listarPorId,
     excluirUsuario
 }
