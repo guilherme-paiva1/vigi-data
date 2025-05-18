@@ -73,21 +73,42 @@ function buscarUsuarios() {
                 lista_usuarios = document.getElementById('div_lista_usuarios');
                 lista_usuarios.innerHTML = estruturaHTML;
             })
+        } else {
+            console.log("Erro ao buscar usuários");
         }
     })
 }
 
 
 function adicionarUsuario() {
-    // Adicionar fetch para adicionar o usuário com os dados recebidos
-    console.log(nome_novo_usuario.value);
-    console.log(matricula_novo_usuario.value);
-    console.log(email_novo_usuario.value);
-    console.log(status_novo_usuario.value);
+    var nome_novo_usuario = document.getElementById('nome_novo_usuario');
+    var matricula_novo_usuario = document.getElementById('matricula_novo_usuario');
+    var email_novo_usuario = document.getElementById('email_novo_usuario');
+    var senha_novo_usuario = document.getElementById('senha_novo_usuario');
+
+    fetch('/usuarios/cadastrar', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            nomeServer: nome_novo_usuario.value,
+            matriculaServer: matricula_novo_usuario.value,
+            emailServer: email_novo_usuario.value,
+            senhaServer: senha_novo_usuario.value,
+            idSuperiorServer: sessionStorage.ID_USUARIO
+        })
+    }).then(function (resposta) {
+        if(resposta.ok) {
+            console.log("Usuário adicionado com sucesso!");
+            window.location.reload(); 
+        } else {
+            console.log("Erro ao adicionar usuário");
+        }
+    });
 }
 
 function carregarInformacoesEditarUsuario(idUsuario) {
-    console.log("carregar informações do usuário com id: " + idUsuario);
     var id_usuario_editar = document.getElementById('id_usuario_editar');
     var nome_editar_usuario = document.getElementById('nome_editar_usuario');
     var matricula_editar_usuario = document.getElementById('matricula_editar_usuario');
@@ -118,8 +139,35 @@ function carregarInformacoesEditarUsuario(idUsuario) {
     });
 }
 
-function editarUsuario(idUsuario) {
-    // Adicionar fetch para editar o usuário com os dados recebidos
+function editarUsuario() {
+    var id_usuario_editar = document.getElementById('id_usuario_editar');
+    var nome_editar_usuario = document.getElementById('nome_editar_usuario');  
+    var matricula_editar_usuario = document.getElementById('matricula_editar_usuario');
+    var email_editar_usuario = document.getElementById('email_editar_usuario');
+    var status_editar_usuario = document.getElementById('status_editar_usuario');
+
+    fetch('/usuarios/editar', {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idUsuarioServer: id_usuario_editar.value,
+            nomeServer: nome_editar_usuario.value,
+            matriculaServer: matricula_editar_usuario.value,
+            emailServer: email_editar_usuario.value,
+            ativoServer: status_editar_usuario.value
+        })
+    }).then(function (resposta) {
+        if(resposta.ok) {
+            resposta.json().then(json => {
+                console.log(json);
+                window.location.reload(); // Recarrega a página atual após edição
+            });
+        } else {
+            console.log("Erro ao editar usuário");
+        }
+    });
 }
 
 function abrirConfirmacaoExclusao() {
@@ -148,7 +196,7 @@ function confirmarExclusaoUsuario() {
             document.getElementById('modal_edicao_usuario').classList.add('oculto');
         }
     });
-    window.location.href = '/usuarios.html'; // Recarrega a página após exclusão
+    window.location.reload(); // Recarrega a página atual após exclusão]
 }
 
 

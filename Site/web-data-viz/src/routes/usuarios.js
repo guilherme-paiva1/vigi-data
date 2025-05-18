@@ -19,8 +19,12 @@ router.post("/listarPorId", function (req, res) {
     usuarioController.listarPorId(req, res);
 });
 
-router.post("/excluirUsuario", function (req, res) {
+router.post("/excluir", function (req, res) {
     usuarioController.excluirUsuario(req, res);
+});
+
+router.put("/editar", function (req, res) {
+    usuarioController.editar(req, res);
 });
 
 module.exports = router;

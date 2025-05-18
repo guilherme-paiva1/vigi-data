@@ -220,7 +220,6 @@
                     <option value="todos">Todos os Status</option>
                     <option value="ativo">Ativo</option>
                     <option value="inativo">Inativo</option>
-                    <option value="ferias">Férias</option>
                 </select>
             </div>
 
@@ -240,11 +239,15 @@
                 </div>
                 <div class="form-group">
                     <label for="matricula_novo_usuario">Matrícula*</label>
-                    <input type="text" id="matricula_novo_usuario" required placeholder="Digite o número da matrícula">
+                    <input type="text" id="matricula_novo_usuario" maxlength="7" required placeholder="Digite o número da matrícula">
                 </div>
                 <div class="form-group">
                     <label for="email_novo_usuario">E-mail Institucional*</label>
                     <input type="email" id="email_novo_usuario" required placeholder="exemplo@policia.gov.br">
+                </div>
+                <div class="form-group">
+                    <label for="senha_novo_usuario">Senha*</label>
+                    <input type="password" id="senha_novo_usuario" required placeholder="Digite a senha">
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-cancel" onclick="mudarModalNovoUsuario()">Cancelar</button>
@@ -278,7 +281,6 @@
                     <select id="status_editar_usuario" required>
                         <option value="ativo">Ativo</option>
                         <option value="inativo">Inativo</option>
-                        <option value="ferias">Férias</option>
                     </select>
                 </div>
                 <div class="modal-actions">

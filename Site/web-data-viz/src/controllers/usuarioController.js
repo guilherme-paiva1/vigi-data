@@ -40,10 +40,9 @@ function entrar(req, res) {
 function cadastrar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
-    var matricula = req.body.matriculaServer
-    var perfil = req.body.perfil;
+    var matricula = req.body.matriculaServer;
     var idSuperior = req.body.idSuperiorServer;
-    var senha = req.body.senhaServer 
+    var senha = req.body.senhaServer;
 
     if (nome == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
@@ -51,14 +50,12 @@ function cadastrar(req, res) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else if (idSuperior == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
-    } else if (perfil == undefined) {
-        res.status(400).send("Erro. Tente novamente mais tarde.");
     } else if (matricula == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else if (senha == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
-        usuarioModel.cadastrar(nome, email, matricula, perfil, idSuperior, senha)
+        usuarioModel.cadastrar(nome, email, matricula, idSuperior, senha)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -88,7 +85,7 @@ function listar(req, res) {
                 if (resultado.length > 0) {
                     res.json(resultado);
                 } else {
-                    res.status(403).send("Policiais não encontrados");
+                    res.status(204).send("Policiais não encontrados");
                 }
             }
         ).catch(
@@ -106,8 +103,7 @@ function editar(req, res) {
     var nome = req.body.nomeServer;
     var email = req.body.emailServer;
     var matricula = req.body.matriculaServer
-    var idSuperior = req.body.idSuperiorServer;
-
+    var ativo = req.body.ativoServer;
     
     if (idUsuario == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
@@ -117,10 +113,15 @@ function editar(req, res) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else if (matricula == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
-    } else if (idSuperior == undefined) {
+    } else if (ativo == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
-        usuarioModel.editar(idUsuario, nome, email, matricula)
+        if (ativo == "ativo") {
+            ativo = 1;
+        } else {
+            ativo = 0;
+        }
+        usuarioModel.editar(idUsuario, nome, email, matricula, ativo)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -150,7 +151,7 @@ function listarPorId(req, res) {
                 if (resultado.length > 0) {
                     res.json(resultado);
                 } else {
-                    res.status(403).send("Policial não encontrado");
+                    res.status(204).send("Policial não encontrado");
                 }
             }
         ).catch(
@@ -164,34 +165,27 @@ function listarPorId(req, res) {
 }
 
 function excluirUsuario(req, res) {
-    var id_usuario = req.body.idUsuarioServer;
+    var idUsuario = req.body.idUsuarioServer;
 
-    if (id_usuario == undefined) {
+    if (idUsuario == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
-        usuarioModel.excluirUsuario(id_usuario)
+        usuarioModel.excluirUsuario(idUsuario)
         .then(
-                function (excluirUsuario) {
-                    if (excluirUsuario.length >= 1) {
-                        res.json({
-                            id_usuario: excluirUsuario[0].id_usuario,
-                            nome: excluirUsuario[0].nome,
-                            email: excluirUsuario[0].email,
-                            id: excluirUsuario[0].id,
-                            perfil: excluirUsuario[0].perfil,
-                            superior: excluirUsuario[0].superior,
-                        });
-                    } else if (excluirUsuario.length == 0) {
-                        res.status(403).send("id inválido.");
-                    }
+            function (resposta) {
+                if (resposta.ok) {
+                    res.status(202).send("Usuário excluído com sucesso!");
+                } else {
+                    res.status(403).send("Erro ao excluir usuário.");
                 }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log("\nHouve um erro ao excluir o usuário! Erro: ", erro.sqlMessage);
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao excluir o usuário! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
     }
 
 }
