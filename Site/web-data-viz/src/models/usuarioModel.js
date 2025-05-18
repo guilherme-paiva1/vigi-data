@@ -33,6 +33,14 @@ function listar(idSuperior) {
     return database.executar(instrucaoSql);
 }
 
+function listarPorId(idUsuario) {
+    var instrucaoSql = `
+        SELECT idUsuario, nome, email, matricula, ativo FROM usuario WHERE idUsuario = ${idUsuario};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 function editar(idUsuario, nome, email, matricula, ativo) {
     var instrucaoSql = `
         UPDATE usuario 
