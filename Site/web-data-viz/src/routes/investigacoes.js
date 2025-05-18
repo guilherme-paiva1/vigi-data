@@ -7,4 +7,8 @@ router.post("/exibir", function (req, res) {
     investigacoesController.exibir(req, res);
 });
 
+router.post("/excluirInvestigacao", function (req, res) {
+    investigacoesController.excluirInvestigacao(req, res);
+});
+
 module.exports = router;
