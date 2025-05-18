@@ -88,6 +88,15 @@ public class LeitorExcel {
                 String bairroTratado = valorcelulaBairro.toLowerCase();
 
                 String regiaoTratada = valorcelulaRegiao.toLowerCase();
+                Integer idRegiao;
+                switch (regiaoTratada) {
+                    case "norte" -> idRegiao = 1;
+                    case "oeste" -> idRegiao = 2;
+                    case "leste" -> idRegiao = 3;
+                    case "centro" -> idRegiao = 4;
+                    case "sul" -> idRegiao = 5;
+                    case null, default -> idRegiao = null;
+                }
                 Boolean regiaoInvalida = !listaRegioesValidas.contains(regiaoTratada);
 
                 if (regiaoInvalida) continue;
@@ -102,7 +111,7 @@ public class LeitorExcel {
                 LocalDateTime dataHoraTratada = converterDate(valorCelulaData, valorCelulaHorario);
 
                 if (dataHoraTratada != null ) {
-                    Ocorrencia ocorrencia = new Ocorrencia(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada, bairroTratado, regiaoTratada);
+                    Ocorrencia ocorrencia = new Ocorrencia(rubricaTratada, latitudeTratada, longitudeTratada, dataHoraTratada, bairroTratado, idRegiao);
                     dadosExtraidos.add(ocorrencia);
                 }
             }

@@ -71,7 +71,7 @@ public class Main {
             // Inserindo os dados extraídos no Banco
             System.out.println("Inserindo as ocorrências extraídas do S3 no Banco de dados...");
             for (Ocorrencia ocorrencia : ocorrencias) {
-            template.update("INSERT INTO ocorrencia (rubrica, latitude, longitude, data_hora_crime, bairro, regiao) VALUES (?, ?, ?, ?, ?, ?)",
+            template.update("INSERT INTO ocorrencia (rubrica, latitude, longitude, data_hora_crime, bairro, fkRegiao) VALUES (?, ?, ?, ?, ?, ?)",
                     ocorrencia.getRubrica(), ocorrencia.getLatitude(), ocorrencia.getLongitude(), ocorrencia.getDataHoraCrime(), ocorrencia.getBairro(), ocorrencia.getRegiao());
             }
 

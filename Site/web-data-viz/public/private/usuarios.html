@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/style-response.css">
     <link rel="shortcut icon" href="../assets/logo-branco-simples.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <title>Usuários</title>
 </head>
 
@@ -36,7 +37,7 @@
                                 Investigações
                             </button>
                         </a>
-    
+
                         <a href="usuarios.html">
                             <button class="botao botao-azul-claro">
                                 <svg height="27px" viewBox="0 -0.5 25 25" fill="none"
@@ -65,7 +66,7 @@
                                 Usuários
                             </button>
                         </a>
-    
+
                         <div id="btn_notificacao" onclick="mudarModalNotificacao()" class="icon icon-notificacao">
                             <svg fill="#ffffff" width="25px" height="25px" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -78,7 +79,7 @@
                                 </g>
                             </svg>
                         </div>
-    
+
                         <div id="btn_usuario" onclick="mudarModalUsuario()" class="icon icon-usuario" id="icon_usuario">
                             <svg fill="#ffffff" width="45px" height="45px" viewBox="0 0 24 24"
                                 xmlns="http://www.w3.org/2000/svg">
@@ -280,11 +281,27 @@
                     </select>
                 </div>
                 <div class="modal-actions">
+                    <button type="button" class="btn-excluir" onclick="abrirConfirmacaoExclusao()">
+                        <i class="fas fa-trash-alt"></i> Excluir usuário
+                    </button>
                     <button type="button" class="btn-cancel" onclick="mudarModalEditarUsuario()">Cancelar</button>
-                    <button type="submit" class="btn-save" onclick="editarUsuario(idUsuario)">Salvar Alterações</button>
+                    <button type="submit" class="btn-save" onclick="editarUsuario(idUsuario)">Salvar</button>
                 </div>
+
+                <!-- Modal de confirmação de exclusão -->
+                <div id="modal_confirmacao_exclusao" class="modal-confirmacao oculto">
+                    <div class="caixa-confirmacao">
+                        <p>Tem certeza que deseja excluir este usuário?</p>
+                        <div class="btn-modal">
+                            <button class="btn-cancel" onclick="fecharConfirmacaoExclusao()">Cancelar</button>
+                            <button class="btn-confirm" onclick="confirmarExclusaoUsuario()">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </div>
     </div>
 
         <!-- modal de desempenho do usuário -->

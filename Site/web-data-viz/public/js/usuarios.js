@@ -101,6 +101,29 @@ function editarUsuario() {
     // Adicionar fetch para editar o usuário com os dados recebidos
 }
 
+function abrirConfirmacaoExclusao() {
+    document.getElementById('modal_confirmacao_exclusao').classList.remove('oculto');
+}
+
+function fecharConfirmacaoExclusao() {
+    document.getElementById('modal_confirmacao_exclusao').classList.add('oculto');
+}
+
+function confirmarExclusaoUsuario() {
+    // Aqui você coloca sua lógica de exclusão, como chamada para API etc.
+    console.log('Usuário excluído');
+
+    // Fecha o modal de confirmação
+    fecharConfirmacaoExclusao();
+
+    // Fecha também o modal de edição do usuário
+    document.getElementById('modal_edicao_usuario').classList.add('oculto');
+
+    // (Opcional) Redirecionar, atualizar a lista ou mostrar um alerta
+    // window.location.href = '/usuarios'; // se quiser redirecionar
+}
+
+
 function carregarInformacoesDesempenhoUsuario(idUsuario) {
     nome_editar_usuario.value = "exemplo_nome";
     matricula_editar_usuario.value = "exemplo_matricula";

@@ -16,14 +16,24 @@ CREATE TABLE usuario (
 			REFERENCES usuario(idUsuario)
 );
 
+CREATE TABLE regiao (
+	idRegiao INT PRIMARY KEY auto_increment,
+    nome VARCHAR(6),
+    populacao INT
+);
+
 CREATE TABLE ocorrencia (
     idOcorrencia INT PRIMARY KEY AUTO_INCREMENT,
     rubrica VARCHAR(45),
-    regiao VARCHAR(10),
     bairro VARCHAR(70),
     latitude DECIMAL(10, 8),
     longitude DECIMAL(10, 8),
-    data_hora_crime DATETIME
+    data_hora_crime DATETIME,
+    fkRegiao INT,
+    
+    CONSTRAINT fk_ocorr_regiao
+		FOREIGN KEY (fkRegiao)
+			REFERENCES regiao(idRegiao)
 );
 
 CREATE TABLE alerta (
@@ -56,17 +66,21 @@ CREATE TABLE investigacao (
     localidade VARCHAR(45),
     dt_investigacao DATE,
     status_atual VARCHAR(15),
-	regiao VARCHAR(6)
+	fkRegiao INT,
+    
+    CONSTRAINT fk_inv_regiao
+		FOREIGN KEY (fkRegiao)
+			REFERENCES regiao(idRegiao)
 )  AUTO_INCREMENT=100;
 
-CREATE TABLE historico_requisicao (
-	fkRequisicao INT,
+CREATE TABLE historico_investigacao (
+	fkInvestigacao INT,
     fkUsuario INT,
     criador TINYINT,
     
-    CONSTRAINT fk_req_hist
-		FOREIGN KEY (fkRequisicao)
-			REFERENCES requisicao(idRequisicao),
+    CONSTRAINT fk_inv_hist
+		FOREIGN KEY (fkInvestigacao)
+			REFERENCES investigacao(idInvestigacao),
 		
 	CONSTRAINT fk_usuario_hist
 		FOREIGN KEY (fkUsuario)
@@ -78,11 +92,5 @@ CREATE TABLE log (
     dataHora TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     mensagem VARCHAR(255),
     categoria VARCHAR(7)
-);
-
-CREATE TABLE regiao (
-	idRegiao INT PRIMARY KEY auto_increment,
-    nome VARCHAR(6),
-    populacao INT
 );
 
