@@ -54,10 +54,10 @@ function cadastrar(req, res) {
     }
 }
 
-function visualizarRequisicoes(req, res){
+function visualizarInvestigacoes(req, res){
     var fkUsuario = req.body.fkUsuarioServer
 
-    investigacaoModel.visualizarRequisicoes(fkUsuario)
+    investigacaoModel.visualizarInvestigacoes(fkUsuario)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -76,5 +76,5 @@ function visualizarRequisicoes(req, res){
 
 module.exports = {
     cadastrar,
-    visualizarRequisicoes
+    visualizarInvestigacoes
 }
