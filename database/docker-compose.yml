@@ -17,16 +17,6 @@ services:
     networks:
       - vida_network
 
-    frontend:
-      image: vigi-frontend
-      container_name: frontend-container
-      ports:
-        - "8080:8080"
-      depends_on:
-        - mysql
-      networks:
-        - vida_network
-
 volumes:
   db_data:
   
