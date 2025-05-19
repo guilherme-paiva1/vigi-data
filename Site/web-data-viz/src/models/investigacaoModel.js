@@ -47,6 +47,7 @@ function visualizarInvestigacoes(fkUsuario) {
     return database.executar(instrucaoSql);
 }
 
+
 function excluirInvestigacao(id_investigacao) {
     var instrucaoSql = `
         DELETE FROM investigacao
@@ -56,10 +57,24 @@ function excluirInvestigacao(id_investigacao) {
     return database.executar(instrucaoSql);
 }
 
+function visualizarInvestigacaoPolicial(fkUsuario) {
+    var instrucaoSql = `
+    SELECT titulo, descricao, localidade, dt_investigacao, status_atual,
+        (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais
+         FROM investigacao AS inv 
+         JOIN historico_investigacao AS hist 
+            ON inv.idInvestigacao = hist.fkInvestigacao 
+         WHERE 
+	        hist.fkUsuario = ${fkUsuario} AND hist.criador = 0;
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrar,
     registrarHistoricoDoDelegado,
     excluirInvestigacao,
-    visualizarInvestigacoes
-
+    visualizarInvestigacoes,
+    visualizarInvestigacaoPolicial
 };

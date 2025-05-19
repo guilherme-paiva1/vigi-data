@@ -19,4 +19,8 @@ router.post("/excluirInvestigacao", function (req, res) {
     investigacaoController.excluirInvestigacao(req, res);
 });
 
+router.post("/visualizarInvestigacaoPolicial", function (req, res) {
+    investigacaoController.visualizarInvestigacaoPolicial(req, res);
+});
+
 module.exports = router;
