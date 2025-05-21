@@ -94,6 +94,26 @@ function visualizarInvestigacaoPolicial(req, res){
             );
 }
 
+function visualizarInvestigacaoPorId(req, res){
+    var idInvestigacao = req.body.idInvestigacaoServer
+
+    investigacaoModel.visualizarInvestigacaoPorId(idInvestigacao)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao visualizar as investigações! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+}
+
 function exibir(req, res) {
     var id = req.body.idServer;
 
@@ -168,5 +188,6 @@ module.exports = {
     visualizarInvestigacoes,
     exibir,
     excluirInvestigacao,
-    visualizarInvestigacaoPolicial
+    visualizarInvestigacaoPolicial,
+    visualizarInvestigacaoPorId
 }

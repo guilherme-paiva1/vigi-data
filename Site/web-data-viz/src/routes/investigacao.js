@@ -23,4 +23,8 @@ router.post("/visualizarInvestigacaoPolicial", function (req, res) {
     investigacaoController.visualizarInvestigacaoPolicial(req, res);
 });
 
+router.post("/visualizarInvestigacaoPorId", function (req, res) {
+    investigacaoController.visualizarInvestigacaoPorId(req, res);
+});
+
 module.exports = router;

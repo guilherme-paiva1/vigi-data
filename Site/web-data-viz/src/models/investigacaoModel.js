@@ -57,6 +57,19 @@ function excluirInvestigacao(id_investigacao) {
     return database.executar(instrucaoSql);
 }
 
+function visualizarInvestigacaoPorId(id_investigacao) {
+    var instrucaoSql = `
+        SELECT titulo, descricao, localidade, dt_investigacao, status_atual,
+        (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais 
+        FROM investigacao AS inv 
+        JOIN historico_investigacao AS hist 
+            ON inv.idInvestigacao = hist.fkInvestigacao
+        WHERE id = ${id_investigacao};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 function visualizarInvestigacaoPolicial(fkUsuario) {
     var instrucaoSql = `
     SELECT titulo, descricao, localidade, dt_investigacao, status_atual,
@@ -76,5 +89,6 @@ module.exports = {
     registrarHistoricoDoDelegado,
     excluirInvestigacao,
     visualizarInvestigacoes,
-    visualizarInvestigacaoPolicial
+    visualizarInvestigacaoPolicial,
+    visualizarInvestigacaoPorId
 };
