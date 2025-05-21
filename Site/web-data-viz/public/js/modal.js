@@ -21,17 +21,17 @@ var navbar = document.querySelector(".navbar");
 
 btnMenu.addEventListener("click", function () {
   if (navbar.classList.contains("show")) {
-      navbar.classList.remove("show"); // fecha a navbar
-      modalNotificacao.style.display = "none";
-      modalUsuario.style.display = "none";
+    navbar.classList.remove("show"); // fecha a navbar
+    modalNotificacao.style.display = "none";
+    modalUsuario.style.display = "none";
   } else {
-      navbar.classList.add("show"); // abre a navbar
+    navbar.classList.add("show"); // abre a navbar
   }
 });
 
 document.addEventListener("click", function (event) {
   if (!btnMenu.contains(event.target) && !navbar.contains(event.target)) {
-      navbar.classList.remove("show"); // fecha a navbar se clicar fora
+    navbar.classList.remove("show"); // fecha a navbar se clicar fora
   }
 });
 
@@ -68,10 +68,27 @@ function mudarModalNovoUsuario() {
   }
 }
 
+function mudarModalNovaInvestigacao() {
+  const modalNovaInvestigacao = document.getElementById('modal_nova_investigacao');
+  
+  if (modalNovaInvestigacao.style.display == "flex") {
+    modalNovaInvestigacao.style.opacity = "0";
+
+    setTimeout(function() {
+      modalNovaInvestigacao.style.display = "none";
+    }, 100);
+  } else {
+    modalNovaInvestigacao.style.display = "flex";
+    setTimeout(function() {
+      modalNovaInvestigacao.style.opacity = "1";
+    }, 100);
+  }
+}
+
 function mudarModalEditarUsuario(idUsuario) {
   if (modalEditarUsuario.style.display == "flex") {
     modalEditarUsuario.style.opacity = "0";
-    
+
     setTimeout(function () {
       modalEditarUsuario.style.display = "none";
     }, 100);
@@ -181,7 +198,7 @@ function perfilSession() {
     return;
   }
 
-  if(sessionStorage.PERFIL_USUARIO == "policial") {
+  if (sessionStorage.PERFIL_USUARIO == "policial") {
     nav_usuarios.style.display = "none";
     conteudoModal.innerHTML += `
     <a href="#">
