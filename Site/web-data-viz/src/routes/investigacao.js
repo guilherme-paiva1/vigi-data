@@ -27,4 +27,8 @@ router.post("/visualizarInvestigacaoPorId", function (req, res) {
     investigacaoController.visualizarInvestigacaoPorId(req, res);
 });
 
+router.put("/editar", function (req, res) {
+    investigacaoController.editarInvestigacao(req, res);
+});
+
 module.exports = router;

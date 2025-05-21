@@ -57,6 +57,16 @@ function excluirInvestigacao(id_investigacao) {
     return database.executar(instrucaoSql);
 }
 
+function editarInvestigacao(id_investigacao, titulo, descricao, localidade, dt_investigacao, status_atual) {
+    var instrucaoSql = `
+        UPDATE investigacao
+        SET titulo = '${titulo}', descricao = '${descricao}', localidade = '${localidade}', dt_investigacao = '${dt_investigacao}', status_atual = '${status_atual}'
+        WHERE id = ${id_investigacao};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 function visualizarInvestigacaoPorId(id_investigacao) {
     var instrucaoSql = `
         SELECT titulo, descricao, localidade, dt_investigacao, status_atual,
@@ -90,5 +100,6 @@ module.exports = {
     excluirInvestigacao,
     visualizarInvestigacoes,
     visualizarInvestigacaoPolicial,
-    visualizarInvestigacaoPorId
+    visualizarInvestigacaoPorId,
+    editarInvestigacao
 };
