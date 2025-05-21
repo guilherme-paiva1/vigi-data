@@ -16,8 +16,8 @@ public class Conexao {
 
         conn = DriverManager.getConnection(
                 "jdbc:mysql://" + ip + ":3306/vida",
-                "svc_vida",
-                "urubu100"
+                System.getenv("MYSQL_USER"),
+                System.getenv("MYSQL_PASSWORD")
         );
 
         conn.setAutoCommit(false);
