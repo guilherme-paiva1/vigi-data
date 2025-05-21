@@ -1,10 +1,11 @@
 var ocorrenciaModel = require('../models/ocorrenciaModel');
 
-function listar() {
-    let rubrica = req.body.rubrica;
-    let dataFiltro = req.body.dataFiltro;
-    
-    ocorrenciaModel.listar(rubrica, dataFiltro)
+function listar(req, res) {
+    let rubrica = req.body.rubricaServer;
+    let dataDe = req.body.dataDeServer;
+    let dataAte = req.body.dataAteServer;
+
+    ocorrenciaModel.listar(rubrica, dataDe, dataAte)
     .then(
         function (resultado) {
             res.json(resultado);

@@ -149,28 +149,29 @@
             <div class="dashboard-filters">
               <h2>Dashboard</h2>
             <div class="filters">
-                <label>Período:
-                  <select>
-                    <option>Últimos 90 dias</option>
-                    <option>Últimos 30 dias</option>
-                    <option>Últimos 7 dias</option>
-                  </select>
+                <label for="date_periodo_de">De:
+                    <input type="date" value="2025-02-01" min="2024-01-01" max="2025-02-28" id="date_periodo_de" onchange="renderizarMapaDeCalor()">
                 </label>
+                <label for="date_periodo_ate">Até:
+                    <input type="date" value="2025-02-28" min="2024-01-01" max="2025-02-28" id="date_periodo_ate" onchange="renderizarMapaDeCalor()">
+                </label>
+
                 <label>Zona:
-                  <select>
-                    <option>Zona Norte</option>
-                    <option>Zona Sul</option>
-                    <option>Zona Leste</option>
-                    <option>Zona Oeste</option>
-                    <option>Centro</option>
+                  <select id="select_zona" onchange="renderizarMapaDeCalor()">
+                    <option value="all">Todas</option>
+                    <option value="norte">Zona Norte</option>
+                    <option value="sul">Zona Sul</option>
+                    <option value="leste">Zona Leste</option>
+                    <option value="oeste">Zona Oeste</option>
+                    <option value="centro">Centro</option>
                   </select>
                 </label>
                 <label>Tipo de Crime:
-                  <select>
-                    <option>Todos</option>
-                    <option>Furto</option>
-                    <option>Roubo</option>
-                    <option>Tráfico de Drogas</option>
+                  <select id="select_rubrica" onchange="renderizarMapaDeCalor()">
+                    <option value="all">Todos</option>
+                    <option value="furto">Furto</option>
+                    <option value="roubo">Roubo</option>
+                    <option value="tráfico drogas">Tráfico de Drogas</option>
                   </select>
                 </label>
             </div>
