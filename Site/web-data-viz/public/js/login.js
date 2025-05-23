@@ -8,8 +8,8 @@ function entrar() {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            matriculaServer: matricula,
-            senhaServer: senha
+            matricula: matricula,
+            senha: senha
         })
     }).then(function (resposta) {
         if (resposta.ok) {
