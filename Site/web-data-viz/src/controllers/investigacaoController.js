@@ -55,7 +55,7 @@ function cadastrar(req, res) {
 }
 
 function visualizarInvestigacoes(req, res){
-    var fkUsuario = req.body.fkUsuarioServer
+    var fkUsuario = req.body.fkUsuarioServer;
 
     investigacaoModel.visualizarInvestigacoes(fkUsuario)
             .then(
