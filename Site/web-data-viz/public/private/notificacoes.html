@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/style-response.css">
     <link rel="shortcut icon" href="../assets/logo-branco-simples.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title>Usuários</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <title>Notificações</title>
 </head>
 
 <body>
@@ -67,22 +70,21 @@
                             </button>
                         </a>
 
-
-                    <a href="notificacoes.html">
-                        <button class="botao botao-azul-claro">
-                            <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                <g id="SVGRepo_iconCarrier">
-                                    <path
-                                    d="M10,21h4a2,2,0,0,1-4,0ZM3.076,18.383a1,1,0,0,1,.217-1.09L5,15.586V10a7.006,7.006,0,0,1,6-6.92V2a1,1,0,0,1,2,0V3.08A7.006,7.006,0,0,1,19,10v5.586l1.707,1.707A1,1,0,0,1,20,19H4A1,1,0,0,1,3.076,18.383ZM6.414,17H17.586l-.293-.293A1,1,0,0,1,17,16V10A5,5,0,0,0,7,10v6a1,1,0,0,1-.293.707Z">
-                                    </path>
-                                </g>
-                            </svg>
-                            Notificações
-                        </button>
-                    </a>
+                        <a href="notificacoes.html">
+                            <button class="botao botao-azul-claro">
+                                <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M10,21h4a2,2,0,0,1-4,0ZM3.076,18.383a1,1,0,0,1,.217-1.09L5,15.586V10a7.006,7.006,0,0,1,6-6.92V2a1,1,0,0,1,2,0V3.08A7.006,7.006,0,0,1,19,10v5.586l1.707,1.707A1,1,0,0,1,20,19H4A1,1,0,0,1,3.076,18.383ZM6.414,17H17.586l-.293-.293A1,1,0,0,1,17,16V10A5,5,0,0,0,7,10v6a1,1,0,0,1-.293.707Z">
+                                        </path>
+                                    </g>
+                                </svg>
+                                Notificações
+                            </button>
+                        </a>
 
                         <div id="btn_notificacao" onclick="mudarModalNotificacao()" class="icon icon-notificacao">
                             <svg fill="#ffffff" width="25px" height="25px" viewBox="0 0 24 24"
@@ -208,7 +210,9 @@
                             </g>
                         </svg>
                     </div>
-                    <div class="modal-conteudo" id="modal_conteudo"></div>
+                    <div class="modal-conteudo" id="modal_conteudo">
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -219,128 +223,131 @@
         <div class="investigations-container">
             <div class="header-section">
                 <div class="header-text">
-                    <h2>Gestão de Usuários</h2>
-                    <p class="subtitle">Gerencie todos os policiais</p>
+                    <h2>Gestão de Notificações</h2>
+                    <p class="subtitle">Gerencie e crie novas notificações para os usuários</p>
                 </div>
                 <div>
-                <button type="button" class="btn-new-user" onclick="mudarModalNovoUsuario()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    Novo Policial
-                </button>
+                    <button type="button" class="btn-new-user" onclick="mudarModalNovaNotificacao()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Nova Notificação
+                    </button>
                 </div>
             </div>
 
             <div class="search-and-select">
                 <input type="text" placeholder="Buscar policiais..." class="search-input" id="input_filtro_nome">
                 <select class="role-select" id="input_filtro_status">
-                    <option value="todos">Todos os Status</option>
-                    <option value="ativo">Ativo</option>
-                    <option value="inativo">Inativo</option>
+                    <option value="">Filtrar por tipo</option>
+                    <option value="urgente">Urgente</option>
+                    <option value="informativa">Informativa</option>
+                    <option value="sucesso">Sucesso</option>
                 </select>
             </div>
-            <div id="div_lista_usuarios"></div>
+            <div id="div_lista_notificacoes"></div>
         </div>
 
-        <!-- modal de novo usuário -->
-        <div id="modal_novo_usuario" class="modal-criacao">
+        <!-- modal de nova notificacao -->
+        <div id="modal_nova_notificacao" class="modal-criacao">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Novo Policial</h3>
-                    <button class="close-modal" onclick="mudarModalNovoUsuario()">&times;</button>
+                    <h3>Nova Notificação</h3>
+                    <button class="close-modal" onclick="mudarModalNovaNotificacao()">&times;</button>
                 </div>
                 <div class="form-group">
-                    <label for="nome_novo_usuario">Nome Completo*</label>
-                    <input type="text" id="nome_novo_usuario" required placeholder="Digite o nome completo">
+                    <label for="titulo_nova_notificacao">Título da Notificação*</label>
+                    <input type="text" id="nome_novo_usuario" required placeholder="Digite o título da investigação">
                 </div>
                 <div class="form-group">
-                    <label for="matricula_novo_usuario">Matrícula*</label>
-                    <input type="text" id="matricula_novo_usuario" maxlength="7" required placeholder="Digite o número da matrícula">
+                    <label for="matricula_novo_usuario">Descrição*</label>
+                    <input type="text" id="matricula_novo_usuario" maxlength="7" required
+                        placeholder="Digite a descrição da notificação">
                 </div>
                 <div class="form-group">
-                    <label for="email_novo_usuario">E-mail Institucional*</label>
-                    <input type="email" id="email_novo_usuario" required placeholder="exemplo@policia.gov.br">
+                    <label for="email_novo_usuario">Tipo de Notificação*</label>
+                    <select class="role-select" id="input_tipo">
+                        <option value="urgente">Urgente</option>
+                        <option value="informativa">Informativa</option>
+                        <option value="sucesso">Sucesso</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="senha_novo_usuario">Senha*</label>
-                    <input type="password" id="senha_novo_usuario" required placeholder="Digite a senha">
+                    <label for="destino_nova_usuario">Destinatário*</label>
+                    <input type="password" id="senha_novo_usuario" required placeholder="Selecione um destinatário">
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="btn-cancel" onclick="mudarModalNovoUsuario()">Cancelar</button>
-                    <button type="submit" class="btn-save" onclick="adicionarUsuario()">Cadastrar</button>
+                    <button type="button" class="btn-cancel" onclick="mudarModalNovaNotificacao()">Cancelar</button>
+                    <button type="submit" class="btn-save" onclick="adicionarNotificacao()">Cadastrar</button>
                 </div>
             </div>
         </div>
 
-        <!-- modal de editar usuário -->
-        <div id="modal_editar_usuario" class="modal-edicao">
+        <!-- modal de editar notificação -->
+        <div id="modal_editar_notificacao" class="modal-edicao">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Editar Policial</h3>
-                    <button class="close-modal" onclick="mudarModalEditarUsuario()">&times;</button>
+                    <h3>Editar Notificação</h3>
+                    <button class="close-modal" onclick="mudarModalEditarNotificacao()">&times;</button>
                 </div>
-                <input type="hidden" id="id_usuario_editar">
+                <input type="hidden" id="id_notificacao_editar">
                 <div class="form-group">
-                    <label for="nome_editar_usuario">Nome Completo*</label>
-                    <input type="text" id="nome_editar_usuario" required>
-                </div>
-                <div class="form-group">
-                    <label for="matricula_editar_usuario">Matrícula*</label>
-                    <input type="text" id="matricula_editar_usuario" disabled readonly>
+                    <label for="titulo_editar_notificacao">Título da Notificação*</label>
+                    <input type="text" id="titulo_editar_notificacao" required
+                        placeholder="Digite o título da notificação">
                 </div>
                 <div class="form-group">
-                    <label for="email_editar_usuario">E-mail Institucional*</label>
-                    <input type="email" id="email_editar_usuario" required>
+                    <label for="descricao_editar_notificacao">Descrição*</label>
+                    <input type="text" id="descricao_editar_notificacao" required
+                        placeholder="Digite a descrição da notificação">
                 </div>
                 <div class="form-group">
-                    <label for="status_editar_usuario">Status*</label>
-                    <select id="status_editar_usuario" required>
+                    <label for="tipo_editar_notificacao">Tipo de Notificação*</label>
+                    <select class="role-select" id="tipo_editar_notificacao" required>
+                        <option value="urgente">Urgente</option>
+                        <option value="informativa">Informativa</option>
+                        <option value="sucesso">Sucesso</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="destinatario_editar_notificacao">Destinatário*</label>
+                    <input type="text" id="destinatario_editar_notificacao" required
+                        placeholder="Selecione um destinatário">
+                </div>
+                <div class="form-group">
+                    <label for="status_editar_notificacao">Status*</label>
+                    <select id="status_editar_notificacao" required>
                         <option value="ativo">Ativo</option>
                         <option value="inativo">Inativo</option>
                     </select>
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-excluir" onclick="abrirConfirmacaoExclusao()">
-                        <i class="fas fa-trash-alt"></i> Excluir usuário
+                        <i class="fas fa-trash-alt"></i> Excluir notificação
                     </button>
-                    <button type="button" class="btn-cancel" onclick="mudarModalEditarUsuario()">Cancelar</button>
-                    <button type="submit" class="btn-save" onclick="editarUsuario()">Salvar</button>
+                    <button type="button" class="btn-cancel" onclick="mudarModalEditarNotificacao()">Cancelar</button>
+                    <button type="submit" class="btn-save" onclick="editarNotificacao()">Salvar</button>
                 </div>
 
                 <!-- Modal de confirmação de exclusão -->
-                <div id="modal_confirmacao_exclusao" class="modal-confirmacao oculto">
+                <div id="modal_confirmacao_exclusao_notificacao" class="modal-confirmacao oculto">
                     <div class="caixa-confirmacao">
-                        <p>Tem certeza que deseja excluir este usuário?</p>
+                        <p>Tem certeza que deseja excluir esta notificação?</p>
                         <div class="btn-modal">
                             <button class="btn-cancel" onclick="fecharConfirmacaoExclusao()">Cancelar</button>
-                            <button class="btn-confirm" onclick="confirmarExclusaoUsuario()">Confirmar</button>
+                            <button class="btn-confirm" onclick="confirmarExclusaoNotificacao()">Confirmar</button>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
     </div>
-
-    <!-- modal de desempenho do usuário -->
-    <div id="modal_desempenho_usuario" class="modal-desempenho">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Desempenho do Policial</h3>
-                <button class="close-modal" onclick="mudarModalDesempenhoUsuario()">&times;</button>
-            </div>
-            <div class="modal-actions">
-                <button type="button" class="btn-cancel" onclick="mudarModalDesempenhoUsuario()">Fechar</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="../js/usuarios.js"></script>
-    <script src="../js/modal.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
+
 </html>
+<script src="../js/notificacoes.js"></script>
+<script src="../js/modal.js">
+</script>

@@ -1963,3 +1963,329 @@ button {
     color: #959595;
     font-family: "Inter", sans-serif;
 }
+
+
+/* Estilo base do modal - deve começar oculto */
+.modal-criacao, 
+.modal-edicao {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Quando o modal estiver visível */
+.modal-criacao.visible,
+.modal-edicao.visible {
+    display: flex;
+    opacity: 1;
+}
+
+/* Conteúdo do modal */
+.modal-criacao .modal-content,
+.modal-edicao .modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Cabeçalho do modal */
+.modal-criacao .modal-header,
+.modal-edicao .modal-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-criacao .modal-header h3,
+.modal-edicao .modal-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: rgb(44, 62, 80);
+}
+
+.modal-criacao .close-modal,
+.modal-edicao .close-modal {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+}
+
+/* Corpo do formulário */
+.modal-criacao .form-group,
+.modal-edicao .form-group {
+    padding: 15px 20px;
+}
+
+.modal-criacao .form-group label,
+.modal-edicao .form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #444;
+}
+
+.modal-criacao .form-group input,
+.modal-criacao .form-group select,
+.modal-edicao .form-group input,
+.modal-edicao .form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.modal-criacao .form-group input:focus,
+.modal-criacao .form-group select:focus,
+.modal-edicao .form-group input:focus,
+.modal-edicao .form-group select:focus {
+    border-color: #4a90e2;
+    outline: none;
+}
+
+/* Ações do modal */
+.modal-criacao .modal-actions,
+.modal-edicao .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+}
+
+/* Botões */
+.btn-cancel {
+    padding: 8px 16px;
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-cancel:hover {
+    background-color: #e9e9e9;
+}
+
+.btn-save {
+    padding: 8px 16px;
+    background-color: #4a90e2;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-save:hover {
+    background-color: #3a7bc8;
+}
+
+.btn-excluir {
+    padding: 8px 16px;
+    background-color: #f44336;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-right: auto;
+}
+
+.btn-excluir:hover {
+    background-color: #d32f2f;
+}
+
+/* Modal de confirmação */
+.modal-confirmacao {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-confirmacao.oculto {
+    display: none;
+}
+
+.caixa-confirmacao {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.caixa-confirmacao p {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.btn-modal {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-confirm {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-confirm:hover {
+    background-color: #388E3C;
+}
+
+/* Estilos para os cards de notificação */
+.notification-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.notification-card-header {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-icon {
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-icon.urgente {
+    color: #f44336;
+}
+
+.notification-icon.informativa {
+    color: #2196F3;
+}
+
+.notification-icon.sucesso {
+    color: #4CAF50;
+}
+
+.notification-info {
+    flex: 1;
+}
+
+.notification-title-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notification-type {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.notification-type.urgente {
+    background-color: #ffebee;
+    color: #f44336;
+}
+
+.notification-type.informativa {
+    background-color: #e3f2fd;
+    color: #2196F3;
+}
+
+.notification-type.sucesso {
+    background-color: #e8f5e9;
+    color: #4CAF50;
+}
+
+.notification-date {
+    font-size: 0.85rem;
+    color: #757575;
+}
+
+.notification-details {
+    padding: 15px;
+    color: #424242;
+}
+
+.notification-actions {
+    padding: 10px 15px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.btn-edit, .btn-delete {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-edit {
+    background-color: #e3f2fd;
+    border: 1px solid #bbdefb;
+    color: #1976D2;
+}
+
+.btn-edit:hover {
+    background-color: #bbdefb;
+}
+
+.btn-delete {
+    background-color: #ffebee;
+    border: 1px solid #ffcdd2;
+    color: #f44336;
+}
+
+.btn-delete:hover {
+    background-color: #ffcdd2;
+}
