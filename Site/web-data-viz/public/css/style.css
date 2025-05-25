@@ -1636,6 +1636,7 @@ button {
     align-items: center;
     border-radius: 10px;
 }
+
 .div-periodo label {
     height: 100%;
     width: fit-content;
@@ -1875,12 +1876,59 @@ button {
     stroke: white;
 }
 
+.chart-loading {
+    color: #6B7280;
+    background: #f9fafb;
+    border-radius: 8px;
+    width: 100%;
+    height: 200px;
+    /* ajuste conforme o necessário */
+}
+
+.chart-wrapper {
+    position: relative;
+}
+
+.spinner-overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    z-index: 10;
+}
+
+.spinner {
+    align-self: center;
+    width: 32px;
+    height: 32px;
+    border: 4px solid rgba(0, 30, 255, 0.7);
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 /* Estilo base do modal - deve começar oculto */
 #modal_nova_investigacao {
     display: none;
     position: fixed;
     opacity: 0;
-    transition: opacity 0.1s esa;
+    transition: opacity 0.1s ease;
     top: 0;
     left: 0;
     width: 100%;
