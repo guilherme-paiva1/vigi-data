@@ -323,6 +323,10 @@ body {
     justify-self: end;
 }
 
+#nome_usuario {
+    color: white;
+}
+
 .modal-header {
     display: flex;
     align-items: center;
@@ -1703,6 +1707,7 @@ button {
 }
 
 .legend-item {
+    color: black;
     display: flex;
     flex-direction: column;
     align-items: center;
