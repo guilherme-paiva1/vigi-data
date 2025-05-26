@@ -17,9 +17,19 @@ services:
     networks:
       - vida_network
 
+  frontend:
+    image: vigi-frontend:latest
+    container_name: vigi-frontend
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - vida_network
+
 volumes:
   db_data:
-  
+
 networks:
   vida_network:
     driver: bridge
