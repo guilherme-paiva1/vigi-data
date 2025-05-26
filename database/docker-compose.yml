@@ -32,4 +32,5 @@ volumes:
 
 networks:
   vida_network:
+    name: vida_network
     driver: bridge
