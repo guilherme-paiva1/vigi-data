@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/style-response.css">
+    <link rel="shortcut icon" href="../assets/logo-branco-simples.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <title>Notificações</title>
+</head>
+
+<body>
+    <div class="banner-main logado">
+        <div class="header">
+            <div class="container-navbar">
+                <div class="logo">
+                    <a href="">
+                        <img src="../assets/logo-branco.svg" alt="">
+                    </a>
+                </div>
+                <div class="menu">
+                    <div class="navbar">
+                        <a href="investigacoes.html">
+                            <button class="botao botao-azul-claro">
+                                <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M21,4a1,1,0,0,0-1-1H17V2a1,1,0,0,0-1-1H8A1,1,0,0,0,7,2V3H4A1,1,0,0,0,3,4V22a1,1,0,0,0,1,1H20a1,1,0,0,0,1-1ZM9,3h6V5H9ZM19,21H5V5H7V6A1,1,0,0,0,8,7h8a1,1,0,0,0,1-1V5h2Zm-6-3a1,1,0,0,1-1,1H8a1,1,0,0,1,0-2h4A1,1,0,0,1,13,18Zm4-4a1,1,0,0,1-1,1H8a1,1,0,0,1,0-2h8A1,1,0,0,1,17,14Zm0-4a1,1,0,0,1-1,1H8A1,1,0,0,1,8,9h8A1,1,0,0,1,17,10Z">
+                                        </path>
+                                    </g>
+                                </svg>
+                                Investigações
+                            </button>
+                        </a>
+
+                        <a href="usuarios.html">
+                            <button class="botao botao-azul-claro">
+                                <svg height="27px" viewBox="0 -0.5 25 25" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M12.5 7.333C12.5 8.62148 11.4555 9.666 10.167 9.666C8.8785 9.666 7.83398 8.62148 7.83398 7.333C7.83398 6.04452 8.8785 5 10.167 5C11.4555 5 12.5 6.04452 12.5 7.333Z"
+                                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M14.833 15.733C14.833 17.533 12.744 19 10.166 19C7.588 19 5.5 17.537 5.5 15.733C5.5 13.929 7.589 12.467 10.167 12.467C12.745 12.467 14.833 13.929 14.833 15.733Z"
+                                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M17.439 9.51102C17.439 10.2842 16.8122 10.911 16.039 10.911C15.2658 10.911 14.639 10.2842 14.639 9.51102C14.639 8.73782 15.2658 8.11102 16.039 8.11102C16.4103 8.11102 16.7664 8.25852 17.0289 8.52107C17.2915 8.78362 17.439 9.13972 17.439 9.51102Z"
+                                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path
+                                            d="M16.7 18.067C18.1138 18.1831 19.3596 17.1445 19.5 15.733C19.3591 14.3218 18.1134 13.2839 16.7 13.4"
+                                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </g>
+                                </svg>
+                                Usuários
+                            </button>
+                        </a>
+
+                        <a href="notificacoes.html">
+                            <button class="botao botao-azul-claro">
+                                <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path
+                                            d="M10,21h4a2,2,0,0,1-4,0ZM3.076,18.383a1,1,0,0,1,.217-1.09L5,15.586V10a7.006,7.006,0,0,1,6-6.92V2a1,1,0,0,1,2,0V3.08A7.006,7.006,0,0,1,19,10v5.586l1.707,1.707A1,1,0,0,1,20,19H4A1,1,0,0,1,3.076,18.383ZM6.414,17H17.586l-.293-.293A1,1,0,0,1,17,16V10A5,5,0,0,0,7,10v6a1,1,0,0,1-.293.707Z">
+                                        </path>
+                                    </g>
+                                </svg>
+                                Notificações
+                            </button>
+                        </a>
+
+                        <div id="btn_notificacao" onclick="mudarModalNotificacao()" class="icon icon-notificacao">
+                            <svg fill="#ffffff" width="25px" height="25px" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M10,21h4a2,2,0,0,1-4,0ZM3.076,18.383a1,1,0,0,1,.217-1.09L5,15.586V10a7.006,7.006,0,0,1,6-6.92V2a1,1,0,0,1,2,0V3.08A7.006,7.006,0,0,1,19,10v5.586l1.707,1.707A1,1,0,0,1,20,19H4A1,1,0,0,1,3.076,18.383ZM6.414,17H17.586l-.293-.293A1,1,0,0,1,17,16V10A5,5,0,0,0,7,10v6a1,1,0,0,1-.293.707Z">
+                                    </path>
+                                </g>
+                            </svg>
+                        </div>
+
+                        <div id="btn_usuario" onclick="mudarModalUsuario()" class="icon icon-usuario" id="icon_usuario">
+                            <svg fill="#ffffff" width="45px" height="45px" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M12,1A11,11,0,1,0,23,12,11.013,11.013,0,0,0,12,1Zm0,20a9.641,9.641,0,0,1-5.209-1.674,7,7,0,0,1,10.418,0A9.167,9.167,0,0,1,12,21Zm6.694-3.006a8.98,8.98,0,0,0-13.388,0,9,9,0,1,1,13.388,0ZM12,6a4,4,0,1,0,4,4A4,4,0,0,0,12,6Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,12Z">
+                                    </path>
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div id="btn_menu"><img src="../assets/icons/hamburger-menu.svg" alt=""></div>
+            </div>
+
+            <div class="grupo-modal">
+                <div id="modal_notificacao" class="modal">
+                    <div class="modal-header" id="modal_header">
+                        <h3>Notificações</h3>
+                        <svg class="fechar" onclick="mudarModalNotificacao()" viewBox="0 0 24 24" width="25px"
+                            height="25px" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#8a8a8a">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <g id="Edit / Close_Circle">
+                                    <path id="Vector"
+                                        d="M9 9L11.9999 11.9999M11.9999 11.9999L14.9999 14.9999M11.9999 11.9999L9 14.9999M11.9999 11.9999L14.9999 9M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
+                                        stroke="#ababab" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="notificacao" id="notificacao">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24" width="25px" height="25px" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M11.9998 9.00023V13.0002M11.9998 17.0002H12.0098M10.6151 3.89195L2.39019 18.0986C1.93398 18.8866 1.70588 19.2806 1.73959 19.6039C1.769 19.886 1.91677 20.1423 2.14613 20.309C2.40908 20.5002 2.86435 20.5002 3.77487 20.5002H20.2246C21.1352 20.5002 21.5904 20.5002 21.8534 20.309C22.0827 20.1423 22.2305 19.886 22.2599 19.6039C22.2936 19.2806 22.0655 18.8866 21.6093 18.0986L13.3844 3.89195C12.9299 3.10679 12.7026 2.71421 12.4061 2.58235C12.1474 2.46734 11.8521 2.46734 11.5935 2.58235C11.2969 2.71421 11.0696 3.10679 10.6151 3.89195Z"
+                                        stroke="#F30000" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="notificacao-texto">
+                            <h4>Título</h4>
+                            <p>Conteúdo da notificação</p>
+                        </div>
+                    </div>
+                    <div class="notificacao">
+                        <div class="icon">
+                            <svg viewBox="0 0 24 24" width="25px" height="25px" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                <g id="SVGRepo_iconCarrier">
+                                    <path
+                                        d="M11.9998 9.00023V13.0002M11.9998 17.0002H12.0098M10.6151 3.89195L2.39019 18.0986C1.93398 18.8866 1.70588 19.2806 1.73959 19.6039C1.769 19.886 1.91677 20.1423 2.14613 20.309C2.40908 20.5002 2.86435 20.5002 3.77487 20.5002H20.2246C21.1352 20.5002 21.5904 20.5002 21.8534 20.309C22.0827 20.1423 22.2305 19.886 22.2599 19.6039C22.2936 19.2806 22.0655 18.8866 21.6093 18.0986L13.3844 3.89195C12.9299 3.10679 12.7026 2.71421 12.4061 2.58235C12.1474 2.46734 11.8521 2.46734 11.5935 2.58235C11.2969 2.71421 11.0696 3.10679 10.6151 3.89195Z"
+                                        stroke="#F30000" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="notificacao-texto">
+                            <h4>Título</h4>
+                            <p>Conteúdo da notificação</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="modal_usuario" class="modal">
+                    <div class="modal-header header-azul">
+                        <svg width="60px" height="60px" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <path opacity="0.5"
+                                    d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z"
+                                    fill="#ffffff"></path>
+                                <path
+                                    d="M16.807 19.0112C15.4398 19.9504 13.7841 20.5 12 20.5C10.2159 20.5 8.56023 19.9503 7.193 19.0111C6.58915 18.5963 6.33109 17.8062 6.68219 17.1632C7.41001 15.8302 8.90973 15 12 15C15.0903 15 16.59 15.8303 17.3178 17.1632C17.6689 17.8062 17.4108 18.5964 16.807 19.0112Z"
+                                    fill="#ffffff"></path>
+                                <path
+                                    d="M12 12C13.6569 12 15 10.6569 15 9C15 7.34315 13.6569 6 12 6C10.3432 6 9.00004 7.34315 9.00004 9C9.00004 10.6569 10.3432 12 12 12Z"
+                                    fill="#ffffff"></path>
+                            </g>
+                        </svg>
+                        <div class="conteudo-user">
+                            <h3><span id="nome_usuario"></span></h3>
+                            <p>Distintivo: <span id="matricula_usuario"></span> </p>
+                            <p><span id="perfil_usuario"></span> </p>
+                        </div>
+                        <svg id="btn_fechar" class="fechar" onclick="mudarModalUsuario()" viewBox="0 0 24 24"
+                            width="25px" height="25px" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#8a8a8a">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                                <g id="Edit / Close_Circle">
+                                    <path id="Vector"
+                                        d="M9 9L11.9999 11.9999M11.9999 11.9999L14.9999 14.9999M11.9999 11.9999L9 14.9999M11.9999 11.9999L14.9999 9M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
+                                        stroke="#636b9b" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round"></path>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="modal-conteudo" id="modal_conteudo">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Banner e filtro -->
+    <div class="container investigacoes">
+        <div class="investigations-container">
+            <div class="header-section">
+                <div class="header-text">
+                    <h2>Gestão de Notificações</h2>
+                    <p class="subtitle">Gerencie e crie novas notificações para os usuários</p>
+                </div>
+                <div>
+                    <button type="button" class="btn-new-user" onclick="mudarModalNovaNotificacao()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Nova Notificação
+                    </button>
+                </div>
+            </div>
+
+            <div class="search-and-select">
+                <input type="text" placeholder="Buscar policiais..." class="search-input" id="input_filtro_nome">
+                <select class="role-select" id="input_filtro_status">
+                    <option value="">Filtrar por tipo</option>
+                    <option value="urgente">Urgente</option>
+                    <option value="informativa">Informativa</option>
+                    <option value="sucesso">Sucesso</option>
+                </select>
+            </div>
+            <div id="div_lista_notificacoes"></div>
+        </div>
+
+        <!-- modal de nova notificacao -->
+        <div id="modal_nova_notificacao" class="modal-criacao">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Nova Notificação</h3>
+                    <button class="close-modal" onclick="mudarModalNovaNotificacao()">&times;</button>
+                </div>
+                <div class="form-group">
+                    <label for="titulo_nova_notificacao">Título da Notificação*</label>
+                    <input type="text" id="nome_novo_usuario" required placeholder="Digite o título da investigação">
+                </div>
+                <div class="form-group">
+                    <label for="matricula_novo_usuario">Descrição*</label>
+                    <input type="text" id="matricula_novo_usuario" maxlength="7" required
+                        placeholder="Digite a descrição da notificação">
+                </div>
+                <div class="form-group">
+                    <label for="email_novo_usuario">Tipo de Notificação*</label>
+                    <select class="role-select" id="input_tipo">
+                        <option value="urgente">Urgente</option>
+                        <option value="informativa">Informativa</option>
+                        <option value="sucesso">Sucesso</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="destino_nova_usuario">Destinatário*</label>
+                    <input type="password" id="senha_novo_usuario" required placeholder="Selecione um destinatário">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-cancel" onclick="mudarModalNovaNotificacao()">Cancelar</button>
+                    <button type="submit" class="btn-save" onclick="adicionarNotificacao()">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- modal de editar notificação -->
+        <div id="modal_editar_notificacao" class="modal-edicao">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Editar Notificação</h3>
+                    <button class="close-modal" onclick="mudarModalEditarNotificacao()">&times;</button>
+                </div>
+                <input type="hidden" id="id_notificacao_editar">
+                <div class="form-group">
+                    <label for="titulo_editar_notificacao">Título da Notificação*</label>
+                    <input type="text" id="titulo_editar_notificacao" required
+                        placeholder="Digite o título da notificação">
+                </div>
+                <div class="form-group">
+                    <label for="descricao_editar_notificacao">Descrição*</label>
+                    <input type="text" id="descricao_editar_notificacao" required
+                        placeholder="Digite a descrição da notificação">
+                </div>
+                <div class="form-group">
+                    <label for="tipo_editar_notificacao">Tipo de Notificação*</label>
+                    <select class="role-select" id="tipo_editar_notificacao" required>
+                        <option value="urgente">Urgente</option>
+                        <option value="informativa">Informativa</option>
+                        <option value="sucesso">Sucesso</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="destinatario_editar_notificacao">Destinatário*</label>
+                    <input type="text" id="destinatario_editar_notificacao" required
+                        placeholder="Selecione um destinatário">
+                </div>
+                <div class="form-group">
+                    <label for="status_editar_notificacao">Status*</label>
+                    <select id="status_editar_notificacao" required>
+                        <option value="ativo">Ativo</option>
+                        <option value="inativo">Inativo</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-excluir" onclick="abrirConfirmacaoExclusao()">
+                        <i class="fas fa-trash-alt"></i> Excluir notificação
+                    </button>
+                    <button type="button" class="btn-cancel" onclick="mudarModalEditarNotificacao()">Cancelar</button>
+                    <button type="submit" class="btn-save" onclick="editarNotificacao()">Salvar</button>
+                </div>
+
+                <!-- Modal de confirmação de exclusão -->
+                <div id="modal_confirmacao_exclusao_notificacao" class="modal-confirmacao oculto">
+                    <div class="caixa-confirmacao">
+                        <p>Tem certeza que deseja excluir esta notificação?</p>
+                        <div class="btn-modal">
+                            <button class="btn-cancel" onclick="fecharConfirmacaoExclusao()">Cancelar</button>
+                            <button class="btn-confirm" onclick="confirmarExclusaoNotificacao()">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html>
+<script src="../js/notificacoes.js"></script>
+<script src="../js/modal.js">
+</script>

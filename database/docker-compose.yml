@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: meu-container
+    environment:
+      MYSQL_ROOT_PASSWORD: urubu100
+      MYSQL_DATABASE: vida
+      MYSQL_USER: svc_vida
+      MYSQL_PASSWORD: urubu100
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./script:/docker-entrypoint-initdb.d
+    networks:
+      - vida_network
+
+volumes:
+  db_data:
+  
+networks:
+  vida_network:
+    driver: bridge

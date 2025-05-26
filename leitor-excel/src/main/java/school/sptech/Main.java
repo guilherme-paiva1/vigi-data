@@ -2,6 +2,10 @@ package school.sptech;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.io.IOException;
+
+import school.sptech.exceptions.SemNovasOcorrenciasException;
+import school.sptech.s3.S3Downloader;
+import school.sptech.s3.S3Provider;
 import software.amazon.awssdk.services.s3.S3Client;
 import java.io.InputStream;
 import java.net.InetAddress;
