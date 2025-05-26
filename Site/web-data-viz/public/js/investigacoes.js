@@ -3,7 +3,6 @@ window.onload = function () {
 }
 
 function adicionarInvestigacao() {
-    var form_inve = document.getElementById("form_inv");
     var titulo = document.getElementById("titulo_investigacao").value;
     var descricao = document.getElementById("descricao_investigacao").value;
     var dt_investigacao = document.getElementById("data_investigacao").value;
@@ -24,12 +23,11 @@ function adicionarInvestigacao() {
         }),
     })
         .then(function (resposta) {
-            console.log("resposta: ", resposta)
-
             if (resposta.ok) {
-                carregarInvestigacoes();
-                document.getElementById("form_inv").reset();
-                return false;
+                setTimeout(() => {
+                    carregarInvestigacoes();
+                    document.getElementById("form_investigacao").reset();
+                }, 1000)
 
             }
         })
