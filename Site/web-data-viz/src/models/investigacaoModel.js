@@ -95,6 +95,21 @@ function visualizarInvestigacaoPolicial(fkUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function visualizarHistoricoPorMes(id) {
+    var instrucaoSql = `
+    SELECT 
+    MONTH(i.dt_investigacao) AS mes,
+    COUNT(*) AS total_investigacoes
+    FROM historico_investigacao hi
+    JOIN investigacao i ON hi.fkInvestigacao = i.idInvestigacao
+    WHERE hi.fkUsuario = ${id}
+    GROUP BY mes
+    ORDER BY mes;
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrar,
     registrarHistoricoDoDelegado,
@@ -102,5 +117,6 @@ module.exports = {
     visualizarInvestigacoes,
     visualizarInvestigacaoPolicial,
     visualizarInvestigacaoPorId,
-    editarInvestigacao
+    editarInvestigacao,
+    visualizarHistoricoPorMes
 };
