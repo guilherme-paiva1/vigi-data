@@ -2,6 +2,14 @@ window.onload = function () {
     carregarInvestigacoes();
 }
 
+function abrirConfirmacaoExclusaoInvestigacao() {
+    document.getElementById('modal_confirmacao_exclusao_investigacao').classList.remove('oculto');
+}
+
+function fecharConfirmacaoExclusao() {
+    document.getElementById('modal_confirmacao_exclusao_investigacao').classList.add('oculto');
+}
+
 function adicionarInvestigacao() {
     var titulo = document.getElementById("titulo_investigacao").value;
     var descricao = document.getElementById("descricao_investigacao").value;
@@ -32,6 +40,78 @@ function adicionarInvestigacao() {
             }
         })
 
+}
+
+function carregarInformacoesEditarInvestigacao(idInvestigacao) {
+    var editar_id_investigacao = document.getElementById("editar_id_investigacao");
+    var editar_titulo_investigacao = document.getElementById("editar_titulo_investigacao");
+    var editar_descricao_investigacao = document.getElementById("editar_descricao_investigacao");
+    var editar_data_investigacao = document.getElementById("editar_data_investigacao");
+    var editar_localizacao_investigacao = document.getElementById("editar_localizacao_investigacao");
+    var editar_status_investigacao = document.getElementById("editar_status_investigacao");
+
+
+    fetch('/investigacao/visualizarInvestigacaoPorId', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idInvestigacaoServer: idInvestigacao
+        })
+    }).then(function (resposta) {
+        resposta.json().then(json => {
+            var investigacao = json[0];
+
+            editar_id_investigacao.value = investigacao.idInvestigacao;
+            editar_titulo_investigacao.value = investigacao.titulo;
+            editar_descricao_investigacao.value = investigacao.descricao;
+            editar_data_investigacao.value = investigacao.dt_investigacao.slice(0, 10);
+            editar_localizacao_investigacao.value = investigacao.localidade;
+            editar_status_investigacao.value = investigacao.status_atual;
+        });
+    });
+}
+
+
+function editarInvestigacao() {
+    const modalEditarInvestigacao = document.getElementById('modal_editar_investigacao');
+    var editar_id_investigacao = document.getElementById("editar_id_investigacao");
+    var editar_titulo_investigacao = document.getElementById("editar_titulo_investigacao");
+    var editar_descricao_investigacao = document.getElementById("editar_descricao_investigacao");
+    var editar_data_investigacao = document.getElementById("editar_data_investigacao");
+    var editar_localizacao_investigacao = document.getElementById("editar_localizacao_investigacao");
+    var editar_status_investigacao = document.getElementById("editar_status_investigacao");
+
+
+    fetch("../investigacao/editarInvestigacao", {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idServer: editar_id_investigacao.value,
+            tituloServer: editar_titulo_investigacao.value,
+            descricaoServer: editar_descricao_investigacao.value,
+            localidadeServer: editar_localizacao_investigacao.value,
+            dt_investigacaoServer: editar_data_investigacao.value,
+            status_atualServer: editar_status_investigacao.value
+        })
+    }).then(function (resposta) {
+        console.log("fetch")
+
+        if (resposta.ok) {
+            setTimeout(() => {
+                carregarInvestigacoes();
+
+                modalEditarInvestigacao.style.opacity = "0";
+
+                setTimeout(function () {
+                    modalEditarInvestigacao.style.display = "none";
+                }, 100);
+            }, 1000)
+        }
+    })
 }
 
 function carregarInvestigacoes() {
@@ -73,6 +153,7 @@ function carregarInvestigacoes() {
                     <td>${qtd_policiais}</td>
                     <td>
                         <div class="actions">
+                            <button class="botao botao-azul-claro" onclick="mudarModalEditarInvestigacao(${idInvestigacao})">Editar</button>
                             <a href="#" class="botao botao-secundario">Ver Detalhes</a>
                         </div>
                     </td>

@@ -6,7 +6,6 @@ function cadastrar(req, res) {
     var descricao = req.body.descricaoServer
     var localidade = req.body.localidadeServer
     var dt_investigacao = req.body.dt_investigacaoServer
-    // var incidencia = req.body.incidenciaServer
     var fkDelegado = req.body.fkDelegadoServer
 
     if (titulo == undefined) {
@@ -121,7 +120,7 @@ function exibir(req, res) {
         res.status(400).send("id inválido.");
     } else {
 
-        investigacoesModel.exibir(id)
+        investigacaoModel.exibir(id)
             .then(
                 function (resultadoInvestigacoes) {
                     if (resultadoInvestigacoes.length >= 1) {
@@ -192,7 +191,7 @@ function editarInvestigacao(req, res) {
     } else if (status_atual == undefined) {
         res.status(400).send("status_atual inválido.");
     } else {
-        investigacoesModel.editarInvestigacao(id, titulo, descricao, localidade, dt_investigacao, status_atual)
+        investigacaoModel.editarInvestigacao(id, titulo, descricao, localidade, dt_investigacao, status_atual)
             .then(
                 function (resultado) {
                     res.json(resultado);

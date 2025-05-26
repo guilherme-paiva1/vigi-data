@@ -85,6 +85,25 @@ function mudarModalNovaInvestigacao() {
   }
 }
 
+function mudarModalEditarInvestigacao(idInvestigacao) {
+  const modalEditarInvestigacao = document.getElementById('modal_editar_investigacao');
+  
+  if (modalEditarInvestigacao.style.display == "flex") {
+    modalEditarInvestigacao.style.opacity = "0";
+
+    setTimeout(function() {
+      modalEditarInvestigacao.style.display = "none";
+    }, 100);
+  } else {
+    carregarInformacoesEditarInvestigacao(idInvestigacao);
+
+    modalEditarInvestigacao.style.display = "flex";
+    setTimeout(function() {
+      modalEditarInvestigacao.style.opacity = "1";
+    }, 100);
+  }
+}
+
 function mudarModalEditarUsuario(idUsuario) {
   if (modalEditarUsuario.style.display == "flex") {
     modalEditarUsuario.style.opacity = "0";

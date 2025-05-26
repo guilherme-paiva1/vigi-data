@@ -62,7 +62,7 @@ function editarInvestigacao(id_investigacao, titulo, descricao, localidade, dt_i
     var instrucaoSql = `
         UPDATE investigacao
         SET titulo = '${titulo}', descricao = '${descricao}', localidade = '${localidade}', dt_investigacao = '${dt_investigacao}', status_atual = '${status_atual}'
-        WHERE id = ${id_investigacao};
+        WHERE idInvestigacao = ${id_investigacao};
     `;
 
     return database.executar(instrucaoSql);
@@ -70,12 +70,12 @@ function editarInvestigacao(id_investigacao, titulo, descricao, localidade, dt_i
 
 function visualizarInvestigacaoPorId(id_investigacao) {
     var instrucaoSql = `
-        SELECT titulo, descricao, localidade, dt_investigacao, status_atual,
+        SELECT idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
         (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais 
         FROM investigacao AS inv 
         JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao
-        WHERE id = ${id_investigacao};
+        WHERE idInvestigacao = ${id_investigacao};
     `;
 
     return database.executar(instrucaoSql);
