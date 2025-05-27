@@ -2,8 +2,8 @@ version: '3.8'
 
 services:
   mysql:
-    image: mysql:8.0
-    container_name: meu-container
+    image: imagem-sql
+    container_name: container-sql
     environment:
       MYSQL_ROOT_PASSWORD: urubu100
       MYSQL_DATABASE: vida
@@ -18,14 +18,26 @@ services:
       - vida_network
 
   frontend:
-    image: vigi-frontend:latest
-    container_name: vigi-frontend
+    build:
+      context: ../Site
+      dockerfile: Dockerfile
+    image: site-imagem
+    container_name: container-site
     depends_on:
       - mysql
     ports:
       - "8080:8080"
     networks:
       - vida_network
+    environment:
+      AMBIENTE_PROCESSO: producao
+      DB_HOST: container-sql
+      DB_USER: svc_vida
+      DB_PASSWORD: urubu100
+      DB_DATABASE: vida
+      DB_PORT: 3306
+      APP_PORT: 8080
+      APP_HOST: 0.0.0.0
 
 volumes:
   db_data:

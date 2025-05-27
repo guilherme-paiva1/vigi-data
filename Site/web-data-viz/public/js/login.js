@@ -2,7 +2,7 @@ function entrar() {
     var matricula = ipt_matricula.value; 
     var senha = ipt_senha.value; 
 
-    fetch("/usuarios/entrar", {
+    fetch("http://44.219.160.184:8080/usuarios/entrar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -11,7 +11,8 @@ function entrar() {
             matriculaServer: matricula,
             senhaServer: senha
         })
-    }).then(function (resposta) {
+    })
+    .then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(json => {
                 sessionStorage.ID_USUARIO = json.idUsuario;
@@ -26,7 +27,7 @@ function entrar() {
                         window.location = "../private/investigacoes.html";
                     }, 1000);
                     return;
-                } else if(sessionStorage.PERFIL_USUARIO == "delegado") {
+                } else if (sessionStorage.PERFIL_USUARIO == "delegado") {
                     setTimeout(function () {
                         window.location = "../private/dashboard.html";
                     }, 1000);
@@ -37,8 +38,11 @@ function entrar() {
                 span_mensagem.innerHTML = texto;
             });
         }
-    }).catch(function (erro) {
-        console.log(erro);
     })
+    .catch(function (erro) {
+        console.log(erro);
+        span_mensagem.innerHTML = "❌ Erro na conexão com o servidor!";
+    });
+
     return false;
 }
