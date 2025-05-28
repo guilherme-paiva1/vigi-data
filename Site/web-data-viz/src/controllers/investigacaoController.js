@@ -154,7 +154,7 @@ function excluirInvestigacao(req, res) {
         res.status(400).send("id inválido.");
     } else {
 
-        investigacoesModel.excluirInvestigacao(id)
+        investigacaoModel.excluirInvestigacao(id)
             .then(
                 function (resultado) {
                     res.json(resultado);

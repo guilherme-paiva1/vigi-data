@@ -6,8 +6,32 @@ function abrirConfirmacaoExclusaoInvestigacao() {
     document.getElementById('modal_confirmacao_exclusao_investigacao').classList.remove('oculto');
 }
 
-function fecharConfirmacaoExclusao() {
+function fecharConfirmacaoExclusaoInvestigacao() {
     document.getElementById('modal_confirmacao_exclusao_investigacao').classList.add('oculto');
+}
+
+function confirmarExclusaoInvestigacao() {
+    var editar_id_investigacao = document.getElementById("editar_id_investigacao");
+
+    fetch('/investigacao/excluirInvestigacao', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idServer: editar_id_investigacao.value
+        })
+    }).then(function (resposta) {
+        if (resposta.ok) {
+            setTimeout(() => {
+                carregarInvestigacoes();
+
+                setTimeout(function () {
+                    fecharConfirmacaoExclusaoInvestigacao();
+                }, 1000);
+            }, 1000)
+        }
+    });
 }
 
 function adicionarInvestigacao() {
@@ -17,7 +41,7 @@ function adicionarInvestigacao() {
     var localidade = document.getElementById("localizacao_investigacao").value;
     var id = sessionStorage.ID_USUARIO;
 
-    fetch("../investigacao/cadastrar", {
+    fetch("/investigacao/cadastrar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -83,8 +107,7 @@ function editarInvestigacao() {
     var editar_localizacao_investigacao = document.getElementById("editar_localizacao_investigacao");
     var editar_status_investigacao = document.getElementById("editar_status_investigacao");
 
-
-    fetch("../investigacao/editarInvestigacao", {
+    fetch("/investigacao/editarInvestigacao", {
         method: "PUT",
         headers: {
             "Content-type": "application/json"
@@ -98,14 +121,10 @@ function editarInvestigacao() {
             status_atualServer: editar_status_investigacao.value
         })
     }).then(function (resposta) {
-        console.log("fetch")
-
         if (resposta.ok) {
             setTimeout(() => {
                 carregarInvestigacoes();
-
                 modalEditarInvestigacao.style.opacity = "0";
-
                 setTimeout(function () {
                     modalEditarInvestigacao.style.display = "none";
                 }, 100);

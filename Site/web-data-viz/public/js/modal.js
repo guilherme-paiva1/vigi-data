@@ -6,6 +6,8 @@ conteudoModal = document.getElementById("modal_conteudo");
 modalNovoUsuario = document.getElementById("modal_novo_usuario");
 modalEditarUsuario = document.getElementById("modal_editar_usuario");
 modalDesempenhoUsuario = document.getElementById("modal_desempenho_usuario");
+modalExclusaoInvestigacao = document.getElementById("modal_confirmacao_exclusao_investigacao");
+
 
 nomeSession();
 distintivoSession();
@@ -68,18 +70,49 @@ function mudarModalNovoUsuario() {
   }
 }
 
+// function mudarModalConfirmacaoExclusaoInvestigacao() {
+//   if (modalExclusaoInvestigacao.style.display == "flex") {
+//     modalExclusaoInvestigacao.style.opacity = "0";
+
+//     setTimeout(function () {
+//       modalExclusaoInvestigacao.style.display = "none";
+//     }, 100);
+//   } else {
+//     setTimeout(function () {
+//       modalExclusaoInvestigacao.style.opacity = "1";
+//     }, 100);
+//     modalExclusaoInvestigacao.style.display = "flex";
+//   }
+// }
+
+// function mudarModalConfirmacaoExclusaoInvestigacao() {
+//   if (modalExclusaoInvestigacao.style.display == "flex") {
+//     modalExclusaoInvestigacao.style.opacity = "0";
+
+//     setTimeout(function () {
+//       modalExclusaoInvestigacao.style.display = "none";
+//     }, 100);
+//   } else {
+//     setTimeout(function () {
+//       modalExclusaoInvestigacao.style.opacity = "1";
+//     }, 100);
+//     modalExclusaoInvestigacao.style.display = "flex";
+//   }
+// }
+
+
 function mudarModalNovaInvestigacao() {
   const modalNovaInvestigacao = document.getElementById('modal_nova_investigacao');
-  
+
   if (modalNovaInvestigacao.style.display == "flex") {
     modalNovaInvestigacao.style.opacity = "0";
 
-    setTimeout(function() {
+    setTimeout(function () {
       modalNovaInvestigacao.style.display = "none";
     }, 100);
   } else {
     modalNovaInvestigacao.style.display = "flex";
-    setTimeout(function() {
+    setTimeout(function () {
       modalNovaInvestigacao.style.opacity = "1";
     }, 100);
   }
@@ -87,18 +120,19 @@ function mudarModalNovaInvestigacao() {
 
 function mudarModalEditarInvestigacao(idInvestigacao) {
   const modalEditarInvestigacao = document.getElementById('modal_editar_investigacao');
-  
+
   if (modalEditarInvestigacao.style.display == "flex") {
     modalEditarInvestigacao.style.opacity = "0";
 
-    setTimeout(function() {
+    setTimeout(function () {
       modalEditarInvestigacao.style.display = "none";
     }, 100);
   } else {
     carregarInformacoesEditarInvestigacao(idInvestigacao);
 
     modalEditarInvestigacao.style.display = "flex";
-    setTimeout(function() {
+    setTimeout(function () {
+      fecharConfirmacaoExclusaoInvestigacao();
       modalEditarInvestigacao.style.opacity = "1";
     }, 100);
   }

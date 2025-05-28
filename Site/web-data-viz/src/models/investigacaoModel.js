@@ -50,12 +50,21 @@ function visualizarInvestigacoes(fkUsuario) {
 
 
 function excluirInvestigacao(id_investigacao) {
-    var instrucaoSql = `
-        DELETE FROM investigacao
-        WHERE id = ${id_investigacao};
-    `;
+    var instrucaoSqlHistorico = `
+        DELETE FROM historico_investigacao
+        WHERE fkInvestigacao = ${id_investigacao};
+    `
+    database.executar(instrucaoSqlHistorico)
+        .then((resultado) => {
+            if (resultado.length > 0) {
+                var instrucaoSqlInvestigacao = `
+                DELETE FROM investigacao
+                WHERE idInvestigacao = ${id_investigacao};
+                `;
 
-    return database.executar(instrucaoSql);
+                return database.executar(instrucaoSqlInvestigacao);
+            }
+        });
 }
 
 function editarInvestigacao(id_investigacao, titulo, descricao, localidade, dt_investigacao, status_atual) {
