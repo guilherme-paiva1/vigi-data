@@ -70,36 +70,6 @@ function mudarModalNovoUsuario() {
   }
 }
 
-// function mudarModalConfirmacaoExclusaoInvestigacao() {
-//   if (modalExclusaoInvestigacao.style.display == "flex") {
-//     modalExclusaoInvestigacao.style.opacity = "0";
-
-//     setTimeout(function () {
-//       modalExclusaoInvestigacao.style.display = "none";
-//     }, 100);
-//   } else {
-//     setTimeout(function () {
-//       modalExclusaoInvestigacao.style.opacity = "1";
-//     }, 100);
-//     modalExclusaoInvestigacao.style.display = "flex";
-//   }
-// }
-
-// function mudarModalConfirmacaoExclusaoInvestigacao() {
-//   if (modalExclusaoInvestigacao.style.display == "flex") {
-//     modalExclusaoInvestigacao.style.opacity = "0";
-
-//     setTimeout(function () {
-//       modalExclusaoInvestigacao.style.display = "none";
-//     }, 100);
-//   } else {
-//     setTimeout(function () {
-//       modalExclusaoInvestigacao.style.opacity = "1";
-//     }, 100);
-//     modalExclusaoInvestigacao.style.display = "flex";
-//   }
-// }
-
 
 function mudarModalNovaInvestigacao() {
   const modalNovaInvestigacao = document.getElementById('modal_nova_investigacao');
