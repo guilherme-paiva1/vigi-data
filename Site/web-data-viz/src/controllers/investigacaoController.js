@@ -207,6 +207,35 @@ function editarInvestigacao(req, res) {
     }
 }
 
+function visualizarHistoricoPorMes (req, res){
+    var id = req.body.idServer;
+
+    if (id == undefined) {
+        res.status(400).send("id inválido.");
+    } else {
+
+        investigacoesModel.visualizarHistoricoPorMes(id)
+            .then(
+                function (resultadoInvestigacoesPorMes) {
+                    if (resultadoInvestigacoesPorMes.length >= 1) {
+                        res.json({
+                            qtdPorMes: resultadoInvestigacoesPorMes[0].qtdPorMes
+                        });
+                    } else if (resultadoInvestigacoesPorMes.length == 0) {
+                        res.status(403).send("id inválido ou não há investigações nesse mês.");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao exibir as investigações por mês! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
 
 module.exports = {
     cadastrar,
@@ -215,5 +244,6 @@ module.exports = {
     excluirInvestigacao,
     visualizarInvestigacaoPolicial,
     visualizarInvestigacaoPorId,
-    editarInvestigacao
+    editarInvestigacao,
+    visualizarHistoricoPorMes
 }
