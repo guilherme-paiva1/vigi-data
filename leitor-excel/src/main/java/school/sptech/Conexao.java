@@ -13,9 +13,12 @@ public class Conexao {
     private JdbcTemplate template;
 
     public Conexao() throws SQLException {
+        System.out.println(System.getenv("MYSQL_HOST"));
+        System.out.println(System.getenv("MYSQL_USER"));
+        System.out.println(System.getenv("MYSQL_PASSWORD"));
         String ip = System.getenv("MYSQL_HOST");
         conn = DriverManager.getConnection(
-                "jdbc:mysql://" + ip + ":3306/vida",
+                "jdbc:mysql://" + System.getenv("MYSQL_HOST") + ":3306/vida",
                 System.getenv("MYSQL_USER"),
                 System.getenv("MYSQL_PASSWORD")
         );
