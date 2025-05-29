@@ -113,39 +113,6 @@ function visualizarInvestigacaoPorId(req, res) {
         );
 }
 
-function exibir(req, res) {
-    var id = req.body.idServer;
-
-    if (id == undefined) {
-        res.status(400).send("id inválido.");
-    } else {
-
-        investigacaoModel.exibir(id)
-            .then(
-                function (resultadoInvestigacoes) {
-                    if (resultadoInvestigacoes.length >= 1) {
-                        res.json({
-                            id_usuario: resultadoInvestigacoes[0].id_usuario,
-                            nome: resultadoInvestigacoes[0].nome,
-                            email: resultadoInvestigacoes[0].email,
-                            id: resultadoInvestigacoes[0].id,
-                            perfil: resultadoInvestigacoes[0].perfil,
-                            superior: resultadoInvestigacoes[0].superior,
-                        });
-                    } else if (resultadoInvestigacoes.length == 0) {
-                        res.status(403).send("id inválido.");
-                    }
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log("\nHouve um erro ao exibir as investigações! Erro: ", erro.sqlMessage);
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
-
-}
 
 function excluirInvestigacao(req, res) {
     var id = req.body.idServer;
@@ -206,13 +173,64 @@ function editarInvestigacao(req, res) {
     }
 }
 
+function visualizarInvestigacaoPorStatus(req, res) {
+    var id = req.body.idServer;
+    var status_atual = req.body.status_atualServer;
+
+    if (id == undefined) {
+        res.status(400).send("id inválido.");
+    } else if (status_atual == undefined) {
+        res.status(400).send("status_atual inválido.");
+    } else {
+        investigacaoModel.visualizarInvestigacaoPorStatus(status_atual, id)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao visualizar as investigações! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function visualizarQtdInvestigacaoPorStatus(req, res) {
+    var id = req.body.idServer;
+
+    if (id == undefined) {
+        res.status(400).send("id inválido.");
+    } else {
+        investigacaoModel.visualizarQtdInvestigacaoPorStatus(id)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao visualizar as investigações! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
 
 module.exports = {
     cadastrar,
     visualizarInvestigacoes,
-    exibir,
     excluirInvestigacao,
     visualizarInvestigacaoPolicial,
     visualizarInvestigacaoPorId,
-    editarInvestigacao
+    editarInvestigacao,
+    visualizarInvestigacaoPorStatus,
+    visualizarQtdInvestigacaoPorStatus
 }

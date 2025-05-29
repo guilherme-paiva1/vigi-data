@@ -222,7 +222,7 @@
             </div>
             <div class="card info-investigacao">
                 <span class="card-header">Total de Investigações</span>
-                <span class="card-conteudo">127</span>
+                <span id="card_total" class="card-conteudo"></span>
             </div>
         </div>
         <div class="card pai green">
@@ -231,7 +231,7 @@
             </div>
             <div class="card info-investigacao">
                 <div class="card-header">Concluídas</div>
-                <div class="card-conteudo">127</div>
+                <span id="card_concluida" class="card-conteudo"></span>
             </div>
         </div>
         <div class="card pai yellow">
@@ -240,7 +240,7 @@
             </div>
             <div class="card info-investigacao">
                 <div class="card-header">Em andamento</div>
-                <div class="card-conteudo">127</div>
+                <span id="card_andamento" class="card-conteudo"></span>
             </div>
         </div>
         <div class="card pai red">
@@ -249,7 +249,7 @@
             </div>
             <div class="card info-investigacao">
                 <div class="card-header">Urgentes</div>
-                <div class="card-conteudo">127</div>
+                <div class="card-conteudo"></div>
             </div>
         </div>
     </div>
@@ -273,21 +273,12 @@
                 </div>
             </div>
 
-            <div class="investigations-header">
-                <input type="text" id="ipt_pesquisa" placeholder="Buscar Investigações..." class="search-input" />
-                <div class="filters">
-                    <button class="btn filter-btn"><img src="../assets/icons/icon-filter.svg">
-                        Filtrar</button>
-                    <button class="btn sort-btn"><img src="../assets/icons/icon-reorder.svg">
-                        Ordenar</button>
-                </div>
-            </div>
             <div class="filter-tabs">
-                <button class="tab active">Todos</button>
-                <button class="tab">Pendentes</button>
-                <button class="tab">Em Andamento</button>
-                <button class="tab">Concluídos</button>
-                <button class="tab">Urgentes</button>
+                <button onclick="carregarInvestigacoes()" class="tab active">Todos</button>
+                <button onclick="visualizarInvestigacaoPorStatus('Pendente')" class="tab">Pendentes</button>
+                <button onclick="visualizarInvestigacaoPorStatus('Em andamento')" class="tab">Em Andamento</button>
+                <button onclick="visualizarInvestigacaoPorStatus('Esclarecida')" class="tab">Esclarecidas</button>
+                <button onclick="visualizarInvestigacaoPorStatus('Não esclarecida')" class="tab">Não esclarecidas</button>
             </div>
 
             <table class="investigation-table">
@@ -305,14 +296,6 @@
                 <tbody id="tabela_investigacoes">
                 </tbody>
             </table>
-
-            <div class="pagination">
-                <span>Mostrando 1 de 1 Investigações</span>
-                <div>
-                    <button class="btn">Anterior</button>
-                    <button class="btn">Próximo</button>
-                </div>
-            </div>
         </div>
 
         <!-- modal de nova investigação -->
@@ -398,10 +381,10 @@
                         <label for="editar_status_investigacao">Status atual</label>
 
                         <select id="editar_status_investigacao" required>
-                            <option value="pendente">Pendente</option>
-                            <option value="em andamento">Em andamento</option>
-                            <option value="esclarecida">Esclarecida</option>
-                            <option value="nao esclarecida">Não esclarecida</option>
+                            <option>Pendente</option>
+                            <option>Em andamento</option>
+                            <option>Esclarecida</option>
+                            <option>Não esclarecida</option>
                         </select>
                     </div>
 

@@ -104,6 +104,49 @@ function visualizarInvestigacaoPolicial(fkUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function visualizarInvestigacaoPorStatus(status, fkUsuario) {
+    var instrucaoSql = `
+        SELECT idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
+        (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais 
+        FROM investigacao AS inv 
+        JOIN historico_investigacao AS hist 
+            ON inv.idInvestigacao = hist.fkInvestigacao
+        WHERE status_atual = '${status}' AND hist.fkUsuario = ${fkUsuario};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
+function visualizarQtdInvestigacaoPorStatus(fkUsuario) {
+    var instrucaoSql = `
+    SELECT 
+		(SELECT COUNT(idInvestigacao) FROM investigacao AS inv
+        JOIN historico_investigacao AS hist 
+		ON inv.idInvestigacao = hist.fkInvestigacao 
+		WHERE hist.fkUsuario = ${fkUsuario} AND status_atual = "Pendente") AS qtd_pendente,
+        
+        (SELECT COUNT(idInvestigacao) FROM investigacao AS inv
+        JOIN historico_investigacao AS hist 
+            ON inv.idInvestigacao = hist.fkInvestigacao 
+         WHERE 
+	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Em andamento") AS qtd_andamento,
+            
+        (SELECT COUNT(idInvestigacao) FROM investigacao AS inv
+        JOIN historico_investigacao AS hist 
+            ON inv.idInvestigacao = hist.fkInvestigacao 
+         WHERE 
+	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Esclarecida") AS qtd_esclarecida,
+            
+        (SELECT COUNT(idInvestigacao) FROM investigacao AS inv 
+        JOIN historico_investigacao AS hist 
+            ON inv.idInvestigacao = hist.fkInvestigacao 
+         WHERE 
+	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Não esclarecida") AS qtd_nao_esclarecida;
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrar,
     registrarHistoricoDoDelegado,
@@ -111,5 +154,7 @@ module.exports = {
     visualizarInvestigacoes,
     visualizarInvestigacaoPolicial,
     visualizarInvestigacaoPorId,
-    editarInvestigacao
+    editarInvestigacao,
+    visualizarQtdInvestigacaoPorStatus,
+    visualizarInvestigacaoPorStatus
 };

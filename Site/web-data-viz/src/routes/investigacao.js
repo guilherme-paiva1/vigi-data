@@ -11,10 +11,6 @@ router.post("/visualizarInvestigacoes", function (req, res) {
     investigacaoController.visualizarInvestigacoes(req, res);
 });
 
-router.post("/exibir", function (req, res) {
-    investigacaoController.exibir(req, res);
-});
-
 router.post("/excluirInvestigacao", function (req, res) {
     investigacaoController.excluirInvestigacao(req, res);
 });
@@ -25,6 +21,14 @@ router.post("/visualizarInvestigacaoPolicial", function (req, res) {
 
 router.post("/visualizarInvestigacaoPorId", function (req, res) {
     investigacaoController.visualizarInvestigacaoPorId(req, res);
+});
+
+router.post("/visualizarInvestigacaoPorStatus", function (req, res) {
+    investigacaoController.visualizarInvestigacaoPorStatus(req, res);
+});
+
+router.post("/visualizarQtdInvestigacaoPorStatus", function (req, res) {
+    investigacaoController.visualizarQtdInvestigacaoPorStatus(req, res);
 });
 
 router.put("/editarInvestigacao", function (req, res) {
