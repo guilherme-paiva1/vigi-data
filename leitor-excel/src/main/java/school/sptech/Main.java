@@ -19,10 +19,7 @@ public class Main {
     public static void main(String[] args) throws SQLException, UnknownHostException {
         try {
             System.out.println("Estabelecendo conexão com o Banco de Dados...");
-            InetAddress ip = InetAddress.getLocalHost();
-            String ipAddress = ip.getHostAddress();
-
-            Conexao conexao = new Conexao(ipAddress);
+            Conexao conexao = new Conexao();
             Connection conn = conexao.criarConexao(conexao);
             JdbcTemplate template = conexao.criarTemplate(conexao);
 
@@ -101,9 +98,7 @@ public class Main {
             System.out.println("Finalizando processo. Status: Erro.");
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            InetAddress ip = InetAddress.getLocalHost();
-            String ipAddress = ip.getHostAddress();
-            Conexao conexao = new Conexao(ipAddress);
+            Conexao conexao = new Conexao();
             JdbcTemplate template = conexao.criarTemplate(conexao);
             Connection conn = conexao.criarConexao(conexao);
 
@@ -113,9 +108,7 @@ public class Main {
             conn.commit();
             System.out.println(mensagem);
         } catch (SemNovasOcorrenciasException e) {
-            InetAddress ip = InetAddress.getLocalHost();
-            String ipAddress = ip.getHostAddress();
-            Conexao conexao = new Conexao(ipAddress);
+            Conexao conexao = new Conexao();
             JdbcTemplate template = conexao.criarTemplate(conexao);
             Connection conn = conexao.criarConexao(conexao);
 

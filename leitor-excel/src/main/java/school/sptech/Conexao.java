@@ -12,8 +12,8 @@ public class Conexao {
     private Connection conn;
     private JdbcTemplate template;
 
-    public Conexao(String ip) throws SQLException {
-
+    public Conexao() throws SQLException {
+        String ip = System.getenv("MYSQL_HOST");
         conn = DriverManager.getConnection(
                 "jdbc:mysql://" + ip + ":3306/vida",
                 System.getenv("MYSQL_USER"),
