@@ -39,6 +39,22 @@ services:
       APP_PORT: 8080
       APP_HOST: 0.0.0.0
 
+  leitor:
+    build:
+      context: ../leitor-excel
+      dockerfile: Dockerfile
+    image: leitor-imagem
+    container_name: container-leitor
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: container-sql
+      MYSQL_USER: svc_vida
+      MYSQL_PASSWORD: urubu100
+    networks:
+      - vida_network
+    entrypoint: ["/app/entrypoint.sh"]
+
 volumes:
   db_data:
 
