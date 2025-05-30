@@ -7,4 +7,8 @@ router.post("/editarNotificacao", function (req, res) {
     notificacaoController.editarNotificacao(req, res);
 });
 
+router.post("/listarNotificacao", function (req, res) {
+    notificacaoController.listarNotificacao(req, res);
+});
+
 module.exports = router;

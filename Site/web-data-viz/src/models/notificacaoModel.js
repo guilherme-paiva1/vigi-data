@@ -13,6 +13,24 @@ function editarNotificacao(id_notificacao, titulo, descricao, tipo){
     return database.executar(instrucaoSql);
 }
 
+function listarNotificacao(id_usuario) {
+    var instrucaoSql = `
+    SELECT 
+    a.idAlerta,
+    a.dtHoraAlerta,
+    a.titulo,
+    a.descricao,
+    a.tipo,
+    n.visualizado
+    FROM notificacao n
+    JOIN alerta a ON n.fkAlerta = a.idAlerta
+    WHERE n.fkUsuario = ${id_usuario};
+    `
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
-    editarNotificacao
+    editarNotificacao,
+    listarNotificacao
 }
