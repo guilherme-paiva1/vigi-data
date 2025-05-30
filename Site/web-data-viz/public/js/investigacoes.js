@@ -127,6 +127,7 @@ function editarInvestigacao() {
                 carregarInvestigacoes();
                 modalEditarInvestigacao.style.opacity = "0";
                 setTimeout(function () {
+                    visualizarQtdInvestigacaoPorStatus();
                     modalEditarInvestigacao.style.display = "none";
                 }, 100);
             }, 1000)
@@ -233,6 +234,7 @@ function visualizarQtdInvestigacaoPorStatus() {
                 cardAndamento.innerHTML = json[0].qtd_andamento;
                 cardPendentes.innerHTML = json[0].qtd_pendente;
                 cardConcluido.innerHTML = json[0].total_concluido;
+
 
             })
         }
