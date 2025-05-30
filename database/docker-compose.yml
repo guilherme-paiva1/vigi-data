@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mysql:
     image: imagem-sql
@@ -43,7 +41,7 @@ services:
     build:
       context: ../leitor-excel
       dockerfile: Dockerfile
-    image: leitor-imagem
+    image: imagemjava
     container_name: container-leitor
     depends_on:
       - mysql
@@ -51,9 +49,10 @@ services:
       MYSQL_HOST: container-sql
       MYSQL_USER: svc_vida
       MYSQL_PASSWORD: urubu100
+    volumes:
+      - ~/.aws:/root/.aws
     networks:
       - vida_network
-    entrypoint: ["/app/entrypoint.sh"]
 
 volumes:
   db_data:

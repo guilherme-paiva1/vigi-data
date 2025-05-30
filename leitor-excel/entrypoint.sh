@@ -9,3 +9,8 @@ done
 
 echo "MySQL está pronto. Iniciando aplicação Java..."
 exec java -Xmx1024m -jar leitura-arquivos-excel.jar
+
+
+
+
+
