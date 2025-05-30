@@ -6,54 +6,44 @@ function cadastrar(req, res) {
     var tipo = req.body.tipoServer;
     var fkUsuario = req.body.fkUsuarioServer;
 
-    if (!titulo) {
+    if (titulo == undefined || titulo == null || titulo.thim().length == 0) {
         res.status(400).send("O título está indefinido.");
-    } else if (!descricao) {
+    } else if (descricao == undefined || descricao == null || descricao.thim().length == 0) {
         res.status(400).send("A descrição está indefinida.");
-    } else if (!tipo) {
+    } else if (tipo == undefined || tipo == null || tipo.thim().length == 0) {
         res.status(400).send("O tipo está indefinido.");
-    } else if (!fkUsuario) {
+    } else if (fkUsuario == undefined || fkUsuario == null || fkUsuario.thim().length == 0) {
         res.status(400).send("O usuário não está identificado.");
     } else {
         notificacaoModel.cadastrar(titulo, descricao, tipo, fkUsuario)
-            .then(function (resultado) {
-                res.status(201).json(resultado);
-            })
-            .catch(function (erro) {
-                console.log("Erro ao cadastrar notificação:", erro);
-                res.status(500).json(erro.sqlMessage);
-            });
-    }
-}
+            .then(
+                function (resultado) {
+                    res.json(resultado);
 
-function buscarUltimaNotificacao(req, res) {
-    var titulo = req.body.tituloServer;
-    var descricao = req.body.descricaoServer;
-    var tipo = req.body.tipoServer;
-
-    if (!titulo) {
-        res.status(400).send("O título está indefinido.");
-    } else if (!descricao) {
-        res.status(400).send("A descrição está indefinida.");
-    } else if (!tipo) {
-        res.status(400).send("O tipo está indefinido.");
-    } else {
-        notificacaoModel.buscarUltimaNotificacao(titulo, descricao, tipo)
-            .then(function (resultado) {
-                if (resultado.length > 0) {
-                    res.status(200).json(resultado[0]);
-                } else {
-                    res.status(404).send("Nenhuma notificação encontrada.");
+                    notificacaoModel.cadastrarNotificacaoAssociativa(fkUsuario, titulo, descricao, tipo)
+                        .then(
+                            function (resultado) {
+                                res.json(resultado);
+                            }
+                        ).catch(
+                            function (erro) {
+                                console.log(erro);
+                                console.log(
+                                    "\nHouve um erro ao criar a notificação! Erro: ",
+                                    erro.sqlMessage
+                                );
+                                res.status(500).json(erro.sqlMessage);
+                            }
+                        );
                 }
-            })
-            .catch(function (erro) {
-                console.log("Erro ao buscar notificação:", erro.sqlMessage);
-                res.status(500).json(erro.sqlMessage);
-            });
+            )
+            .catch (function (erro) {
+            console.log("Erro ao cadastrar notificação:", erro);
+            res.status(500).json(erro.sqlMessage);
+        });
     }
 }
 
 module.exports = {
-    cadastrar,
-    buscarUltimaNotificacao
+    cadastrar
 };
