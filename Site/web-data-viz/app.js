@@ -1,5 +1,5 @@
-var ambiente_processo = 'producao';
-// var ambiente_processo = 'desenvolvimento';
+// var ambiente_processo = 'producao';
+var ambiente_processo = 'desenvolvimento';
 
 var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
 // Acima, temos o uso do operador ternário para definir o caminho do arquivo .env
@@ -19,6 +19,7 @@ var indexRouter = require("./src/routes/index");
 var usuarioRouter = require("./src/routes/usuarios");
 var investigacaoRouter = require("./src/routes/investigacao");
 var ocorrenciaRouter = require("./src/routes/ocorrencia");
+var notificacaoRouter = require("./src/routes/notificacao");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,6 +31,7 @@ app.use("/", indexRouter);
 app.use("/usuarios", usuarioRouter);
 app.use("/investigacao", investigacaoRouter);
 app.use("/ocorrencia", ocorrenciaRouter);
+app.use("/notificacao", notificacaoRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

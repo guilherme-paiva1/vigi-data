@@ -38,15 +38,15 @@ CREATE TABLE ocorrencia (
 );
 
 CREATE TABLE alerta (
-	idAlerta INT PRIMARY KEY,
-    dtHoraAlerta DATETIME,
+	idAlerta INT PRIMARY KEY AUTO_INCREMENT,
+    dtHoraAlerta DATETIME default current_timestamp,
     titulo VARCHAR(45),
     descricao VARCHAR(100),
     tipo VARCHAR(45)
 );
 
 CREATE TABLE notificacao (
-	idNotificacao INT PRIMARY KEY,
+	idNotificacao INT PRIMARY KEY AUTO_INCREMENT,
     fkAlerta INT,
     fkUsuario INT,
     visualizado TINYINT,
