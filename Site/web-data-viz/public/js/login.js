@@ -1,8 +1,13 @@
 function entrar() {
-    var matricula = ipt_matricula.value; 
-    var senha = ipt_senha.value; 
+    var matricula = ipt_matricula.value;
+    var senha = ipt_senha.value;
 
-    fetch("/usuarios/entrar", {
+    // Detecta se está rodando local ou em produção
+    const URL_API = window.location.hostname === "localhost" 
+        ? "http://localhost:3333" 
+        : "https://vigi-data.duckdns.org";
+
+    fetch(`${URL_API}/usuarios/entrar`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -11,7 +16,8 @@ function entrar() {
             matriculaServer: matricula,
             senhaServer: senha
         })
-    }).then(function (resposta) {
+    })
+    .then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(json => {
                 sessionStorage.ID_USUARIO = json.idUsuario;
@@ -25,8 +31,7 @@ function entrar() {
                     setTimeout(function () {
                         window.location = "../private/investigacoes.html";
                     }, 1000);
-                    return;
-                } else if(sessionStorage.PERFIL_USUARIO == "delegado") {
+                } else if (sessionStorage.PERFIL_USUARIO == "delegado") {
                     setTimeout(function () {
                         window.location = "../private/dashboard.html";
                     }, 1000);
@@ -34,11 +39,14 @@ function entrar() {
             });
         } else {
             resposta.text().then(texto => {
-                span_mensagem.innerHTML = texto;
+                span_mensagem.innerHTML = `❌ ${texto}`;
             });
         }
-    }).catch(function (erro) {
-        console.log(erro);
     })
+    .catch(function (erro) {
+        console.log("❌ Erro na conexão com o servidor: ", erro);
+        span_mensagem.innerHTML = "❌ Erro na conexão com o servidor. Verifique sua internet ou tente mais tarde.";
+    });
+
     return false;
 }

@@ -1,0 +1,386 @@
+Iniciando execução do Docker Compose...
+Compose can now delegate builds to bake for better performance.
+ To do so, set COMPOSE_BAKE=true.
+#0 building with "default" instance using docker driver
+
+#1 [frontend internal] load build definition from Dockerfile
+#1 transferring dockerfile: 660B done
+#1 DONE 0.0s
+
+#2 [leitor internal] load build definition from Dockerfile
+#2 transferring dockerfile: 553B done
+#2 DONE 0.0s
+
+#3 [leitor internal] load metadata for docker.io/library/openjdk:21-jdk-slim
+#3 DONE 0.0s
+
+#4 [frontend internal] load metadata for docker.io/library/node:18-alpine
+#4 DONE 0.0s
+
+#5 [frontend internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [leitor internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [frontend builder 1/4] FROM docker.io/library/node:18-alpine
+#7 DONE 0.0s
+
+#8 [leitor 1/6] FROM docker.io/library/openjdk:21-jdk-slim
+#8 DONE 0.0s
+
+#9 [frontend internal] load build context
+#9 transferring context: 3.55kB done
+#9 DONE 0.0s
+
+#10 [frontend builder 3/4] COPY web-data-viz/package*.json ./
+#10 CACHED
+
+#11 [frontend builder 4/4] RUN npm install
+#11 CACHED
+
+#12 [frontend stage-1 3/4] COPY --from=builder /app/node_modules ./node_modules
+#12 CACHED
+
+#13 [frontend builder 2/4] WORKDIR /app
+#13 CACHED
+
+#14 [frontend stage-1 4/4] COPY /web-data-viz .
+#14 CACHED
+
+#15 [frontend] exporting to image
+#15 exporting layers done
+#15 writing image sha256:c9cd8561d9e889380f04dab14f1d87a1a297839f594ddebb21eb8efc3dbc598e done
+#15 naming to docker.io/library/site-imagem done
+#15 DONE 0.0s
+
+#16 [leitor internal] load build context
+#16 transferring context: 83B done
+#16 DONE 0.0s
+
+#17 [leitor 2/6] WORKDIR /app
+#17 CACHED
+
+#18 [leitor 3/6] RUN apt-get update && apt-get install -y netcat-openbsd && apt-get clean
+#18 CACHED
+
+#19 [leitor 4/6] COPY leitura-arquivos-excel.jar ./
+#19 CACHED
+
+#20 [leitor 5/6] COPY entrypoint.sh ./entrypoint.sh
+#20 CACHED
+
+#21 [leitor 6/6] RUN chmod +x entrypoint.sh
+#21 CACHED
+
+#22 [leitor] exporting to image
+#22 exporting layers done
+#22 writing image sha256:b60a09fe911b71756e1b7a3bbdb6a92e42ed35b8b67e9ebba0b933f65a14bd11 done
+#22 naming to docker.io/library/imagemjava done
+#22 DONE 0.0s
+
+#23 [frontend] resolving provenance for metadata file
+#23 DONE 0.0s
+
+#24 [leitor] resolving provenance for metadata file
+#24 DONE 0.0s
+ frontend  Built
+ leitor  Built
+ Container container-sql  Running
+ Container container-site  Running
+ Container container-leitor  Created
+ Container container-leitor  Starting
+ Container container-leitor  Started
+Containers reiniciados em Fri May 30 20:36:01 UTC 2025
+Iniciando execução do Docker Compose...
+Compose can now delegate builds to bake for better performance.
+ To do so, set COMPOSE_BAKE=true.
+#0 building with "default" instance using docker driver
+
+#1 [frontend internal] load build definition from Dockerfile
+#1 transferring dockerfile: 660B done
+#1 DONE 0.0s
+
+#2 [leitor internal] load build definition from Dockerfile
+#2 transferring dockerfile: 553B done
+#2 DONE 0.0s
+
+#3 [frontend internal] load metadata for docker.io/library/node:18-alpine
+#3 DONE 0.0s
+
+#4 [leitor internal] load metadata for docker.io/library/openjdk:21-jdk-slim
+#4 DONE 0.0s
+
+#5 [frontend internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [leitor internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [frontend builder 1/4] FROM docker.io/library/node:18-alpine
+#7 DONE 0.0s
+
+#8 [leitor 1/6] FROM docker.io/library/openjdk:21-jdk-slim
+#8 DONE 0.0s
+
+#9 [leitor internal] load build context
+#9 transferring context: 83B done
+#9 DONE 0.0s
+
+#10 [frontend internal] load build context
+#10 transferring context: 3.55kB done
+#10 DONE 0.0s
+
+#11 [frontend stage-1 3/4] COPY --from=builder /app/node_modules ./node_modules
+#11 CACHED
+
+#12 [frontend builder 2/4] WORKDIR /app
+#12 CACHED
+
+#13 [frontend builder 3/4] COPY web-data-viz/package*.json ./
+#13 CACHED
+
+#14 [frontend builder 4/4] RUN npm install
+#14 CACHED
+
+#15 [frontend stage-1 4/4] COPY /web-data-viz .
+#15 CACHED
+
+#16 [leitor 3/6] RUN apt-get update && apt-get install -y netcat-openbsd && apt-get clean
+#16 CACHED
+
+#17 [leitor 5/6] COPY entrypoint.sh ./entrypoint.sh
+#17 CACHED
+
+#18 [leitor 2/6] WORKDIR /app
+#18 CACHED
+
+#19 [leitor 4/6] COPY leitura-arquivos-excel.jar ./
+#19 CACHED
+
+#20 [leitor 6/6] RUN chmod +x entrypoint.sh
+#20 CACHED
+
+#21 [frontend] exporting to image
+#21 exporting layers done
+#21 writing image sha256:c9cd8561d9e889380f04dab14f1d87a1a297839f594ddebb21eb8efc3dbc598e done
+#21 naming to docker.io/library/site-imagem done
+#21 DONE 0.0s
+
+#22 [leitor] exporting to image
+#22 exporting layers done
+#22 writing image sha256:b60a09fe911b71756e1b7a3bbdb6a92e42ed35b8b67e9ebba0b933f65a14bd11
+#22 writing image sha256:b60a09fe911b71756e1b7a3bbdb6a92e42ed35b8b67e9ebba0b933f65a14bd11 done
+#22 naming to docker.io/library/imagemjava done
+#22 DONE 0.0s
+
+#23 [leitor] resolving provenance for metadata file
+#23 DONE 0.0s
+
+#24 [frontend] resolving provenance for metadata file
+#24 DONE 0.0s
+ frontend  Built
+ leitor  Built
+ Container container-sql  Running
+ Container container-site  Running
+ Container container-leitor  Created
+ Container container-leitor  Starting
+ Container container-leitor  Started
+Containers reiniciados em Fri May 30 20:38:02 UTC 2025
+Iniciando execução do Docker Compose...
+Compose can now delegate builds to bake for better performance.
+ To do so, set COMPOSE_BAKE=true.
+#0 building with "default" instance using docker driver
+
+#1 [leitor internal] load build definition from Dockerfile
+#1 transferring dockerfile: 553B done
+#1 DONE 0.0s
+
+#2 [leitor internal] load metadata for docker.io/library/openjdk:21-jdk-slim
+#2 DONE 0.0s
+
+#3 [frontend internal] load build definition from Dockerfile
+#3 transferring dockerfile: 660B done
+#3 DONE 0.0s
+
+#4 [frontend internal] load metadata for docker.io/library/node:18-alpine
+#4 DONE 0.0s
+
+#5 [leitor internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [leitor 1/6] FROM docker.io/library/openjdk:21-jdk-slim
+#6 DONE 0.0s
+
+#7 [frontend internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [frontend builder 1/4] FROM docker.io/library/node:18-alpine
+#8 DONE 0.0s
+
+#9 [leitor internal] load build context
+#9 transferring context: 83B done
+#9 DONE 0.0s
+
+#10 [leitor 2/6] WORKDIR /app
+#10 CACHED
+
+#11 [leitor 4/6] COPY leitura-arquivos-excel.jar ./
+#11 CACHED
+
+#12 [leitor 3/6] RUN apt-get update && apt-get install -y netcat-openbsd && apt-get clean
+#12 CACHED
+
+#13 [leitor 5/6] COPY entrypoint.sh ./entrypoint.sh
+#13 CACHED
+
+#14 [leitor 6/6] RUN chmod +x entrypoint.sh
+#14 CACHED
+
+#15 [frontend internal] load build context
+#15 transferring context: 3.55kB done
+#15 DONE 0.0s
+
+#16 [leitor] exporting to image
+#16 exporting layers done
+#16 writing image sha256:b60a09fe911b71756e1b7a3bbdb6a92e42ed35b8b67e9ebba0b933f65a14bd11 done
+#16 naming to docker.io/library/imagemjava done
+#16 DONE 0.0s
+
+#17 [frontend builder 2/4] WORKDIR /app
+#17 CACHED
+
+#18 [frontend stage-1 3/4] COPY --from=builder /app/node_modules ./node_modules
+#18 CACHED
+
+#19 [frontend builder 3/4] COPY web-data-viz/package*.json ./
+#19 CACHED
+
+#20 [frontend builder 4/4] RUN npm install
+#20 CACHED
+
+#21 [frontend stage-1 4/4] COPY /web-data-viz .
+#21 CACHED
+
+#22 [frontend] exporting to image
+#22 exporting layers done
+#22 writing image sha256:c9cd8561d9e889380f04dab14f1d87a1a297839f594ddebb21eb8efc3dbc598e done
+#22 naming to docker.io/library/site-imagem done
+#22 DONE 0.0s
+
+#23 [leitor] resolving provenance for metadata file
+#23 DONE 0.0s
+
+#24 [frontend] resolving provenance for metadata file
+#24 DONE 0.0s
+ frontend  Built
+ leitor  Built
+ Container container-sql  Running
+ Container container-site  Running
+ Container container-leitor  Created
+ Container container-leitor  Starting
+ Container container-leitor  Started
+Containers reiniciados em Fri May 30 20:40:02 UTC 2025
+Iniciando execução do Docker Compose...
+Compose can now delegate builds to bake for better performance.
+ To do so, set COMPOSE_BAKE=true.
+#0 building with "default" instance using docker driver
+
+#1 [leitor internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 553B done
+#1 DONE 0.0s
+
+#2 [frontend internal] load build definition from Dockerfile
+#2 transferring dockerfile: 660B done
+#2 DONE 0.0s
+
+#3 [leitor internal] load metadata for docker.io/library/openjdk:21-jdk-slim
+#3 DONE 0.0s
+
+#4 [frontend internal] load metadata for docker.io/library/node:18-alpine
+#4 DONE 0.0s
+
+#5 [leitor internal] load .dockerignore
+#5 transferring context: 2B done
+#5 DONE 0.0s
+
+#6 [frontend internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [leitor 1/6] FROM docker.io/library/openjdk:21-jdk-slim
+#7 DONE 0.0s
+
+#8 [frontend builder 1/4] FROM docker.io/library/node:18-alpine
+#8 DONE 0.0s
+
+#9 [frontend internal] load build context
+#9 transferring context: 3.55kB done
+#9 DONE 0.0s
+
+#10 [leitor internal] load build context
+#10 transferring context: 83B done
+#10 DONE 0.0s
+
+#11 [leitor 5/6] COPY entrypoint.sh ./entrypoint.sh
+#11 CACHED
+
+#12 [leitor 4/6] COPY leitura-arquivos-excel.jar ./
+#12 CACHED
+
+#13 [leitor 3/6] RUN apt-get update && apt-get install -y netcat-openbsd && apt-get clean
+#13 CACHED
+
+#14 [leitor 2/6] WORKDIR /app
+#14 CACHED
+
+#15 [leitor 6/6] RUN chmod +x entrypoint.sh
+#15 CACHED
+
+#16 [frontend stage-1 3/4] COPY --from=builder /app/node_modules ./node_modules
+#16 CACHED
+
+#17 [frontend builder 4/4] RUN npm install
+#17 CACHED
+
+#18 [frontend builder 2/4] WORKDIR /app
+#18 CACHED
+
+#19 [frontend builder 3/4] COPY web-data-viz/package*.json ./
+#19 CACHED
+
+#20 [frontend stage-1 4/4] COPY /web-data-viz .
+#20 CACHED
+
+#21 [leitor] exporting to image
+#21 exporting layers done
+#21 writing image sha256:b60a09fe911b71756e1b7a3bbdb6a92e42ed35b8b67e9ebba0b933f65a14bd11 done
+#21 naming to docker.io/library/imagemjava done
+#21 DONE 0.0s
+
+#22 [frontend] exporting to image
+#22 exporting layers done
+#22 writing image sha256:c9cd8561d9e889380f04dab14f1d87a1a297839f594ddebb21eb8efc3dbc598e done
+#22 naming to docker.io/library/site-imagem done
+#22 DONE 0.0s
+
+#23 [frontend] resolving provenance for metadata file
+#23 DONE 0.0s
+
+#24 [leitor] resolving provenance for metadata file
+#24 DONE 0.0s
+ frontend  Built
+ leitor  Built
+ Container container-sql  Running
+ Container container-site  Running
+ Container container-leitor  Created
+ Container container-leitor  Starting
+ Container container-leitor  Started
+Containers reiniciados em Fri May 30 20:42:01 UTC 2025

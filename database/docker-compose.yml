@@ -1,9 +1,7 @@
-version: '3.8'
-
 services:
   mysql:
-    image: mysql:8.0
-    container_name: meu-container
+    image: imagem-sql
+    container_name: container-sql
     environment:
       MYSQL_ROOT_PASSWORD: urubu100
       MYSQL_DATABASE: vida
@@ -17,9 +15,49 @@ services:
     networks:
       - vida_network
 
+  frontend:
+    build:
+      context: ../Site
+      dockerfile: Dockerfile
+    image: site-imagem
+    container_name: container-site
+    depends_on:
+      - mysql
+    ports:
+      - "8080:8080"
+    networks:
+      - vida_network
+    environment:
+      AMBIENTE_PROCESSO: producao
+      DB_HOST: container-sql
+      DB_USER: svc_vida
+      DB_PASSWORD: urubu100
+      DB_DATABASE: vida
+      DB_PORT: 3306
+      APP_PORT: 8080
+      APP_HOST: 0.0.0.0
+
+  leitor:
+    build:
+      context: ../leitor-excel
+      dockerfile: Dockerfile
+    image: imagemjava
+    container_name: container-leitor
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: container-sql
+      MYSQL_USER: svc_vida
+      MYSQL_PASSWORD: urubu100
+    volumes:
+      - ~/.aws:/root/.aws
+    networks:
+      - vida_network
+
 volumes:
   db_data:
-  
+
 networks:
   vida_network:
+    name: vida_network
     driver: bridge
