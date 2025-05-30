@@ -254,33 +254,33 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3>Nova Notificação</h3>
+
                     <button class="close-modal" onclick="mudarModalNovaNotificacao()">&times;</button>
                 </div>
+
+                <form id="form_notificacao" onsubmit="event.preventDefault(); mudarModalNovaNotificacao();">
                 <div class="form-group">
                     <label for="titulo_nova_notificacao">Título da Notificação*</label>
                     <input type="text" id="nome_novo_usuario" required placeholder="Digite o título da investigação">
                 </div>
                 <div class="form-group">
-                    <label for="matricula_novo_usuario">Descrição*</label>
-                    <input type="text" id="matricula_novo_usuario" maxlength="7" required
+                    <label for="descricao_notificacao">Descrição*</label>
+                    <input type="text" id="descricao_notificacao" maxlength="7" required
                         placeholder="Digite a descrição da notificação">
                 </div>
                 <div class="form-group">
-                    <label for="email_novo_usuario">Tipo de Notificação*</label>
+                    <label for="tipo_notificacao">Tipo de Notificação*</label>
                     <select class="role-select" id="input_tipo">
                         <option value="urgente">Urgente</option>
                         <option value="informativa">Informativa</option>
                         <option value="sucesso">Sucesso</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="destino_nova_usuario">Destinatário*</label>
-                    <input type="password" id="senha_novo_usuario" required placeholder="Selecione um destinatário">
-                </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-cancel" onclick="mudarModalNovaNotificacao()">Cancelar</button>
                     <button type="submit" class="btn-save" onclick="adicionarNotificacao()">Cadastrar</button>
                 </div>
+                </form> 
             </div>
         </div>
 
