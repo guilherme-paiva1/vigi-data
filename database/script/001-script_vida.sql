@@ -41,8 +41,8 @@ CREATE TABLE alerta (
 	idAlerta INT PRIMARY KEY,
     dtHoraAlerta DATETIME,
     titulo VARCHAR(45),
-    conteudo VARCHAR(100),
-    categoria VARCHAR(45)
+    descricao VARCHAR(100),
+    tipo VARCHAR(45)
 );
 
 CREATE TABLE notificacao (

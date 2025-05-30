@@ -4,7 +4,7 @@ function entrar() {
 
     // Detecta se está rodando local ou em produção
     const URL_API = window.location.hostname === "localhost" 
-        ? "http://localhost:8080" 
+        ? "http://localhost:3333" 
         : "https://vigi-data.duckdns.org";
 
     fetch(`${URL_API}/usuarios/entrar`, {
