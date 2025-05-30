@@ -14,15 +14,18 @@ public class Conexao {
     private JdbcTemplate template;
 
     public Conexao() throws SQLException, UnknownHostException {
-        System.out.println(System.getenv("MYSQL_HOST"));
-        System.out.println(System.getenv("MYSQL_USER"));
-        System.out.println(System.getenv("MYSQL_PASSWORD"));
-        InetAddress ip = InetAddress.getLocalHost();
-        String ipAddress = ip.getHostAddress();
+        String dbHost = System.getenv("MYSQL_HOST");
+        String dbUser = System.getenv("MYSQL_USER");
+        String dbPass = System.getenv("MYSQL_PASSWORD");
+
+        System.out.println("Host: " + dbHost);
+        System.out.println("User: " + dbUser);
+        System.out.println("Pass: " + dbPass);
+
         conn = DriverManager.getConnection(
-                "jdbc:mysql://" + ipAddress + ":3306/vida",
-                System.getenv("MYSQL_USER"),
-                System.getenv("MYSQL_PASSWORD")
+                "jdbc:mysql://" + dbHost + ":3306/vida",
+                dbUser,
+                dbPass
         );
 
         conn.setAutoCommit(false);
