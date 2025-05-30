@@ -36,7 +36,7 @@ function listarNotificacao(req, res) {
     if (id_usuario == undefined || id_usuario == null || id_usuario.trim().length == 0) {
         res.status(400).send("id inválido.");
     } else {
-        investigacaoModel.listarNotificacao(id_usuario)
+        notificacaoModel.listarNotificacao(id_usuario)
         .then(
             function(resultado) {
                 res.json(resultado);
