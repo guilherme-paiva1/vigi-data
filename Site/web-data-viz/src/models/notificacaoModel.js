@@ -24,7 +24,8 @@ function listarNotificacao(id_usuario) {
     n.visualizado
     FROM notificacao n
     JOIN alerta a ON n.fkAlerta = a.idAlerta
-    WHERE n.fkUsuario = ${id_usuario};
+    WHERE n.fkUsuario = ${id_usuario}
+    ORDER BY a.dtHoraAlerta DESC;
     `
 
     return database.executar(instrucaoSql);
