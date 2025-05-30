@@ -299,7 +299,6 @@
                         <th>DATA</th>
                         <th>STATUS</th>
                         <th>POLICIAIS</th>
-                        <th>RISCO</th>
                         <th>AÇÕES</th>
                     </tr>
                 </thead>
@@ -325,7 +324,7 @@
                     <button type="button" class="close-modal" onclick="mudarModalNovaInvestigacao()">&times;</button>
                 </div>
 
-                <form onsubmit="event.preventDefault(); adicionarInvestigacao();">
+                <form id="form_investigacao" onsubmit="event.preventDefault(); adicionarInvestigacao();">
                     <div class="form-group">
                         <label for="titulo_investigacao">Título da Investigação</label>
                         <input type="text" id="titulo_investigacao" required
