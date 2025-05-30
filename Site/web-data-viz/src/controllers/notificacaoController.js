@@ -14,6 +14,19 @@ function editarNotificacao(req, res) {
         res.status(400).send("descrição inválida.");
     } else if (tipo == undefined || tipo == null || tipo.trim().length == 0) {
         res.status(400).send("tipo inválido.");
+    } else {
+        investigacoesModel.editarNotificacao(id_notificacao, titulo, descricao, tipo)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao editar a notificação! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
     }
 }
 
