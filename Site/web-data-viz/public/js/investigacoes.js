@@ -140,7 +140,7 @@ function carregarInvestigacoes() {
     var botaoEmAndamento = document.getElementById(`btn_EmAndamento`);
     var botaoEsclarecida = document.getElementById(`btn_Esclarecida`);
     var botaoNaoEsclarecida = document.getElementById(`btn_NaoEsclarecida`);
-    
+
     botaoTotal.classList.add("ativo");
     botaoEmAndamento.classList.remove("ativo");
     botaoPendente.classList.remove("ativo");
@@ -175,13 +175,24 @@ function carregarInvestigacoes() {
                     var qtd_policiais = json[i].qtd_policiais;
 
 
+                    var tag_status = ``;
+                    if (status_atual == 'Em andamento') {
+                        tag_status = 'andamento';
+
+                    } else if (status_atual == 'Não esclarecida') {
+                        tag_status = 'nao-esclarecida';
+
+                    } else {
+                        tag_status = status_atual.toLowerCase();
+                    }
+
                     estrutura_tabela += `
                     <tr>
                     <td>REQ-${idInvestigacao}</td>
                     <td>${titulo}</td>
                     <td>${localidade}</td>
                     <td>${dt_investigacao}</td>
-                    <td><span class="badge status andamento">${status_atual}</span></td>
+                    <td><span class="badge status ${tag_status}">${status_atual}</span></td>
                     <td>${qtd_policiais}</td>
                     <td>
                         <div class="actions">
@@ -286,6 +297,16 @@ function visualizarInvestigacaoPorStatus(status) {
                     var status_atual = json[i].status_atual.charAt(0).toUpperCase() + json[i].status_atual.slice(1);;
                     var qtd_policiais = json[i].qtd_policiais;
 
+                    var tag_status = ``;
+                    if (status_atual == 'Em andamento') {
+                        tag_status = 'andamento';
+
+                    } else if (status_atual == 'Não esclarecida') {
+                        tag_status = 'nao-esclarecida';
+
+                    } else {
+                        tag_status = status_atual.toLowerCase();
+                    }
 
                     estrutura_tabela += `
                     <tr>
@@ -293,18 +314,18 @@ function visualizarInvestigacaoPorStatus(status) {
                     <td>${titulo}</td>
                     <td>${localidade}</td>
                     <td>${dt_investigacao}</td>
-                    <td><span class="badge status andamento">${status_atual}</span></td>
+                    <td><span class="badge status ${tag_status}">${status_atual}</span></td>
                     <td>${qtd_policiais}</td>
                     <td>
                         <div class="actions">
-                            <button class="botao botao-azul-claro" onclick="mudarModalEditarInvestigacao(${idInvestigacao})">Editar</button>
+                            <button class="botao botao-azul-claro ${tag_status}" onclick="mudarModalEditarInvestigacao(${idInvestigacao})">Editar</button>
                             <a href="#" class="botao botao-secundario">Ver Detalhes</a>
                         </div>
                     </td>
                 </tr>   
                     `;
                 }
-                tabela_investigacoes.innerHTML += estrutura_tabela;
+                tabela_investigacoes.innerHTML = estrutura_tabela;
             })
         }
     })
