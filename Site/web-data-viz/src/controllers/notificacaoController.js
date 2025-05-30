@@ -4,7 +4,7 @@ function cadastrar(req, res) {
     var titulo = req.body.tituloServer;
     var descricao = req.body.descricaoServer;
     var tipo = req.body.tipoServer;
-    var fkUsuario = req.body.fkUsuarioServer;
+    var fkUsuarios = req.body.fkUsuarioServer;
 
     if (titulo == undefined || titulo == null || titulo.trim().length == 0) {
         res.status(400).send("O título está indefinido.");
@@ -12,15 +12,15 @@ function cadastrar(req, res) {
         res.status(400).send("A descrição está indefinida.");
     } else if (tipo == undefined || tipo == null || tipo.trim().length == 0) {
         res.status(400).send("O tipo está indefinido.");
-    } else if (fkUsuario == undefined || fkUsuario == null || fkUsuario.trim().length == 0) {
+    } else if (fkUsuarios == undefined || fkUsuarios == null || fkUsuarios.trim().length == 0) {
         res.status(400).send("O usuário não está identificado.");
     } else {
-        notificacaoModel.cadastrar(titulo, descricao, tipo, fkUsuario)
+        notificacaoModel.cadastrar(titulo, descricao, tipo)
             .then(
                 function (resultado) {
                     res.json(resultado);
-
-                    notificacaoModel.cadastrarNotificacaoAssociativa(fkUsuario, titulo, descricao, tipo)
+                    fkUsuarios.array.forEach(fkUsuario => {
+                        notificacaoModel.cadastrarNotificacaoAssociativa(fkUsuario, titulo, descricao, tipo)
                         .then(
                             function (resultado) {
                                 res.json(resultado);
@@ -35,11 +35,12 @@ function cadastrar(req, res) {
                                 res.status(500).json(erro.sqlMessage);
                             }
                         );
-                }
-            )
-            .catch (function (erro) {
-              console.log("Erro ao cadastrar notificação:", erro);
-              res.status(500).json(erro.sqlMessage);
+                    }
+                )
+                .catch (function (erro) {
+                    console.log("Erro ao cadastrar notificação:", erro);
+                    res.status(500).json(erro.sqlMessage);
+                });
             });
     }
 }
@@ -100,7 +101,7 @@ function editarNotificacao(req, res) {
 }
 
 function listarNotificacao(req, res) {
-    var id_usuario = req.body.idServer;
+    var id_usuario = req.body.fkUsuarioServer;
 
     if (id_usuario == undefined || id_usuario == null || id_usuario.trim().length == 0) {
         res.status(400).send("id inválido.");
