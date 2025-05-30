@@ -30,6 +30,28 @@ function editarNotificacao(req, res) {
     }
 }
 
+function listarNotificacao(req, res) {
+    var id_usuario = req.body.idServer;
+
+    if (id_usuario == undefined || id_usuario == null || id_usuario.trim().length == 0) {
+        res.status(400).send("id inválido.");
+    } else {
+        notificacaoModel.listarNotificacao(id_usuario)
+        .then(
+            function(resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar as notificações! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+    }
+}
+
 module.exports = {
-    editarNotificacao
+    editarNotificacao,
+    listarNotificacao
 }
