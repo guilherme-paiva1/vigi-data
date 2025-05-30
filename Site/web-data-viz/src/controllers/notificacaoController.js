@@ -15,7 +15,7 @@ function editarNotificacao(req, res) {
     } else if (tipo == undefined || tipo == null || tipo.trim().length == 0) {
         res.status(400).send("tipo inválido.");
     } else {
-        investigacoesModel.editarNotificacao(id_notificacao, titulo, descricao, tipo)
+        investigacaoModel.editarNotificacao(id_notificacao, titulo, descricao, tipo)
             .then(
                 function (resultado) {
                     res.json(resultado);
