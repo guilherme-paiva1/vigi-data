@@ -1,4 +1,14 @@
-var database = require("../database/config")
+
+var database = require("../database/config");
+
+function excluirNotificacao(idNotificacao) {
+    var instrucaoSql = `
+        DELETE FROM notificacao
+        WHERE idNotificacao = ${idNotificacao};
+    `;
+  
+    return database.executar(instrucaoSql);
+}
 
 function editarNotificacao(id_notificacao, titulo, descricao, tipo){
     var instrucaoSql =`
@@ -26,12 +36,13 @@ function listarNotificacao(id_usuario) {
     JOIN alerta a ON n.fkAlerta = a.idAlerta
     WHERE n.fkUsuario = ${id_usuario}
     ORDER BY a.dtHoraAlerta DESC;
-    `
+    `;
 
     return database.executar(instrucaoSql);
 }
 
 module.exports = {
+    excluirNotificacao,
     editarNotificacao,
     listarNotificacao
 }
