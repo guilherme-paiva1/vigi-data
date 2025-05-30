@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mysql:
     image: imagem-sql
@@ -38,6 +36,23 @@ services:
       DB_PORT: 3306
       APP_PORT: 8080
       APP_HOST: 0.0.0.0
+
+  leitor:
+    build:
+      context: ../leitor-excel
+      dockerfile: Dockerfile
+    image: imagemjava
+    container_name: container-leitor
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: container-sql
+      MYSQL_USER: svc_vida
+      MYSQL_PASSWORD: urubu100
+    volumes:
+      - ~/.aws:/root/.aws
+    networks:
+      - vida_network
 
 volumes:
   db_data:

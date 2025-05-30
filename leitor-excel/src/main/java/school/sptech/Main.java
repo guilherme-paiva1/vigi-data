@@ -8,7 +8,6 @@ import school.sptech.s3.S3Downloader;
 import school.sptech.s3.S3Provider;
 import software.amazon.awssdk.services.s3.S3Client;
 import java.io.InputStream;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.SQLException;

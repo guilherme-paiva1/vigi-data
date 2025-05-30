@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,12 +13,19 @@ public class Conexao {
     private Connection conn;
     private JdbcTemplate template;
 
-    public Conexao() throws SQLException {
-        String ip = System.getenv("MYSQL_HOST");
+    public Conexao() throws SQLException, UnknownHostException {
+        String dbHost = System.getenv("MYSQL_HOST");
+        String dbUser = System.getenv("MYSQL_USER");
+        String dbPass = System.getenv("MYSQL_PASSWORD");
+
+        System.out.println("Host: " + dbHost);
+        System.out.println("User: " + dbUser);
+        System.out.println("Pass: " + dbPass);
+
         conn = DriverManager.getConnection(
-                "jdbc:mysql://" + ip + ":3306/vida",
-                System.getenv("MYSQL_USER"),
-                System.getenv("MYSQL_PASSWORD")
+                "jdbc:mysql://" + dbHost + ":3306/vida",
+                dbUser,
+                dbPass
         );
 
         conn.setAutoCommit(false);
