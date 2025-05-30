@@ -120,6 +120,11 @@ function visualizarInvestigacaoPorStatus(status, fkUsuario) {
 function visualizarQtdInvestigacaoPorStatus(fkUsuario) {
     var instrucaoSql = `
     SELECT 
+        (SELECT COUNT(idInvestigacao) FROM investigacao AS inv
+        JOIN historico_investigacao AS hist 
+		ON inv.idInvestigacao = hist.fkInvestigacao 
+		WHERE hist.fkUsuario = ${fkUsuario}) AS qtd_total,
+
 		(SELECT COUNT(idInvestigacao) FROM investigacao AS inv
         JOIN historico_investigacao AS hist 
 		ON inv.idInvestigacao = hist.fkInvestigacao 
@@ -141,7 +146,9 @@ function visualizarQtdInvestigacaoPorStatus(fkUsuario) {
         JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao 
          WHERE 
-	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Não esclarecida") AS qtd_nao_esclarecida;
+	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Não esclarecida") AS qtd_nao_esclarecida,
+            
+            (SELECT qtd_nao_esclarecida + qtd_esclarecida) AS total_concluido;
     `;
 
     return database.executar(instrucaoSql);

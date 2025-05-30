@@ -225,31 +225,31 @@
                 <span id="card_total" class="card-conteudo"></span>
             </div>
         </div>
-        <div class="card pai green">
-            <div class="img-card">
-                <img src="../assets/icons/icon-done.svg" alt="">
-            </div>
-            <div class="card info-investigacao">
-                <div class="card-header">Concluídas</div>
-                <span id="card_concluida" class="card-conteudo"></span>
-            </div>
-        </div>
         <div class="card pai yellow">
             <div class="img-card">
-                <img src="../assets/icons/icon-time.svg" alt="">
+                <img src="../assets/icons/tempo-amarelo.svg" alt="">
+            </div>
+            <div class="card info-investigacao">
+                <div class="card-header">Pendente</div>
+                <span id="card_pendente" class="card-conteudo"></span>
+            </div>
+        </div>
+        <div class="card pai blue">
+            <div class="img-card">
+                <img src="../assets/icons/tempo-azul.svg" alt="">
             </div>
             <div class="card info-investigacao">
                 <div class="card-header">Em andamento</div>
                 <span id="card_andamento" class="card-conteudo"></span>
             </div>
         </div>
-        <div class="card pai red">
+        <div class="card pai green">
             <div class="img-card">
-                <img src="../assets/icons/icon-warning-triangle.svg" alt="">
+                <img src="../assets/icons/icon-done.svg" alt="">
             </div>
             <div class="card info-investigacao">
-                <div class="card-header">Urgentes</div>
-                <div class="card-conteudo"></div>
+                <div class="card-header">Esclarecidas</div>
+                <span id="card_concluido" class="card-conteudo"></span>
             </div>
         </div>
     </div>
@@ -274,11 +274,11 @@
             </div>
 
             <div class="filter-tabs">
-                <button onclick="carregarInvestigacoes()" class="tab active">Todos</button>
-                <button onclick="visualizarInvestigacaoPorStatus('Pendente')" class="tab">Pendentes</button>
-                <button onclick="visualizarInvestigacaoPorStatus('Em andamento')" class="tab">Em Andamento</button>
-                <button onclick="visualizarInvestigacaoPorStatus('Esclarecida')" class="tab">Esclarecidas</button>
-                <button onclick="visualizarInvestigacaoPorStatus('Não esclarecida')" class="tab">Não esclarecidas</button>
+                <button id="btn_todos" onclick="carregarInvestigacoes()" class="tab">Todos</button>
+                <button id="btn_Pendente" onclick="visualizarInvestigacaoPorStatus('Pendente')" class="tab">Pendentes</button>
+                <button id="btn_EmAndamento" onclick="visualizarInvestigacaoPorStatus('EmAndamento')" class="tab">Em Andamento</button>
+                <button id="btn_Esclarecida" onclick="visualizarInvestigacaoPorStatus('Esclarecida')" class="tab">Esclarecidas</button>
+                <button id="btn_NaoEsclarecida" onclick="visualizarInvestigacaoPorStatus('NaoEsclarecida')" class="tab">Não esclarecidas</button>
             </div>
 
             <table class="investigation-table">

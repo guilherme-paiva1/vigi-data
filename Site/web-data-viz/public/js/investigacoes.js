@@ -1,5 +1,6 @@
 window.onload = function () {
     carregarInvestigacoes();
+    visualizarQtdInvestigacaoPorStatus();
 }
 
 function abrirConfirmacaoExclusaoInvestigacao() {
@@ -134,6 +135,18 @@ function editarInvestigacao() {
 }
 
 function carregarInvestigacoes() {
+    var botaoTotal = document.getElementById(`btn_todos`);
+    var botaoPendente = document.getElementById(`btn_Pendente`);
+    var botaoEmAndamento = document.getElementById(`btn_EmAndamento`);
+    var botaoEsclarecida = document.getElementById(`btn_Esclarecida`);
+    var botaoNaoEsclarecida = document.getElementById(`btn_NaoEsclarecida`);
+    
+    botaoTotal.classList.add("ativo");
+    botaoEmAndamento.classList.remove("ativo");
+    botaoPendente.classList.remove("ativo");
+    botaoEsclarecida.classList.remove("ativo");
+    botaoNaoEsclarecida.classList.remove("ativo");
+
     var tabela_investigacoes = document.getElementById("tabela_investigacoes");
     var id = sessionStorage.ID_USUARIO;
 
@@ -186,13 +199,67 @@ function carregarInvestigacoes() {
 }
 
 function visualizarQtdInvestigacaoPorStatus() {
+    var id = sessionStorage.ID_USUARIO;
+    var cardTotal = document.getElementById("card_total");
+    var cardPendentes = document.getElementById("card_pendente");
+    var cardAndamento = document.getElementById("card_andamento");
+    var cardConcluido = document.getElementById("card_concluido");
+
+    fetch("../investigacao/visualizarQtdInvestigacaoPorStatus", {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idServer: id,
+        })
+    }).then(function (resposta) {
+        if (resposta.ok) {
+            resposta.json().then(json => {
+
+                linha_cards.style.display = "flex";
+                cardTotal.innerHTML = json[0].qtd_total;
+                cardAndamento.innerHTML = json[0].qtd_andamento;
+                cardPendentes.innerHTML = json[0].qtd_pendente;
+                cardConcluido.innerHTML = json[0].total_concluido;
+
+            })
+        }
+    })
 
 }
 
 function visualizarInvestigacaoPorStatus(status) {
+    var botaoStatusAtual = document.getElementById(`btn_${status}`);
+    var botaoTotal = document.getElementById(`btn_todos`);
+    var botaoPendente = document.getElementById(`btn_Pendente`);
+    var botaoEmAndamento = document.getElementById(`btn_EmAndamento`);
+    var botaoEsclarecida = document.getElementById(`btn_Esclarecida`);
+    var botaoNaoEsclarecida = document.getElementById(`btn_NaoEsclarecida`);
+
+    botaoTotal.classList.remove("ativo");
+    botaoEmAndamento.classList.remove("ativo");
+    botaoPendente.classList.remove("ativo");
+    botaoEsclarecida.classList.remove("ativo");
+    botaoNaoEsclarecida.classList.remove("ativo");
+
+    botaoStatusAtual.classList.add("ativo");
+
     var tabela_investigacoes = document.getElementById("tabela_investigacoes");
     var id = sessionStorage.ID_USUARIO;
-    var status_atual = status;
+    var status_atual = ``
+
+    if (status == 'EmAndamento') {
+        status_atual = 'Em andamento';
+
+    } else if (status == 'NaoEsclarecida') {
+        status_atual = 'Não esclarecida';
+
+    } else {
+        status_atual = status;
+    }
+
+    console.log(status_atual);
 
     fetch("../investigacao/visualizarInvestigacaoPorStatus", {
         method: "POST",
