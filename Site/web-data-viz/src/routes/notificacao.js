@@ -16,4 +16,8 @@ router.post("/listarNotificacao", function (req, res) {
     notificacaoController.listarNotificacao(req, res);
 });
 
+router.delete("/excluir", function (req, res) {
+    notificacaoController.excluirNotificacao(req, res);
+});
+
 module.exports = router;
