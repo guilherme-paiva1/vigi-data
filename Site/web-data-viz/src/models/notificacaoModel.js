@@ -83,10 +83,8 @@ function listarAlertaDelegado(id_usuario) {
     a.dtHoraAlerta,
     a.titulo,
     a.descricao,
-    a.tipo,
-    n.visualizado
-    FROM notificacao n
-    JOIN alerta a ON n.fkAlerta = a.idAlerta
+    a.tipo
+    FROM alerta a
     WHERE a.fkCriador = ${id_usuario}
     ORDER BY a.dtHoraAlerta DESC;
     `;
