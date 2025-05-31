@@ -7,8 +7,11 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/style-response.css">
     <link rel="shortcut icon" href="../assets/logo-branco-simples.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <title>Usuários</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <title>Dashboard</title>
 </head>
 
 <body>
@@ -178,133 +181,7 @@
         </div>
     </div>
 
-    <!-- Banner e filtro -->
-    <div class="container investigacoes">
-        <div class="investigations-container">
-            <div class="header-section">
-                <div class="header-text">
-                    <h2>Gestão de Usuários</h2>
-                    <p class="subtitle">Gerencie todos os policiais</p>
-                </div>
-                <div>
-                <button type="button" class="btn-new-user" onclick="mudarModalNovoUsuario()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    Novo Policial
-                </button>
-                </div>
-            </div>
-
-            <div class="search-and-select">
-                <input type="text" placeholder="Buscar policiais..." class="search-input" id="input_filtro_nome">
-                <select class="role-select" id="input_filtro_status">
-                    <option value="todos">Todos os Status</option>
-                    <option value="ativo">Ativo</option>
-                    <option value="inativo">Inativo</option>
-                </select>
-            </div>
-            <div id="div_lista_usuarios"></div>
-        </div>
-
-        <!-- modal de novo usuário -->
-        <div id="modal_novo_usuario" class="modal-criacao">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Novo Policial</h3>
-                    <button class="close-modal" onclick="mudarModalNovoUsuario()">&times;</button>
-                </div>
-                <div class="form-group">
-                    <label for="nome_novo_usuario">Nome Completo*</label>
-                    <input type="text" id="nome_novo_usuario" required placeholder="Digite o nome completo">
-                </div>
-                <div class="form-group">
-                    <label for="matricula_novo_usuario">Matrícula*</label>
-                    <input type="text" id="matricula_novo_usuario" maxlength="7" required placeholder="Digite o número da matrícula">
-                </div>
-                <div class="form-group">
-                    <label for="email_novo_usuario">E-mail Institucional*</label>
-                    <input type="email" id="email_novo_usuario" required placeholder="exemplo@policia.gov.br">
-                </div>
-                <div class="form-group">
-                    <label for="senha_novo_usuario">Senha*</label>
-                    <input type="password" id="senha_novo_usuario" required placeholder="Digite a senha">
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-cancel" onclick="mudarModalNovoUsuario()">Cancelar</button>
-                    <button type="submit" class="btn-save" onclick="adicionarUsuario()">Cadastrar</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- modal de editar usuário -->
-        <div id="modal_editar_usuario" class="modal-edicao">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Editar Policial</h3>
-                    <button class="close-modal" onclick="mudarModalEditarUsuario()">&times;</button>
-                </div>
-                <input type="hidden" id="id_usuario_editar">
-                <div class="form-group">
-                    <label for="nome_editar_usuario">Nome Completo*</label>
-                    <input type="text" id="nome_editar_usuario" required>
-                </div>
-                <div class="form-group">
-                    <label for="matricula_editar_usuario">Matrícula*</label>
-                    <input type="text" id="matricula_editar_usuario" disabled readonly>
-                </div>
-                <div class="form-group">
-                    <label for="email_editar_usuario">E-mail Institucional*</label>
-                    <input type="email" id="email_editar_usuario" required>
-                </div>
-                <div class="form-group">
-                    <label for="status_editar_usuario">Status*</label>
-                    <select id="status_editar_usuario" required>
-                        <option value="ativo">Ativo</option>
-                        <option value="inativo">Inativo</option>
-                    </select>
-                </div>
-                <div class="modal-actions">
-                    <button type="button" class="btn-excluir" onclick="abrirConfirmacaoExclusao()">
-                        <i class="fas fa-trash-alt"></i> Excluir usuário
-                    </button>
-                    <button type="button" class="btn-cancel" onclick="mudarModalEditarUsuario()">Cancelar</button>
-                    <button type="submit" class="btn-save" onclick="editarUsuario()">Salvar</button>
-                </div>
-
-                <!-- Modal de confirmação de exclusão -->
-                <div id="modal_confirmacao_exclusao" class="modal-confirmacao oculto">
-                    <div class="caixa-confirmacao">
-                        <p>Tem certeza que deseja excluir este usuário?</p>
-                        <div class="btn-modal">
-                            <button class="btn-cancel" onclick="fecharConfirmacaoExclusao()">Cancelar</button>
-                            <button class="btn-confirm" onclick="confirmarExclusaoUsuario()">Confirmar</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    </div>
-
-    <!-- modal de desempenho do usuário -->
-    <div id="modal_desempenho_usuario" class="modal-desempenho">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Desempenho do Policial</h3>
-                <button class="close-modal" onclick="mudarModalDesempenhoUsuario()">&times;</button>
-            </div>
-            <div class="modal-actions">
-                <button type="button" class="btn-cancel" onclick="mudarModalDesempenhoUsuario()">Fechar</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="../js/usuarios.js"></script>
-    <script src="../js/modal.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 </body>
+
 </html>
+<script src="../js/modal.js"></script>
