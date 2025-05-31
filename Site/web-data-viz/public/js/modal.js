@@ -200,7 +200,6 @@ function perfilSession() {
   }
 
   if (sessionStorage.PERFIL_USUARIO == "policial") {
-    nav_usuarios.style.display = "none";
     conteudoModal.innerHTML += `
     <a href="#">
       <div class="conteudo-opcao">
@@ -271,29 +270,30 @@ async function carregarNotificacoes() {
                 </div>
             </div>`;
       } else {
-        json.data.forEach(notificacao => {
+        json.forEach(notificacao => {
+          console.log(notificacao);
           let icon = "";
           switch (notificacao.tipo) {
             case "urgente":
               icon = icon_urgente;
               break;
-            case "informativo":
+            case "informativa":
               icon = icon_informativo;
               break;
             case "sucesso":
               icon = icon_sucesso;
               break;
           }
-          estruturaHTML += `
-                <div class="notificacao" id="notificacao_${notificacao.idNotificacao}">
-                    <div class="icon">
-                        <img src="${icon}" alt="${notificacao.tipo}">
-                    </div>
-                    <div class="notificacao-texto">
-                        <h4>${notificacao.titulo}</h4>
-                        <p>${notificacao.conteudo}</p>
-                    </div>
-                </div>`;
+            estruturaHTML += `
+              <div class="notificacao" id="notificacao_${notificacao.idNotificacao}">
+                <div class="icon">
+                  <img src="${icon}" alt="${notificacao.tipo}" style="width:32px;height:32px;">
+                </div>
+                <div class="notificacao-texto">
+                  <h4>${notificacao.titulo}</h4>
+                  <p>${notificacao.descricao}</p>
+                </div>
+              </div>`;
         });
       }
     } else {

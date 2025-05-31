@@ -1,17 +1,15 @@
 var database = require("../database/config");
 
-function cadastrar(titulo, descricao, tipo, fkCriador) {
+async function cadastrar(titulo, descricao, tipo, fkCriador) {
     var instrucaoSql = `
         INSERT INTO alerta (titulo, descricao, tipo, fkCriador) 
         VALUES ('${titulo}', '${descricao}', '${tipo}', ${fkCriador});
     `;
     
-    return database.executar(instrucaoSql);
-}
+    await database.executar(instrucaoSql);
 
-function cadastrarNotificacaoAssociativa(fkUsuario, titulo, descricao, tipo, fkCriador) {
     var instrucaoSqlIdNotificacao = `
-        SELECT idAlerta 
+        SELECT idAlerta
         FROM alerta 
         WHERE titulo = '${titulo}'
         AND descricao = '${descricao}'
@@ -20,21 +18,16 @@ function cadastrarNotificacaoAssociativa(fkUsuario, titulo, descricao, tipo, fkC
         ORDER BY dtHoraAlerta DESC
         LIMIT 1;
     `;
-
-    database.executar(instrucaoSqlIdNotificacao)
-    .then((resultado) => {
-                if (resultado.length > 0) {
-                    var idNotificacao = resultado[0].instrucaoSqlIdNotificacao;
-                    var queryNotificacao = `
-                        INSERT INTO notificacao (fkAlerta, fkUsuario, visualizado) 
-                            VALUES (${idNotificacao}, ${fkUsuario}, 0);
-                    `;
-                    return database.executar(queryNotificacao);
-                }
-            });
+    return database.executar(instrucaoSqlIdNotificacao);
 }
 
-var database = require("../database/config");
+function cadastrarNotificacaoAssociativa(fkUsuario, idNotificacao) {
+    var instrucaoSql = `
+        INSERT INTO notificacao (fkAlerta, fkUsuario, visualizado) 
+        VALUES (${idNotificacao}, ${fkUsuario}, 0);
+    `;
+    return database.executar(instrucaoSql);
+}
 
 function excluirNotificacao(idNotificacao) {
     var instrucaoSql = `
@@ -66,6 +59,7 @@ function listarNotificacao(id_usuario) {
     a.titulo,
     a.descricao,
     a.tipo,
+    n.idNotificacao,
     n.visualizado
     FROM notificacao n
     JOIN alerta a ON n.fkAlerta = a.idAlerta
