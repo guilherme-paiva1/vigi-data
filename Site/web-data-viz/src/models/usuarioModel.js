@@ -57,8 +57,7 @@ function editar(idUsuario, nome, email, matricula, ativo) {
 
 function excluirUsuario(idUsuario) {
     var instrucaoSql = `
-        DELETE FROM usuario
-        WHERE idUsuario = ${idUsuario};
+        DELETE FROM usuario WHERE idUsuario = ${idUsuario};
     `;
 
     return database.executar(instrucaoSql);

@@ -1,34 +1,42 @@
-var mysql = require("mysql2");
+require('dotenv').config();
+const mysql = require('mysql2');
 
-// CONEXÃO DO BANCO MYSQL SERVER
-var mySqlConfig = {
+const mySqlConfig = {
     host: process.env.DB_HOST,
     database: process.env.DB_DATABASE,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT
+    port: process.env.DB_PORT || 3306
 };
 
 function executar(instrucao) {
-
     if (process.env.AMBIENTE_PROCESSO !== "producao" && process.env.AMBIENTE_PROCESSO !== "desenvolvimento") {
-        console.log("\nO AMBIENTE (produção OU desenvolvimento) NÃO FOI DEFINIDO EM .env OU dev.env OU app.js\n");
-        return Promise.reject("AMBIENTE NÃO CONFIGURADO EM .env");
+        console.log("\n❌ O AMBIENTE (producao ou desenvolvimento) NÃO FOI DEFINIDO no arquivo .env\n");
+        return Promise.reject("❌ AMBIENTE NÃO CONFIGURADO NO .env");
     }
 
-    return new Promise(function (resolve, reject) {
-        var conexao = mysql.createConnection(mySqlConfig);
-        conexao.connect();
-        conexao.query(instrucao, function (erro, resultados) {
-            conexao.end();
+    return new Promise((resolve, reject) => {
+        const conexao = mysql.createConnection(mySqlConfig);
+
+        conexao.connect((erro) => {
             if (erro) {
+                console.error("❌ Erro ao conectar no MySQL:", erro.message);
                 reject(erro);
+                return;
             }
-            console.log(resultados);
-            resolve(resultados);
-        });
-        conexao.on('error', function (erro) {
-            return ("ERRO NO MySQL SERVER: ", erro.sqlMessage);
+
+            conexao.query(instrucao, (erro, resultados) => {
+                conexao.end();
+
+                if (erro) {
+                    console.error("❌ Erro na execução da instrução SQL:", erro.sqlMessage);
+                    reject(erro);
+                    return;
+                }
+
+                console.log("✅ Resultado da execução:", resultados);
+                resolve(resultados);
+            });
         });
     });
 }

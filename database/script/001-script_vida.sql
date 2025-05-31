@@ -1,5 +1,4 @@
 CREATE DATABASE IF NOT EXISTS vida;
-
 USE vida;
 
 CREATE TABLE usuario (
@@ -13,12 +12,13 @@ CREATE TABLE usuario (
     ativo TINYINT,
     
     CONSTRAINT fk_usuario_supervisor 
-		FOREIGN KEY (fkSupervisor)
-			REFERENCES usuario(idUsuario)
+        FOREIGN KEY (fkSupervisor)
+        REFERENCES usuario(idUsuario)
+        ON DELETE SET NULL  -- Para evitar exclusão em cascata circular
 );
 
 CREATE TABLE regiao (
-	idRegiao INT PRIMARY KEY auto_increment,
+    idRegiao INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(6),
     populacao INT
 );
@@ -33,31 +33,40 @@ CREATE TABLE ocorrencia (
     fkRegiao INT,
     
     CONSTRAINT fk_ocorr_regiao
-		FOREIGN KEY (fkRegiao)
-			REFERENCES regiao(idRegiao)
+        FOREIGN KEY (fkRegiao)
+        REFERENCES regiao(idRegiao)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE alerta (
-	idAlerta INT PRIMARY KEY,
-    dtHoraAlerta DATETIME,
+    idAlerta INT PRIMARY KEY AUTO_INCREMENT,
+    dtHoraAlerta DATETIME DEFAULT CURRENT_TIMESTAMP,
     titulo VARCHAR(45),
-    conteudo VARCHAR(100),
-    categoria VARCHAR(45)
+    descricao VARCHAR(100),
+    tipo VARCHAR(45),
+    fkCriador INT,
+    
+    CONSTRAINT fk_alerta_criador
+        FOREIGN KEY (fkCriador)
+        REFERENCES usuario(idUsuario)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE notificacao (
-	idNotificacao INT PRIMARY KEY,
+    idNotificacao INT PRIMARY KEY AUTO_INCREMENT,
     fkAlerta INT,
     fkUsuario INT,
     visualizado TINYINT,
     
     CONSTRAINT fk_alerta_not
-		FOREIGN KEY (fkAlerta)
-			REFERENCES alerta(idAlerta),
-		
-	CONSTRAINT fk_usuario_not
-		FOREIGN KEY (fkUsuario)
-			REFERENCES usuario(idUsuario)
+        FOREIGN KEY (fkAlerta)
+        REFERENCES alerta(idAlerta)
+        ON DELETE CASCADE,
+        
+    CONSTRAINT fk_usuario_not
+        FOREIGN KEY (fkUsuario)
+        REFERENCES usuario(idUsuario)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE investigacao (
@@ -67,25 +76,28 @@ CREATE TABLE investigacao (
     localidade VARCHAR(45),
     dt_investigacao DATE,
     status_atual VARCHAR(15),
-	fkRegiao INT,
+    fkRegiao INT,
     
     CONSTRAINT fk_inv_regiao
-		FOREIGN KEY (fkRegiao)
-			REFERENCES regiao(idRegiao)
-)  AUTO_INCREMENT=100;
+        FOREIGN KEY (fkRegiao)
+        REFERENCES regiao(idRegiao)
+        ON DELETE CASCADE
+) AUTO_INCREMENT=100;
 
 CREATE TABLE historico_investigacao (
-	fkInvestigacao INT,
+    fkInvestigacao INT,
     fkUsuario INT,
     criador TINYINT,
     
     CONSTRAINT fk_inv_hist
-		FOREIGN KEY (fkInvestigacao)
-			REFERENCES investigacao(idInvestigacao),
-		
-	CONSTRAINT fk_usuario_hist
-		FOREIGN KEY (fkUsuario)
-			REFERENCES usuario(idUsuario)
+        FOREIGN KEY (fkInvestigacao)
+        REFERENCES investigacao(idInvestigacao)
+        ON DELETE CASCADE,
+        
+    CONSTRAINT fk_usuario_hist
+        FOREIGN KEY (fkUsuario)
+        REFERENCES usuario(idUsuario)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE log (

@@ -148,7 +148,20 @@ function visualizarQtdInvestigacaoPorStatus(fkUsuario) {
          WHERE 
 	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Não esclarecida") AS qtd_nao_esclarecida,
             
-            (SELECT qtd_nao_esclarecida + qtd_esclarecida) AS total_concluido;
+            (SELECT qtd_nao_esclarecida + qtd_esclarecida) AS total_concluido;`
+    return database.executar(instrucaoSql);
+}
+
+function visualizarHistoricoPorMes(id) {
+    var instrucaoSql = `
+    SELECT 
+    MONTH(i.dt_investigacao) AS mes,
+    COUNT(*) AS total_investigacoes
+    FROM historico_investigacao hi
+    JOIN investigacao i ON hi.fkInvestigacao = i.idInvestigacao
+    WHERE hi.fkUsuario = ${id}
+    GROUP BY mes
+    ORDER BY mes;
     `;
 
     return database.executar(instrucaoSql);
@@ -163,5 +176,6 @@ module.exports = {
     visualizarInvestigacaoPorId,
     editarInvestigacao,
     visualizarQtdInvestigacaoPorStatus,
-    visualizarInvestigacaoPorStatus
+    visualizarInvestigacaoPorStatus,
+    visualizarHistoricoPorMes
 };

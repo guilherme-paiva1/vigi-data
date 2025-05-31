@@ -113,7 +113,6 @@ function visualizarInvestigacaoPorId(req, res) {
         );
 }
 
-
 function excluirInvestigacao(req, res) {
     var id = req.body.idServer;
 
@@ -173,6 +172,33 @@ function editarInvestigacao(req, res) {
     }
 }
 
+function visualizarHistoricoPorMes(req, res) {
+    var id = req.body.idServer;
+
+    if (id == undefined) {
+        res.status(400).send("id inválido.");
+    } else {
+        investigacoesModel.visualizarHistoricoPorMes(id)
+            .then(
+                function (resultadoInvestigacoesPorMes) {
+                    if (resultadoInvestigacoesPorMes.length >= 1) {
+                        res.json({
+                            qtdPorMes: resultadoInvestigacoesPorMes[0].qtdPorMes
+                        });
+                    } else if (resultadoInvestigacoesPorMes.length == 0) {
+                        res.status(403).send("id inválido ou não há investigações nesse mês.");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao visualizar o histórico por mês! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 function visualizarInvestigacaoPorStatus(req, res) {
     var id = req.body.idServer;
     var status_atual = req.body.status_atualServer;
@@ -201,28 +227,24 @@ function visualizarInvestigacaoPorStatus(req, res) {
 }
 
 function visualizarQtdInvestigacaoPorStatus(req, res) {
-    var id = req.body.idServer;
-
-    if (id == undefined) {
-        res.status(400).send("id inválido.");
-    } else {
-        investigacaoModel.visualizarQtdInvestigacaoPorStatus(id)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao visualizar as investigações! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
+    id = req.body.idServer;
+    investigacaoModel.visualizarQtdInvestigacaoPorStatus(id)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao visualizar as investigações! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
 }
+
 
 module.exports = {
     cadastrar,
@@ -232,5 +254,6 @@ module.exports = {
     visualizarInvestigacaoPorId,
     editarInvestigacao,
     visualizarInvestigacaoPorStatus,
-    visualizarQtdInvestigacaoPorStatus
+    visualizarQtdInvestigacaoPorStatus,
+    visualizarHistoricoPorMes
 }

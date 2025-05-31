@@ -2097,7 +2097,7 @@ button {
 /* Corpo do formulário */
 .modal-criacao .form-group,
 .modal-edicao .form-group {
-    padding: 15px 20px;
+    padding: 10px;
 }
 
 .modal-criacao .form-group label,
@@ -2336,7 +2336,7 @@ button {
 }
 
 .btn-edit:hover {
-    background-color: #bbdefb;
+    background-color: #45abff;
 }
 
 .btn-delete {

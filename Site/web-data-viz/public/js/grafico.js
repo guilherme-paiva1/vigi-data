@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // Escopo global — só declare uma vez
 window.map = null;
 
-function renderizarOcorrenciaPorTipo(zona) {
+async function renderizarOcorrenciaPorTipo(zona) {
   let exibicao = "";
   switch (zona) {
     case "norte":
@@ -31,121 +31,101 @@ function renderizarOcorrenciaPorTipo(zona) {
   let dados = [0, 0, 0];
   document.getElementById('chart-spinner').classList.remove('hidden');
 
-  for (let i = 0; i < listaRubricas.length; i++) {
-    let rubrica = listaRubricas[i];
-    fetch("../ocorrencia/listar", {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json"
-      },
-      body: JSON.stringify({
-        rubricaServer: `= '${rubrica}'`,
-        dataDeServer: dataDe,
-        dataAteServer: dataAte
-      })
-    })
-      .then(function (resposta) {
-        resposta.json().then(json => {
-          let index = 0;
-          switch (rubrica) {
-            case "roubo":
-              index = 0;
-              break;
-            case "furto":
-              index = 1;
-              break;
-            case "tráfico drogas":
-              index = 2;
-              break;
-          }
-
-          switch (zona) {
-            case "norte":
-              dados[index] = json[0].qtd_ocorrencia_norte;
-              break;
-            case "sul":
-              dados[index] = json[0].qtd_ocorrencia_sul;
-              break;
-            case "leste":
-              dados[index] = json[0].qtd_ocorrencia_leste;
-              break;
-            case "oeste":
-              dados[index] = json[0].qtd_ocorrencia_oeste;
-              break;
-            case "centro":
-              dados[index] = json[0].qtd_ocorrencia_centro;
-              break;
-          }
-
-        });
-      })
-      .catch(function (erro) {
-        console.log(erro);
+  // Use Promise.all para buscar todos os dados em paralelo
+  await Promise.all(listaRubricas.map(async (rubrica, i) => {
+    try {
+      const resposta = await fetch("../ocorrencia/listar", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+          rubricaServer: `= '${rubrica}'`,
+          dataDeServer: dataDe,
+          dataAteServer: dataAte
+        })
       });
+      const json = await resposta.json();
+      switch (zona) {
+        case "norte":
+          dados[i] = json[0].qtd_ocorrencia_norte;
+          break;
+        case "sul":
+          dados[i] = json[0].qtd_ocorrencia_sul;
+          break;
+        case "leste":
+          dados[i] = json[0].qtd_ocorrencia_leste;
+          break;
+        case "oeste":
+          dados[i] = json[0].qtd_ocorrencia_oeste;
+          break;
+        case "centro":
+          dados[i] = json[0].qtd_ocorrencia_centro;
+          break;
+      }
+    } catch (erro) {
+      console.log(erro);
     }
-    setTimeout(function () {
-      // Verifica se todos os dados foram carregados
-      if (dados.every(dado => dado !== 0)) {
-        const existingChart = Chart.getChart('crime-chart');
-        if (existingChart) {
-          existingChart.destroy();
-        }
+  }));
 
-        // Gráfico de barras - Ocorrências por tipo
-        const crimeCtx = document.getElementById('crime-chart').getContext('2d');
-        new Chart(crimeCtx, {
-          type: 'bar',
-          data: {
-            labels: ['Roubo', 'Furto', 'Tráfico'],
-            datasets: [{
-              label: 'Ocorrências',
-              data: dados,
-              backgroundColor: ['#1E90FF', '#007BFF', '#20c997'],
-              borderColor: ['#1a7acc', '#0069d9', '#1aa179'],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-              legend: {
-                display: false
-              },
-              tooltip: {
-                enabled: true,
-                callbacks: {
-                  label: function (context) {
-                    return `${context.dataset.label}: ${context.raw.toLocaleString()}`;
-                  }
-                }
-              }
-            },
-            scales: {
-              y: {
-                beginAtZero: true,
-                ticks: {
-                  stepSize: 200,
-                  callback: function (value) {
-                    return value.toLocaleString();
-                  }
-                },
-                grid: {
-                  color: 'rgba(0, 0, 0, 0.05)'
-                }
-              },
-              x: {
-                grid: {
-                  display: false
-                }
-              }
+  const existingChart = Chart.getChart('crime-chart');
+  if (existingChart) {
+    existingChart.destroy();
+  }
+
+  // Gráfico de barras - Ocorrências por tipo
+  const crimeCtx = document.getElementById('crime-chart').getContext('2d');
+  new Chart(crimeCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Roubo', 'Furto', 'Tráfico'],
+      datasets: [{
+        label: 'Ocorrências',
+        data: dados,
+        backgroundColor: ['#1E90FF', '#007BFF', '#20c997'],
+        borderColor: ['#1a7acc', '#0069d9', '#1aa179'],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: {
+          display: false
+        },
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            label: function (context) {
+              return `${context.dataset.label}: ${context.raw.toLocaleString()}`;
             }
           }
-        });
-        document.getElementById('chart-spinner').classList.add('hidden');
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 200,
+            callback: function (value) {
+              return value.toLocaleString();
+            }
+          },
+          grid: {
+            color: 'rgba(0, 0, 0, 0.05)'
+          }
+        },
+        x: {
+          grid: {
+            display: false
+          }
+        }
       }
-    }, 2000); // Tempo de espera para garantir que todos os dados foram carregados
-  }
+    }
+  });
+  document.getElementById('chart-spinner').classList.add('hidden');
+}
 
   function renderizarHistoricoDeInvestigacoes() {
     // Gráfico de linha - Histórico de investigações
