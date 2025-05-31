@@ -239,6 +239,15 @@
                         <option value="sucesso">Sucesso</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="policiais_notificacao">Policiais*</label>
+                    <select class="role-select" id="policiais_notificacao" onchange="selecionarPolicial()">
+                    </select>
+                    <div id="lista_policiais_selecionados">
+                        <h4>Policiais Selecionados:</h4>
+                        <ul id="ul_policiais_selecionados" style="max-height: 40px; overflow-y: auto; margin: 0; padding: 0;"></ul>
+                    </div>
+                </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-cancel" onclick="mudarModalNovaNotificacao()">Cancelar</button>
                     <button type="submit" class="btn-save" onclick="adicionarNotificacao()">Cadastrar</button>

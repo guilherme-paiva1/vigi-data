@@ -1,6 +1,7 @@
 var notificacaoModel = require("../models/notificacaoModel");
 
 function cadastrar(req, res) {
+    console.log(req.body);
     var titulo = req.body.tituloServer;
     var descricao = req.body.descricaoServer;
     var tipo = req.body.tipoServer;
@@ -13,37 +14,33 @@ function cadastrar(req, res) {
         res.status(400).send("A descrição está indefinida.");
     } else if (tipo == undefined || tipo == null || tipo.trim().length == 0) {
         res.status(400).send("O tipo está indefinido.");
-    } else if (fkUsuarios == undefined || fkUsuarios == null || fkUsuarios.length == 0) {
+    } else if (fkUsuarios == undefined || fkUsuarios == null) {
         res.status(400).send("O usuário não está identificado.");
     } else if (fkCriador == undefined || fkCriador == null || fkCriador.trim().length == 0) {
         res.status(400).send("O criador da notificação não está identificado.");
     } else {
         notificacaoModel.cadastrar(titulo, descricao, tipo, fkCriador)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                    fkUsuarios.forEach(fkUsuario => {
-                        notificacaoModel.cadastrarNotificacaoAssociativa(fkUsuario, titulo, descricao, tipo, fkCriador)
-                        .then(
-                            function (resultado) {
-                                res.json(resultado);
-                            }
-                        ).catch(
-                            function (erro) {
-                                console.log(erro);
-                                console.log(
-                                    "\nHouve um erro ao criar a notificação! Erro: ",
-                                    erro.sqlMessage
-                                );
-                                res.status(500).json(erro.sqlMessage);
-                            }
-                        );
-                    }
-                )
-                .catch (function (erro) {
-                    console.log("Erro ao cadastrar notificação:", erro);
-                    res.status(500).json(erro.sqlMessage);
+            .then(function (resultadoCadastro) {
+            const idNotificacao = resultadoCadastro[0].idAlerta;
+            const promises = fkUsuarios.map(fkUsuario => {
+                return notificacaoModel.cadastrarNotificacaoAssociativa(fkUsuario, idNotificacao);
+            });
+            Promise.all(promises)
+                .then(results => {
+                res.json({ idNotificacao, message: "Notificação cadastrada com sucesso!" });
+                })
+                .catch(function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao criar as associações da notificação! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
                 });
+            })
+            .catch(function (erro) {
+            console.log("Erro ao cadastrar notificação:", erro);
+            res.status(500).json(erro.sqlMessage);
             });
     }
 }

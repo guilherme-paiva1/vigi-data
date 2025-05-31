@@ -11,3 +11,6 @@ INSERT INTO regiao (nome, populacao) VALUES
 	("Centro", 423536),
 	("Sul", 3735554);
     
+    select * from notificacao;
+    select * from alerta;
+    
