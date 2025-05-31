@@ -10,6 +10,7 @@ modalDesempenhoUsuario = document.getElementById("modal_desempenho_usuario");
 nomeSession();
 distintivoSession();
 perfilSession();
+mostrarNotificacoes();
 
 function sair() {
   sessionStorage.clear();
@@ -70,16 +71,16 @@ function mudarModalNovoUsuario() {
 
 function mudarModalNovaInvestigacao() {
   const modalNovaInvestigacao = document.getElementById('modal_nova_investigacao');
-  
+
   if (modalNovaInvestigacao.style.display == "flex") {
     modalNovaInvestigacao.style.opacity = "0";
 
-    setTimeout(function() {
+    setTimeout(function () {
       modalNovaInvestigacao.style.display = "none";
     }, 100);
   } else {
     modalNovaInvestigacao.style.display = "flex";
-    setTimeout(function() {
+    setTimeout(function () {
       modalNovaInvestigacao.style.opacity = "1";
     }, 100);
   }
@@ -240,4 +241,73 @@ function perfilSession() {
       </a>
     `
   }
+}
+
+async function carregarNotificacoes() {
+  var estruturaHTML = "";
+  const icon_urgente = "../assets/icons/icon-alert.svg";
+  const icon_informativo = "../assets/icons/icon-time.svg";
+  const icon_sucesso = "../assets/icons/icon-done.svg";
+
+  try {
+    const resposta = await fetch("../notificacao/listarNotificacao", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        fkUsuarioServer: sessionStorage.ID_USUARIO
+      })
+    });
+
+    if (resposta.ok) {
+      const json = await resposta.json();
+      if (json.length == 0) {
+        estruturaHTML = `
+            <div class="notificacao">
+                <div class="notificacao-texto">
+                    <h4>Sem notificações</h4>
+                    <p>Você não possui notificações no momento.</p>
+                </div>
+            </div>`;
+      } else {
+        json.data.forEach(notificacao => {
+          let icon = "";
+          switch (notificacao.tipo) {
+            case "urgente":
+              icon = icon_urgente;
+              break;
+            case "informativo":
+              icon = icon_informativo;
+              break;
+            case "sucesso":
+              icon = icon_sucesso;
+              break;
+          }
+          estruturaHTML += `
+                <div class="notificacao" id="notificacao_${notificacao.idNotificacao}">
+                    <div class="icon">
+                        <img src="${icon}" alt="${notificacao.tipo}">
+                    </div>
+                    <div class="notificacao-texto">
+                        <h4>${notificacao.titulo}</h4>
+                        <p>${notificacao.conteudo}</p>
+                    </div>
+                </div>`;
+        });
+      }
+    } else {
+      const texto = await resposta.text();
+      console.error("Erro ao carregar notificações:", texto);
+    }
+  } catch (error) {
+    console.error("Erro ao carregar notificações:", error);
+  }
+  return estruturaHTML;
+}
+
+async function mostrarNotificacoes() {
+  var notificacoesHTML = await carregarNotificacoes();
+  var div_notificacoes = document.getElementById("div_notificacoes");
+  div_notificacoes.innerHTML = notificacoesHTML;
 }

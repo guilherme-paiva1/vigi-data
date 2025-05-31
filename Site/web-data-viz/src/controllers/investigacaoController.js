@@ -206,7 +206,6 @@ function visualizarHistoricoPorMes (req, res){
 module.exports = {
     cadastrar,
     visualizarInvestigacoes,
-    exibir,
     excluirInvestigacao,
     visualizarInvestigacaoPolicial,
     visualizarInvestigacaoPorId,
