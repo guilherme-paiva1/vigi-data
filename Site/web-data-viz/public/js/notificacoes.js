@@ -15,7 +15,7 @@ function adicionarNotificacao() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            fkUsuarioServer: idUsuarios,
+            fkUsuariosServer: idUsuarios,
             tituloServer: titulo,
             descricaoServer: descricao,
             tipoServer: tipo,
