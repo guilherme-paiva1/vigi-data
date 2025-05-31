@@ -17,8 +17,9 @@ function buscarUsuarios() {
     })
     .then(function (resposta){
         if(resposta.ok) {
-            resposta.json().then(json => {
-                let users = json;
+            resposta.text().then(function (text) {
+                if (text) {
+                let users = JSON.parse(text);
                 let estruturaHTML = '';
                 let statusExibicao = '';
                 users.forEach(user => {
@@ -72,11 +73,15 @@ function buscarUsuarios() {
 
                 lista_usuarios = document.getElementById('div_lista_usuarios');
                 lista_usuarios.innerHTML = estruturaHTML;
-            })
-        } else {
-            console.log("Erro ao buscar usuários");
-        }
-    })
+            } else {
+                lista_usuarios = document.getElementById('div_lista_usuarios');
+                lista_usuarios.innerHTML = '<p class="no-users">Nenhum usuário encontrado.</p>';
+            }
+        });
+    } else {
+        console.log("Erro ao buscar usuários");
+    }
+})
 }
 
 

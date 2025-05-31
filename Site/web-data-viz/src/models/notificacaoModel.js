@@ -1,12 +1,12 @@
 var database = require("../database/config");
 
-function cadastrar(titulo, descricao, tipo, fkCriador) {
+async function cadastrar(titulo, descricao, tipo, fkCriador) {
     var instrucaoSql = `
         INSERT INTO alerta (titulo, descricao, tipo, fkCriador) 
         VALUES ('${titulo}', '${descricao}', '${tipo}', ${fkCriador});
     `;
     
-    database.executar(instrucaoSql);
+    await database.executar(instrucaoSql);
 
     var instrucaoSqlIdNotificacao = `
         SELECT idAlerta
@@ -18,7 +18,7 @@ function cadastrar(titulo, descricao, tipo, fkCriador) {
         ORDER BY dtHoraAlerta DESC
         LIMIT 1;
     `;
-    return database.executar(instrucaoSqlIdNotificacao)
+    return database.executar(instrucaoSqlIdNotificacao);
 }
 
 function cadastrarNotificacaoAssociativa(fkUsuario, idNotificacao) {
