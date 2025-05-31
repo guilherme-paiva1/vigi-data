@@ -1,21 +1,24 @@
 var database = require("../database/config");
 
-function cadastrar(titulo, descricao, tipo) {
+function cadastrar(titulo, descricao, tipo, fkCriador) {
     var instrucaoSql = `
-        INSERT INTO alerta (titulo, descricao, tipo) 
-        VALUES ('${titulo}', '${descricao}', '${tipo}');
+        INSERT INTO alerta (titulo, descricao, tipo, fkCriador) 
+        VALUES ('${titulo}', '${descricao}', '${tipo}', ${fkCriador});
     `;
     
     return database.executar(instrucaoSql);
 }
 
-function cadastrarNotificacaoAssociativa(fkUsuario, titulo, descricao, tipo) {
+function cadastrarNotificacaoAssociativa(fkUsuario, titulo, descricao, tipo, fkCriador) {
     var instrucaoSqlIdNotificacao = `
         SELECT idAlerta 
         FROM alerta 
         WHERE titulo = '${titulo}'
         AND descricao = '${descricao}'
-        AND tipo = '${tipo}';
+        AND tipo = '${tipo}'
+        AND fkCriador = ${fkCriador}
+        ORDER BY dtHoraAlerta DESC
+        LIMIT 1;
     `;
 
     database.executar(instrucaoSqlIdNotificacao)
@@ -73,10 +76,29 @@ function listarNotificacao(id_usuario) {
     return database.executar(instrucaoSql);
 }
 
+function listarAlertaDelegado(id_usuario) {
+    var instrucaoSql = `
+    SELECT 
+    a.idAlerta,
+    a.dtHoraAlerta,
+    a.titulo,
+    a.descricao,
+    a.tipo,
+    n.visualizado
+    FROM notificacao n
+    JOIN alerta a ON n.fkAlerta = a.idAlerta
+    WHERE a.fkCriador = ${id_usuario}
+    ORDER BY a.dtHoraAlerta DESC;
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     excluirNotificacao,
     editarNotificacao,
     listarNotificacao,
+    listarAlertaDelegado,
     cadastrar,
-    cadastrarNotificacaoAssociativa
+    cadastrarNotificacaoAssociativa,
 }
