@@ -3,10 +3,10 @@ function adicionarNotificacao() {
     var titulo = document.getElementById('titulo_nova_notificacao').value;
     var descricao = document.getElementById('descricao_notificacao').value;
     var tipo = document.getElementById('tipo_notificacao').value;
+    var fkCriador = sessionStorage.ID_USUARIO;
     
-    // Substituir a sessionStorage por IDs dos policiais selecionados. Exemplo:
-    // var idUsuarios = [1, 2, 3]; // IDs dos policiais selecionados
-    var idUsuario = sessionStorage.ID_USUARIO;
+    // Substituir esse mock por IDs dos policiais selecionados. Exemplo:
+    var idUsuarios = [1, 2]; // IDs dos policiais selecionados
 
     // Enviar para o backend
     fetch("../notificacao/cadastrar", {
@@ -15,10 +15,11 @@ function adicionarNotificacao() {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            fkUsuarioServer: idUsuario,
+            fkUsuariosServer: idUsuarios,
             tituloServer: titulo,
             descricaoServer: descricao,
-            tipoServer: tipo
+            tipoServer: tipo,
+            fkCriadorServer: fkCriador
         }),
     })
     .then(function (resposta) {

@@ -4,7 +4,8 @@ function cadastrar(req, res) {
     var titulo = req.body.tituloServer;
     var descricao = req.body.descricaoServer;
     var tipo = req.body.tipoServer;
-    var fkUsuarios = req.body.fkUsuarioServer;
+    var fkUsuarios = req.body.fkUsuariosServer;
+    var fkCriador = req.body.fkCriadorServer;
 
     if (titulo == undefined || titulo == null || titulo.trim().length == 0) {
         res.status(400).send("O título está indefinido.");
@@ -12,15 +13,17 @@ function cadastrar(req, res) {
         res.status(400).send("A descrição está indefinida.");
     } else if (tipo == undefined || tipo == null || tipo.trim().length == 0) {
         res.status(400).send("O tipo está indefinido.");
-    } else if (fkUsuarios == undefined || fkUsuarios == null || fkUsuarios.trim().length == 0) {
+    } else if (fkUsuarios == undefined || fkUsuarios == null || fkUsuarios.length == 0) {
         res.status(400).send("O usuário não está identificado.");
+    } else if (fkCriador == undefined || fkCriador == null || fkCriador.trim().length == 0) {
+        res.status(400).send("O criador da notificação não está identificado.");
     } else {
-        notificacaoModel.cadastrar(titulo, descricao, tipo)
+        notificacaoModel.cadastrar(titulo, descricao, tipo, fkCriador)
             .then(
                 function (resultado) {
                     res.json(resultado);
-                    fkUsuarios.array.forEach(fkUsuario => {
-                        notificacaoModel.cadastrarNotificacaoAssociativa(fkUsuario, titulo, descricao, tipo)
+                    fkUsuarios.forEach(fkUsuario => {
+                        notificacaoModel.cadastrarNotificacaoAssociativa(fkUsuario, titulo, descricao, tipo, fkCriador)
                         .then(
                             function (resultado) {
                                 res.json(resultado);
@@ -121,9 +124,31 @@ function listarNotificacao(req, res) {
     }
 }
 
+function listarAlertaDelegado(req, res) {
+    var id_usuario = req.body.fkUsuarioServer;
+
+    if (id_usuario == undefined || id_usuario == null || id_usuario.trim().length == 0) {
+        res.status(400).send("id inválido.");
+    } else {
+        notificacaoModel.listarAlertaDelegado(id_usuario)
+        .then(
+            function(resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar as notificações! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+    }
+}
+
 module.exports = {
     cadastrar,
     editarNotificacao,
     listarNotificacao,
-    excluirNotificacao
+    excluirNotificacao,
+    listarAlertaDelegado
 }

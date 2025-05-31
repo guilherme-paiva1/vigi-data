@@ -16,6 +16,10 @@ router.post("/listarNotificacao", function (req, res) {
     notificacaoController.listarNotificacao(req, res);
 });
 
+router.post("/listarAlertaDelegado", function (req, res) {
+    notificacaoController.listarAlertaDelegado(req, res);
+});
+
 router.delete("/excluir", function (req, res) {
     notificacaoController.excluirNotificacao(req, res);
 });

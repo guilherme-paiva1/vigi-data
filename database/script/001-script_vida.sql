@@ -42,7 +42,12 @@ CREATE TABLE alerta (
     dtHoraAlerta DATETIME default current_timestamp,
     titulo VARCHAR(45),
     descricao VARCHAR(100),
-    tipo VARCHAR(45)
+    tipo VARCHAR(45),
+    fkCriador INT,
+    
+    CONSTRAINT fk_alerta_criador
+		FOREIGN KEY (fkCriador)
+			REFERENCES usuario(idUsuario)
 );
 
 CREATE TABLE notificacao (
