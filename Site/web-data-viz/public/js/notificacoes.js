@@ -29,26 +29,26 @@ function adicionarNotificacao() {
             fkCriadorServer: fkCriador
         }),
     })
-    .then(function (resposta) {
-        if (resposta.ok) {
-            resposta.json().then(function (resultado) {
-                console.log("Notificação cadastrada com sucesso:", resultado);
-                // Fechar o modal e limpar o formulário
-                mudarModalNovaNotificacao();
-                document.getElementById('form_notificacao').reset();
-                
-                // Recarregar a lista de notificações
-                carregarAlertas();
-                
-                // Mostrar mensagem de sucesso
-                alert('Notificação cadastrada com sucesso!');
-            });
-        }
-    })
-    .catch(function (erro) {
-        console.error('Erro:', erro);
-        console.log("Erro ao cadastrar notificação:", erro.message);
-    });
+        .then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(function (resultado) {
+                    console.log("Notificação cadastrada com sucesso:", resultado);
+                    // Fechar o modal e limpar o formulário
+                    mudarModalNovaNotificacao();
+                    document.getElementById('form_notificacao').reset();
+
+                    // Recarregar a lista de notificações
+                    carregarAlertas();
+
+                    // Mostrar mensagem de sucesso
+                    alert('Notificação cadastrada com sucesso!');
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.error('Erro:', erro);
+            console.log("Erro ao cadastrar notificação:", erro.message);
+        });
 
     // Impede o envio padrão do formulário
     return false;
@@ -56,6 +56,10 @@ function adicionarNotificacao() {
 
 function carregarAlertas() {
     var idUsuario = sessionStorage.ID_USUARIO;
+
+    const icon_urgente = "../assets/icons/icon-alert.svg";
+    const icon_informativo = "../assets/icons/icon-time.svg";
+    const icon_sucesso = "../assets/icons/icon-done.svg";
 
     fetch(`../notificacao/listarAlertaDelegado`, {
         method: "POST",
@@ -66,21 +70,54 @@ function carregarAlertas() {
             fkUsuarioServer: idUsuario
         }),
     })
-    .then(function (resposta) {
-        if (resposta.ok) {
-            resposta.json().then(function (notificacoes) {
-                var listaNotificacoes = document.getElementById('div_lista_notificacoes');
-                listaNotificacoes.innerHTML = ''; // Limpa a lista antes de adicionar novas notificações
-
-                notificacoes.forEach(function (notificacao) {
-                    
+        .then(function (resposta) {
+            if (resposta.ok) {
+                resposta.json().then(function (notificacoes) {
+                    var listaNotificacoes = document.getElementById('div_lista_notificacoes');
+                    listaNotificacoes.innerHTML = ''; // Limpa a lista antes de adicionar novas notificações
+                    console.log("Notificações recebidas:", notificacoes);
+                    let estruturaHTML = "";
+                    notificacoes.forEach(function (notificacao) {
+                        let icon = "";
+                        switch (notificacao.tipo) {
+                            case "urgente":
+                                icon = icon_urgente;
+                                break;
+                            case "informativa":
+                                icon = icon_informativo;
+                                break;
+                            case "sucesso":
+                                icon = icon_sucesso;
+                                break;
+                        }
+                        estruturaHTML += `
+                        <div class="notificacao-listagem notification-type.${notificacao.tipo}" id="notificacao_${notificacao.idAlerta}">
+                            <div class="icon">
+                                <img src="${icon}" alt="${notificacao.tipo}" style="width:32px;height:32px;">
+                            </div>
+                            <div class="notificacao-texto">
+                                <h4>${notificacao.titulo}</h4>
+                                <p>${notificacao.descricao}</p>
+                                <p class="notification-date">${new Date(notificacao.dtHoraAlerta).toLocaleDateString("pt-BR", {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        })}</p>
+                            </div>
+                            <div class="notification-actions">
+                                <button class="btn" onclick="mudarModalEditarAlerta(${notificacao.idAlerta})">Editar</button>
+                            </div>
+                        </div>`;
+                    });
+                    listaNotificacoes.innerHTML = estruturaHTML;
                 });
-            });
-        }
-    })
-    .catch(function (erro) {
-        console.error('Erro:', erro);
-    });
+            }
+        })
+        .catch(function (erro) {
+            console.error('Erro:', erro);
+        });
 }
 
 function carregarPoliciais() {
@@ -91,44 +128,44 @@ function carregarPoliciais() {
             "Content-type": "application/json"
         },
         body: JSON.stringify({
-            idSuperiorServer: idSuperior   
+            idSuperiorServer: idSuperior
         })
     })
-    .then(function (resposta) {
-        if (resposta.ok) {
-            resposta.text().then(function (text) {
-                var selectPoliciais = document.getElementById('policiais_notificacao');
-                if (text) {
-                    var usuarios = JSON.parse(text);
-                    selectPoliciais.innerHTML = ''; 
-                    var option = document.createElement('option');
-                    option.value = "";
-                    option.disabled = true;
-                    option.selected = true;
-                    option.textContent = "Selecione os policiais";
-                    selectPoliciais.appendChild(option);
-
-                    usuarios.forEach(function (usuario) {
+        .then(function (resposta) {
+            if (resposta.ok) {
+                resposta.text().then(function (text) {
+                    var selectPoliciais = document.getElementById('policiais_notificacao');
+                    if (text) {
+                        var usuarios = JSON.parse(text);
+                        selectPoliciais.innerHTML = '';
                         var option = document.createElement('option');
-                        option.value = usuario.idUsuario; 
-                        option.textContent = usuario.nome;
+                        option.value = "";
+                        option.disabled = true;
+                        option.selected = true;
+                        option.textContent = "Selecione os policiais";
                         selectPoliciais.appendChild(option);
-                    });
-                } else {
-                    selectPoliciais.innerHTML = '';
-                    var option = document.createElement('option');
-                    option.value = "";
-                    option.disabled = true;
-                    option.selected = true;
-                    option.textContent = "Você não possui policiais vinculados, cadastre um policial primeiro";
-                    selectPoliciais.appendChild(option);
-                }
-            });
-        }
-    })
-    .catch(function (erro) {
-        console.error('Erro:', erro);
-    });
+
+                        usuarios.forEach(function (usuario) {
+                            var option = document.createElement('option');
+                            option.value = usuario.idUsuario;
+                            option.textContent = usuario.nome;
+                            selectPoliciais.appendChild(option);
+                        });
+                    } else {
+                        selectPoliciais.innerHTML = '';
+                        var option = document.createElement('option');
+                        option.value = "";
+                        option.disabled = true;
+                        option.selected = true;
+                        option.textContent = "Você não possui policiais vinculados, cadastre um policial primeiro";
+                        selectPoliciais.appendChild(option);
+                    }
+                });
+            }
+        })
+        .catch(function (erro) {
+            console.error('Erro:', erro);
+        });
 }
 
 function selecionarPolicial() {
@@ -145,7 +182,7 @@ function selecionarPolicial() {
         var img = document.createElement('img');
         img.src = "../assets/icons/icon-trash.svg";
         img.alt = "Remover";
-        img.onclick = function() {
+        img.onclick = function () {
             var index = listaIDsPoliciais.indexOf(idSelecionado);
             if (index > -1) {
                 listaIDsPoliciais.splice(index, 1);
@@ -170,4 +207,107 @@ function mudarModalNovaNotificacao() {
     } else {
         modalNovaNotificacao.style.display = "flex";
     }
+}
+
+function mudarModalEditarAlerta(idAlerta) {
+    if (modalEditarAlerta.style.display == "flex") {
+        modalEditarAlerta.style.opacity = "0";
+
+        setTimeout(function () {
+            modalEditarAlerta.style.display = "none";
+        }, 100);
+    } else {
+        carregarInformacoesEditarAlerta(idAlerta);
+
+        setTimeout(function () {
+            modalEditarAlerta.style.opacity = "1";
+        }, 100);
+        modalEditarAlerta.style.display = "flex";
+    }
+}
+
+function carregarInformacoesEditarAlerta(idAlerta) {
+    let id_usuario_editar = document.getElementById('id_notificacao_editar');
+    let titulo_editar_notificacao = document.getElementById('titulo_editar_notificacao');
+    let descricao_editar_notificacao = document.getElementById('descricao_editar_notificacao');
+    let tipo_editar_notificacao = document.getElementById('tipo_editar_notificacao');
+    fetch('/notificacao/listarPorId', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idAlertaServer: idAlerta
+        })
+    }).then(function (resposta) {
+        resposta.json().then(json => {
+            let alerta = json[0];
+            id_usuario_editar.value = alerta.idAlerta;
+            titulo_editar_notificacao.value = alerta.titulo;
+            descricao_editar_notificacao.value = alerta.descricao;
+            tipo_editar_notificacao.value = alerta.tipo;
+        });
+    });
+}
+
+function editarAlerta() {
+    var notificacaoId = document.getElementById('id_notificacao_editar').value;
+    var titulo = document.getElementById('titulo_editar_notificacao').value;
+    var descricao = document.getElementById('descricao_editar_notificacao').value;
+    var tipo = document.getElementById('tipo_editar_notificacao').value;
+    fetch('/notificacao/editarNotificacao', {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idAlertaServer: notificacaoId,
+            tituloServer: titulo,
+            descricaoServer: descricao,
+            tipoServer: tipo
+        })
+    }).then(function (resposta) {
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                mudarModalEditarAlerta();
+                carregarAlertas();
+            });
+        } else {
+            console.error("Erro ao editar alerta");
+        }
+    }).catch(function (erro) {
+        console.error('Erro:', erro);
+    });
+}
+
+function abrirConfirmacaoExclusao() {
+    document.getElementById('modal_confirmacao_exclusao').classList.remove('oculto');
+}
+
+function fecharConfirmacaoExclusao() {
+    document.getElementById('modal_confirmacao_exclusao').classList.add('oculto');
+}
+
+function confirmarExclusaoAlerta() {
+    var idAlerta = document.getElementById('id_notificacao_editar').value;
+    fetch('/notificacao/excluirAlerta', {
+        method: "DELETE",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idAlertaServer: idAlerta
+        })
+    }).then(function (resposta) {
+        if (resposta.ok) {
+            fecharConfirmacaoExclusao();
+            mudarModalEditarAlerta();
+            carregarAlertas();
+            alert('Alerta excluído com sucesso!');
+        } else {
+            console.error("Erro ao excluir alerta");
+        }
+    }).catch(function (erro) {
+        console.error('Erro:', erro);
+    });
 }

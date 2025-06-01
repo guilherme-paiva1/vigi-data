@@ -2139,7 +2139,7 @@ button {
 /* Corpo do formulário */
 .modal-criacao .form-group,
 .modal-edicao .form-group {
-    padding: 10px;
+    padding: 2px;
 }
 
 .modal-criacao .form-group label,
@@ -2358,6 +2358,30 @@ button {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
+}
+
+.notificacao-listagem {
+    display: flex;
+    height: 50px;
+    flex-direction: row;
+    justify-content: space-between;
+    border-top: 1px solid #ddd;
+}
+
+.notificacao-listagem .icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notificacao-listagem .notificacao-texto {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    align-items: center;
+    font-size: 0.9rem;
+    gap: 10px;
+    margin: 10px;
 }
 
 .btn-edit, .btn-delete {
