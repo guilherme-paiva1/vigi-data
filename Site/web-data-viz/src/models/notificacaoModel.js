@@ -38,6 +38,16 @@ function excluirNotificacao(idNotificacao) {
     return database.executar(instrucaoSql);
 }
 
+function visualizarNotificacao(idNotificacao) {
+    var instrucaoSql = `
+        UPDATE notificacao
+        SET visualizado = 1
+        WHERE idNotificacao = ${idNotificacao};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 function editarNotificacao(id_notificacao, titulo, descricao, tipo){
     var instrucaoSql =`
     UPDATE alerta
@@ -93,4 +103,5 @@ module.exports = {
     listarAlertaDelegado,
     cadastrar,
     cadastrarNotificacaoAssociativa,
+    visualizarNotificacao
 }

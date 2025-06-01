@@ -69,6 +69,31 @@ function excluirNotificacao(req, res) {
           );
      }
 }
+
+function visualizarNotificacao(req, res) {
+    var idNotificacao = req.body.idNotificacaoServer;
+
+    if (idNotificacao == undefined) {
+        res.status(400).send("Erro. ID da notificação inválido.");
+    } else {
+        notificacaoModel.visualizarNotificacao(idNotificacao)
+            .then(
+                function (resultado) {
+                    if (resultado.affectedRows > 0) {
+                        res.status(202).send("Notificação visualizada com sucesso!");
+                    } else {
+                        res.status(404).send("Notificação não encontrada.");
+                    }
+                  }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao visualizar a notificação! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+          );
+     }
+}
   
 function editarNotificacao(req, res) {
     var id_notificacao = req.body.idServer;
@@ -147,5 +172,6 @@ module.exports = {
     editarNotificacao,
     listarNotificacao,
     excluirNotificacao,
-    listarAlertaDelegado
+    listarAlertaDelegado,
+    visualizarNotificacao
 }
