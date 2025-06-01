@@ -113,37 +113,18 @@ function visualizarHistoricoPorMes(id) {
 function visualizarDesempenhoPolicial(idUsuario) {
     var instrucaoSql = `
     SELECT
-    COUNT(*) AS totalInvestigacoes,
-    
-    SUM(CASE 
-        WHEN i.status_atual = 'Resolvida' THEN 1 
-        ELSE 0 
-    END) AS totalInvestigacoesResolvidas,
-    
-    SUM(CASE 
-        WHEN r.nome = 'ZN' THEN 1 
-        ELSE 0 
-    END) AS investigacoesAtendidasZN,
-    
-    SUM(CASE 
-        WHEN r.nome = 'ZL' THEN 1 
-        ELSE 0 
-    END) AS investigacoesAtendidasZL,
-    
-    SUM(CASE 
-        WHEN r.nome = 'ZS' THEN 1 
-        ELSE 0 
-    END) AS investigacoesAtendidasZS,
-    
-    SUM(CASE 
-        WHEN r.nome = 'ZO' THEN 1 
-        ELSE 0 
-    END) AS investigacoesAtendidasZO
-
+        COUNT(*) AS totalInvestigacoes,
+        COALESCE(SUM(CASE WHEN i.status_atual = 'Resolvida' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesResolvidas,
+        COALESCE(SUM(CASE WHEN i.status_atual = 'Pendente' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesPendentes,
+        COALESCE(SUM(CASE WHEN i.status_atual = 'Em andamento' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesEmAndamento,
+        COALESCE(SUM(CASE WHEN r.nome = 'norte' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasNorte,
+        COALESCE(SUM(CASE WHEN r.nome = 'leste' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasLeste,
+        COALESCE(SUM(CASE WHEN r.nome = 'sul' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasSul,
+        COALESCE(SUM(CASE WHEN r.nome = 'oeste' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasOeste,
+        COALESCE(SUM(CASE WHEN r.nome = 'centro' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasCentro
     FROM historico_investigacao h
     JOIN investigacao i ON h.fkInvestigacao = i.idInvestigacao
     JOIN regiao r ON i.fkRegiao = r.idRegiao
-
     WHERE h.fkUsuario = ${idUsuario};
     `;
 

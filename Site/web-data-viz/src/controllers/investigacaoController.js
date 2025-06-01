@@ -214,12 +214,13 @@ function visualizarDesempenhoPolicial (req, res){
                 function (resultadoDesempenhoPolicial) {
                     if (resultadoDesempenhoPolicial.length >= 1) {
                         res.json({
-                            totalInvestigacoes: resultadoDesempenhoPolicial[0].totalInvestigacoes,
-                            totalInvestigacoesResolvidas: resultadoDesempenhoPolicial[0].totalInvestigacoesResolvidas,
-                            investigacoesAtendidasZN: resultadoDesempenhoPolicial[0].investigacoesAtendidasZN,
-                            investigacoesAtendidasZL: resultadoDesempenhoPolicial[0].investigacoesAtendidasZL,
-                            investigacoesAtendidasZS: resultadoDesempenhoPolicial[0].investigacoesAtendidasZS,
-                            investigacoesAtendidasZO: resultadoDesempenhoPolicial[0].investigacoesAtendidasZO
+                            totalInvestigacoes: Number(resultadoDesempenhoPolicial[0].totalInvestigacoes),
+                            totalInvestigacoesResolvidas: Number(resultadoDesempenhoPolicial[0].totalInvestigacoesResolvidas),
+                            investigacoesAtendidasNorte: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasNorte),
+                            investigacoesAtendidasLeste: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasLeste),
+                            investigacoesAtendidasSul: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasSul),
+                            investigacoesAtendidasOeste: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasOeste),
+                            investigacoesAtendidasCentro: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasCentro),
                         });
                     } else if (resultadoDesempenhoPolicial.length == 0) {
                         res.status(403).send("id inválido ou não há investigações nesse mês.");

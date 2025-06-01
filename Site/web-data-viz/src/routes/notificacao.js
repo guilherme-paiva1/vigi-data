@@ -23,5 +23,8 @@ router.post("/listarAlertaDelegado", function (req, res) {
 router.delete("/excluir", function (req, res) {
     notificacaoController.excluirNotificacao(req, res);
 });
+router.put("/visualizar", function (req, res) {
+    notificacaoController.visualizarNotificacao(req, res);
+});
 
 module.exports = router;
