@@ -20,6 +20,10 @@ router.post("/listarAlertaDelegado", function (req, res) {
     notificacaoController.listarAlertaDelegado(req, res);
 });
 
+router.post("/listarPorId", function (req, res) {
+    notificacaoController.listarPorId(req, res);
+});
+
 router.delete("/excluir", function (req, res) {
     notificacaoController.excluirNotificacao(req, res);
 });

@@ -257,11 +257,11 @@
         </div>
 
         <!-- modal de editar notificação -->
-        <div id="modal_editar_notificacao" class="modal-edicao">
+        <div id="modal_editar_alerta" class="modal-edicao">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Editar Notificação</h3>
-                    <button class="close-modal" onclick="mudarModalEditarNotificacao()">&times;</button>
+                    <h3>Editar Alerta</h3>
+                    <button class="close-modal" onclick="mudarModalEditarAlerta()">&times;</button>
                 </div>
                 <input type="hidden" id="id_notificacao_editar">
                 <div class="form-group">
@@ -280,18 +280,6 @@
                         <option value="urgente">Urgente</option>
                         <option value="informativa">Informativa</option>
                         <option value="sucesso">Sucesso</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="destinatario_editar_notificacao">Destinatário*</label>
-                    <input type="text" id="destinatario_editar_notificacao" required
-                        placeholder="Selecione um destinatário">
-                </div>
-                <div class="form-group">
-                    <label for="status_editar_notificacao">Status*</label>
-                    <select id="status_editar_notificacao" required>
-                        <option value="ativo">Ativo</option>
-                        <option value="inativo">Inativo</option>
                     </select>
                 </div>
                 <div class="modal-actions">

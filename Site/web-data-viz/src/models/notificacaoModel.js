@@ -96,11 +96,26 @@ function listarAlertaDelegado(id_usuario) {
     return database.executar(instrucaoSql);
 }
 
+function listarPorId(idAlerta) {
+    var instrucaoSql = `
+    SELECT 
+    a.idAlerta,
+    a.titulo,
+    a.descricao,
+    a.tipo
+    FROM alerta a
+    WHERE a.idAlerta = ${idAlerta};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     excluirNotificacao,
     editarNotificacao,
     listarNotificacao,
     listarAlertaDelegado,
+    listarPorId,
     cadastrar,
     cadastrarNotificacaoAssociativa,
     visualizarNotificacao

@@ -167,11 +167,33 @@ function listarAlertaDelegado(req, res) {
     }
 }
 
+function listarPorId(req, res) {
+    var idAlerta = req.body.idAlertaServer;
+
+    if (idAlerta == undefined || idAlerta == null) {
+        res.status(400).send("id inválido.");
+    } else {
+        notificacaoModel.listarPorId(idAlerta)
+        .then(
+            function(resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar a notificação! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+    }
+}
+
 module.exports = {
     cadastrar,
     editarNotificacao,
     listarNotificacao,
     excluirNotificacao,
     listarAlertaDelegado,
-    visualizarNotificacao
+    visualizarNotificacao,
+    listarPorId
 }

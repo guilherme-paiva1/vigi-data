@@ -57,6 +57,10 @@ function adicionarNotificacao() {
 function carregarAlertas() {
     var idUsuario = sessionStorage.ID_USUARIO;
 
+    const icon_urgente = "../assets/icons/icon-alert.svg";
+    const icon_informativo = "../assets/icons/icon-time.svg";
+    const icon_sucesso = "../assets/icons/icon-done.svg";
+
     fetch(`../notificacao/listarAlertaDelegado`, {
         method: "POST",
         headers: {
@@ -71,10 +75,44 @@ function carregarAlertas() {
             resposta.json().then(function (notificacoes) {
                 var listaNotificacoes = document.getElementById('div_lista_notificacoes');
                 listaNotificacoes.innerHTML = ''; // Limpa a lista antes de adicionar novas notificações
-
+                console.log("Notificações recebidas:", notificacoes);
+                let estruturaHTML = "";
                 notificacoes.forEach(function (notificacao) {
-                    
+                    let icon = "";
+                    switch (notificacao.tipo) {
+                        case "urgente":
+                            icon = icon_urgente;
+                            break;
+                        case "informativa":
+                            icon = icon_informativo;
+                            break;
+                        case "sucesso":
+                            icon = icon_sucesso;
+                            break;
+                    }
+                    estruturaHTML += `
+                        <div class="notificacao-listagem notification-type.${notificacao.tipo}" id="notificacao_${notificacao.idAlerta}">
+                            <div class="icon">
+                                <img src="${icon}" alt="${notificacao.tipo}" style="width:32px;height:32px;">
+                            </div>
+                            <div class="notificacao-texto">
+                                <h4>${notificacao.titulo}</h4>
+                                <p>${notificacao.descricao}</p>
+                                <p class="notification-date">${new Date(notificacao.dtHoraAlerta).toLocaleDateString("pt-BR", {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric',
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                })}</p>
+                            </div>
+                            <div class="notification-actions">
+                                <button class="btn" onclick="mudarModalEditarAlerta(${notificacao.idAlerta})">Editar</button>
+                                <button class="btn btn-excluir" onclick="mudarModalExcluirAlerta(${notificacao.idAlerta})">Excluir</button>
+                            </div>
+                        </div>`;
                 });
+                listaNotificacoes.innerHTML = estruturaHTML;
             });
         }
     })
@@ -170,4 +208,78 @@ function mudarModalNovaNotificacao() {
     } else {
         modalNovaNotificacao.style.display = "flex";
     }
+}
+
+function mudarModalEditarAlerta(idAlerta) {
+  if (modalEditarAlerta.style.display == "flex") {
+    modalEditarAlerta.style.opacity = "0";
+
+    setTimeout(function () {
+      modalEditarAlerta.style.display = "none";
+    }, 100);
+  } else {
+    carregarInformacoesEditarAlerta(idAlerta);
+
+    setTimeout(function () {
+      modalEditarAlerta.style.opacity = "1";
+    }, 100);
+    modalEditarAlerta.style.display = "flex";
+  }
+}
+
+function carregarInformacoesEditarAlerta(idAlerta) {
+    let id_usuario_editar = document.getElementById('id_notificacao_editar');
+    let titulo_editar_notificacao = document.getElementById('titulo_editar_notificacao');
+    let descricao_editar_notificacao = document.getElementById('descricao_editar_notificacao');
+    let tipo_editar_notificacao = document.getElementById('tipo_editar_notificacao');
+    fetch('/notificacao/listarPorId', {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idAlertaServer: idAlerta
+        })
+    }).then(function (resposta) {
+        resposta.json().then(json => {
+            let alerta = json[0];
+            id_usuario_editar.value = alerta.idAlerta;
+            titulo_editar_notificacao.value = alerta.titulo;
+            descricao_editar_notificacao.value = alerta.descricao;
+            tipo_editar_notificacao.value = alerta.tipo;
+        });
+    });
+}
+
+function editarAlerta() {
+    var notificacaoId = document.getElementById('id_notificacao_editar').value;
+    var titulo = document.getElementById('titulo_editar_notificacao').value;
+    var descricao = document.getElementById('descricao_editar_notificacao').value;
+    var tipo = document.getElementById('tipo_editar_notificacao').value;
+    var idUsuarios = listaIDsPoliciais;
+    fetch('/notificacao/editar', {
+        method: "PUT",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idNotificacaoServer: notificacaoId,
+            tituloServer: titulo,
+            descricaoServer: descricao,
+            tipoServer: tipo
+        })
+    }).then(function (resposta) {
+        if (resposta.ok) {
+            resposta.json().then(json => {
+                console.log("Alerta editado com sucesso:", json);
+                mudarModalEditarAlerta();
+                carregarAlertas();
+                alert('Alerta editado com sucesso!');
+            });
+        } else {
+            console.error("Erro ao editar alerta");
+        }
+    }).catch(function (erro) {
+        console.error('Erro:', erro);
+    });
 }

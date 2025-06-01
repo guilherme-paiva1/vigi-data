@@ -1,4 +1,4 @@
-var modalNotificacao, modalUsuario, conteudoModal, modalNovoUsuario, modalEditarUsuario, modalDesempenhoUsuario;
+var modalNotificacao, modalUsuario, conteudoModal, modalNovoUsuario, modalEditarUsuario, modalDesempenhoUsuario, modalEditarAlerta;
 
 modalNotificacao = document.getElementById("modal_notificacao");
 modalUsuario = document.getElementById("modal_usuario");
@@ -6,6 +6,7 @@ conteudoModal = document.getElementById("modal_conteudo");
 modalNovoUsuario = document.getElementById("modal_novo_usuario");
 modalEditarUsuario = document.getElementById("modal_editar_usuario");
 modalDesempenhoUsuario = document.getElementById("modal_desempenho_usuario");
+modalEditarAlerta = document.getElementById("modal_editar_alerta");
 
 nomeSession();
 distintivoSession();
@@ -270,7 +271,7 @@ async function carregarNotificacoes() {
                 <div class="notificacao-texto">
                   <h4>${notificacao.titulo}</h4>
                   <p>${notificacao.descricao}</p>
-                  <p>${new Date(notificacao.dtHoraAlerta).toLocaleDateString("pt-BR", {
+                  <p class="notification-date">${new Date(notificacao.dtHoraAlerta).toLocaleDateString("pt-BR", {
                     day: '2-digit',
                     month: '2-digit',
                     year: 'numeric',
