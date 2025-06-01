@@ -158,7 +158,7 @@ function editarInvestigacao(req, res) {
     } else if (status_atual == undefined) {
         res.status(400).send("status_atual inválido.");
     } else {
-        investigacoesModel.editarInvestigacao(id, titulo, descricao, localidade, dt_investigacao, status_atual)
+        investigacaoModel.editarInvestigacao(id, titulo, descricao, localidade, dt_investigacao, status_atual)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -180,7 +180,7 @@ function visualizarHistoricoPorMes (req, res){
         res.status(400).send("id inválido.");
     } else {
 
-        investigacoesModel.visualizarHistoricoPorMes(id)
+        investigacaoModel.visualizarHistoricoPorMes(id)
             .then(
                 function (resultadoInvestigacoesPorMes) {
                     if (resultadoInvestigacoesPorMes.length >= 1) {
@@ -202,6 +202,40 @@ function visualizarHistoricoPorMes (req, res){
 
 }
 
+function visualizarDesempenhoPolicial (req, res){
+    var id_usuario = req.params.idUsuario;
+
+    if (id_usuario == undefined) {
+        res.status(204).send("id inválido.");
+    } else {
+
+        investigacaoModel.visualizarDesempenhoPolicial(id_usuario)
+            .then(
+                function (resultadoDesempenhoPolicial) {
+                    if (resultadoDesempenhoPolicial.length >= 1) {
+                        res.json({
+                            totalInvestigacoes: resultadoDesempenhoPolicial[0].totalInvestigacoes,
+                            totalInvestigacoesResolvidas: resultadoDesempenhoPolicial[0].totalInvestigacoesResolvidas,
+                            investigacoesAtendidasZN: resultadoDesempenhoPolicial[0].investigacoesAtendidasZN,
+                            investigacoesAtendidasZL: resultadoDesempenhoPolicial[0].investigacoesAtendidasZL,
+                            investigacoesAtendidasZS: resultadoDesempenhoPolicial[0].investigacoesAtendidasZS,
+                            investigacoesAtendidasZO: resultadoDesempenhoPolicial[0].investigacoesAtendidasZO
+                        });
+                    } else if (resultadoDesempenhoPolicial.length == 0) {
+                        res.status(403).send("id inválido ou não há investigações nesse mês.");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao exibir o desempenho! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
 
 module.exports = {
     cadastrar,
@@ -210,5 +244,6 @@ module.exports = {
     visualizarInvestigacaoPolicial,
     visualizarInvestigacaoPorId,
     editarInvestigacao,
-    visualizarHistoricoPorMes
+    visualizarHistoricoPorMes,
+    visualizarDesempenhoPolicial
 }
