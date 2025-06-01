@@ -11,10 +11,6 @@ router.post("/visualizarInvestigacoes", function (req, res) {
     investigacaoController.visualizarInvestigacoes(req, res);
 });
 
-router.post("/exibir", function (req, res) {
-    investigacaoController.exibir(req, res);
-});
-
 router.post("/excluirInvestigacao", function (req, res) {
     investigacaoController.excluirInvestigacao(req, res);
 });
