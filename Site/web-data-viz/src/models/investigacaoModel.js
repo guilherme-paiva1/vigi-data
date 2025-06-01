@@ -110,6 +110,46 @@ function visualizarHistoricoPorMes(id) {
     return database.executar(instrucaoSql);
 }
 
+function visualizarDesempenhoPolicial(idUsuario) {
+    var instrucaoSql = `
+    SELECT
+    COUNT(*) AS totalInvestigacoes,
+    
+    SUM(CASE 
+        WHEN i.status_atual = 'Resolvida' THEN 1 
+        ELSE 0 
+    END) AS totalInvestigacoesResolvidas,
+    
+    SUM(CASE 
+        WHEN r.nome = 'ZN' THEN 1 
+        ELSE 0 
+    END) AS investigacoesAtendidasZN,
+    
+    SUM(CASE 
+        WHEN r.nome = 'ZL' THEN 1 
+        ELSE 0 
+    END) AS investigacoesAtendidasZL,
+    
+    SUM(CASE 
+        WHEN r.nome = 'ZS' THEN 1 
+        ELSE 0 
+    END) AS investigacoesAtendidasZS,
+    
+    SUM(CASE 
+        WHEN r.nome = 'ZO' THEN 1 
+        ELSE 0 
+    END) AS investigacoesAtendidasZO
+
+    FROM historico_investigacao h
+    JOIN investigacao i ON h.fkInvestigacao = i.idInvestigacao
+    JOIN regiao r ON i.fkRegiao = r.idRegiao
+
+    WHERE h.fkUsuario = ${idUsuario};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrar,
     registrarHistoricoDoDelegado,
@@ -118,5 +158,6 @@ module.exports = {
     visualizarInvestigacaoPolicial,
     visualizarInvestigacaoPorId,
     editarInvestigacao,
-    visualizarHistoricoPorMes
+    visualizarHistoricoPorMes,
+    visualizarDesempenhoPolicial
 };
