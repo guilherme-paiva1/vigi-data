@@ -38,6 +38,15 @@ function excluirNotificacao(idNotificacao) {
     return database.executar(instrucaoSql);
 }
 
+function excluirAlerta(idAlerta) {
+    var instrucaoSql = `
+        DELETE FROM alerta
+        WHERE idAlerta = ${idAlerta};
+    `;
+  
+    return database.executar(instrucaoSql);
+}
+
 function visualizarNotificacao(idNotificacao) {
     var instrucaoSql = `
         UPDATE notificacao
@@ -112,6 +121,7 @@ function listarPorId(idAlerta) {
 
 module.exports = {
     excluirNotificacao,
+    excluirAlerta,
     editarNotificacao,
     listarNotificacao,
     listarAlertaDelegado,

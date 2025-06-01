@@ -287,16 +287,16 @@
                         <i class="fas fa-trash-alt"></i> Excluir notificação
                     </button>
                     <button type="button" class="btn-cancel" onclick="mudarModalEditarNotificacao()">Cancelar</button>
-                    <button type="submit" class="btn-save" onclick="editarNotificacao()">Salvar</button>
+                    <button type="submit" class="btn-save" onclick="editarAlerta()">Salvar</button>
                 </div>
 
                 <!-- Modal de confirmação de exclusão -->
-                <div id="modal_confirmacao_exclusao_notificacao" class="modal-confirmacao oculto">
+                <div id="modal_confirmacao_exclusao" class="modal-confirmacao oculto">
                     <div class="caixa-confirmacao">
                         <p>Tem certeza que deseja excluir esta notificação?</p>
                         <div class="btn-modal">
                             <button class="btn-cancel" onclick="fecharConfirmacaoExclusao()">Cancelar</button>
-                            <button class="btn-confirm" onclick="confirmarExclusaoNotificacao()">Confirmar</button>
+                            <button class="btn-confirm" onclick="confirmarExclusaoAlerta()">Confirmar</button>
                         </div>
                     </div>
                 </div>
