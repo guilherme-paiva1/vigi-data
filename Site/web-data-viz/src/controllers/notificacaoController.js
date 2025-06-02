@@ -69,9 +69,59 @@ function excluirNotificacao(req, res) {
           );
      }
 }
+
+function excluirAlerta(req, res) {
+    var idAlerta = req.body.idAlertaServer;
+
+    if (idAlerta == undefined) {
+        res.status(400).send("Erro. ID do alerta inválido.");
+    } else {
+        notificacaoModel.excluirAlerta(idAlerta)
+            .then(
+                function (resultado) {
+                    if (resultado.affectedRows > 0) {
+                        res.status(202).send("Alerta excluído com sucesso!");
+                    } else {
+                        res.status(404).send("Alerta não encontrado.");
+                    }
+                  }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao excluir o alerta! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+          );
+     }
+}
+
+function visualizarNotificacao(req, res) {
+    var idNotificacao = req.body.idNotificacaoServer;
+
+    if (idNotificacao == undefined) {
+        res.status(400).send("Erro. ID da notificação inválido.");
+    } else {
+        notificacaoModel.visualizarNotificacao(idNotificacao)
+            .then(
+                function (resultado) {
+                    if (resultado.affectedRows > 0) {
+                        res.status(202).send("Notificação visualizada com sucesso!");
+                    } else {
+                        res.status(404).send("Notificação não encontrada.");
+                    }
+                  }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao visualizar a notificação! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+          );
+     }
+}
   
 function editarNotificacao(req, res) {
-    var id_notificacao = req.body.idServer;
+    var id_notificacao = req.body.idAlertaServer;
     var titulo = req.body.tituloServer;
     var descricao = req.body.descricaoServer; 
     var tipo = req.body.tipoServer;
@@ -80,12 +130,12 @@ function editarNotificacao(req, res) {
         res.status(400).send("id inválido.");
     } else if (titulo == undefined || titulo == null || titulo.trim().length == 0) {
         res.status(400).send("titulo inválido.");
-    } else if (descricao == undefined || descrica == null || descricao.trim().length == 0) {
+    } else if (descricao == undefined || descricao == null || descricao.trim().length == 0) {
         res.status(400).send("descrição inválida.");
     } else if (tipo == undefined || tipo == null || tipo.trim().length == 0) {
         res.status(400).send("tipo inválido.");
     } else {
-        investigacaoModel.editarNotificacao(id_notificacao, titulo, descricao, tipo)
+        notificacaoModel.editarNotificacao(id_notificacao, titulo, descricao, tipo)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -142,10 +192,34 @@ function listarAlertaDelegado(req, res) {
     }
 }
 
+function listarPorId(req, res) {
+    var idAlerta = req.body.idAlertaServer;
+
+    if (idAlerta == undefined || idAlerta == null) {
+        res.status(400).send("id inválido.");
+    } else {
+        notificacaoModel.listarPorId(idAlerta)
+        .then(
+            function(resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log("\nHouve um erro ao listar a notificação! Erro: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+    }
+}
+
 module.exports = {
     cadastrar,
     editarNotificacao,
     listarNotificacao,
     excluirNotificacao,
-    listarAlertaDelegado
+    listarAlertaDelegado,
+    visualizarNotificacao,
+    listarPorId,
+    excluirAlerta
 }

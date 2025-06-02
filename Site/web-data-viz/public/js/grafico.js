@@ -1,3 +1,4 @@
+if (sessionStorage.PERFIL_USUARIO == "policial") window.location.href = "./investigacoes.html";
 document.addEventListener('DOMContentLoaded', function () {
   renderizarMapaDeCalor();
 });
