@@ -1066,6 +1066,11 @@ button {
     box-sizing: border-box;
 }
 
+#form-group-local {
+    display: flex;
+    justify-content: space-between;
+}
+
 .btn-excluir {
     margin-right: auto;
     background-color: transparent;

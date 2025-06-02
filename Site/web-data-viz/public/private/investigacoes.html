@@ -288,18 +288,22 @@
                         <input type="date" id="data_investigacao" required>
                     </div>
 
-                    <div class="form-group">
-                        <label for="localizacao_investigacao">Localização</label>
-                        <input type="text" id="localizacao_investigacao" required placeholder="Digite a localização">
+                    <div class="form-group" id="form-group-local">
+                        <div>
+                            <label for="localizacao_investigacao">Localização</label>
+                            <input  type="text" id="localizacao_investigacao" required placeholder="Digite a localização">
+                        </div>
                         
-                        <label for="regiao_investigacao">Região</label>
-                        <select id="regiao_investigacao">
-                            <option value="1">Zona Norte</option>
-                            <option value="2">Zona Oeste</option>
-                            <option value="3">Zona Leste</option>
-                            <option value="4">Centro</option>
-                            <option value="5">Zona Sul</option>
-                        </select>
+                        <div>
+                            <label for="regiao_investigacao">Região</label>
+                            <select class="role-select" id="regiao_investigacao">
+                                <option value="1">Zona Norte</option>
+                                <option value="2">Zona Oeste</option>
+                                <option value="3">Zona Leste</option>
+                                <option value="4">Centro</option>
+                                <option value="5">Zona Sul</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
                     <label for="policiais_investigacao">Policiais*</label>
