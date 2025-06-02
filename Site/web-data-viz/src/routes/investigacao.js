@@ -23,7 +23,15 @@ router.post("/visualizarInvestigacaoPorId", function (req, res) {
     investigacaoController.visualizarInvestigacaoPorId(req, res);
 });
 
-router.put("/editar", function (req, res) {
+router.post("/visualizarInvestigacaoPorStatus", function (req, res) {
+    investigacaoController.visualizarInvestigacaoPorStatus(req, res);
+});
+
+router.post("/visualizarQtdInvestigacaoPorStatus", function (req, res) {
+    investigacaoController.visualizarQtdInvestigacaoPorStatus(req, res);
+});
+
+router.put("/editarInvestigacao", function (req, res) {
     investigacaoController.editarInvestigacao(req, res);
 });
 

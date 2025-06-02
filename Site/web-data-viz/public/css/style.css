@@ -709,16 +709,22 @@ button {
 }
 
 .status.andamento {
-    background-color: #4a90e2;
-}
-
-.status.urgente {
-    background-color: #f66;
+    background-color: #0075BE;
 }
 
 .status.pendente {
     background-color: #f5d76e;
     color: black;
+}
+
+.status.esclarecida {
+    background-color: #78d36b;
+    color: black;
+}
+
+.status.nao-esclarecida {
+    background-color: #e98050;
+    color: rgb(255, 255, 255);
 }
 
 .risco.medio {
@@ -2402,7 +2408,7 @@ button {
 }
 
 .btn-edit:hover {
-    background-color: #45abff;
+    background-color: #bbdefb;
 }
 
 .btn-delete {

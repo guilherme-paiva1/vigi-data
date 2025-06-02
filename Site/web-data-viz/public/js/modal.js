@@ -6,6 +6,7 @@ conteudoModal = document.getElementById("modal_conteudo");
 modalNovoUsuario = document.getElementById("modal_novo_usuario");
 modalEditarUsuario = document.getElementById("modal_editar_usuario");
 modalDesempenhoUsuario = document.getElementById("modal_desempenho_usuario");
+modalExclusaoInvestigacao = document.getElementById("modal_confirmacao_exclusao_investigacao");
 modalEditarAlerta = document.getElementById("modal_editar_alerta");
 
 nomeSession();
@@ -70,6 +71,7 @@ function mudarModalNovoUsuario() {
   }
 }
 
+
 function mudarModalNovaInvestigacao() {
   const modalNovaInvestigacao = document.getElementById('modal_nova_investigacao');
 
@@ -83,6 +85,26 @@ function mudarModalNovaInvestigacao() {
     modalNovaInvestigacao.style.display = "flex";
     setTimeout(function () {
       modalNovaInvestigacao.style.opacity = "1";
+    }, 100);
+  }
+}
+
+function mudarModalEditarInvestigacao(idInvestigacao) {
+  const modalEditarInvestigacao = document.getElementById('modal_editar_investigacao');
+
+  if (modalEditarInvestigacao.style.display == "flex") {
+    modalEditarInvestigacao.style.opacity = "0";
+
+    setTimeout(function () {
+      modalEditarInvestigacao.style.display = "none";
+    }, 100);
+  } else {
+    carregarInformacoesEditarInvestigacao(idInvestigacao);
+
+    modalEditarInvestigacao.style.display = "flex";
+    setTimeout(function () {
+      fecharConfirmacaoExclusaoInvestigacao();
+      modalEditarInvestigacao.style.opacity = "1";
     }, 100);
   }
 }

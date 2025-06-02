@@ -1,9 +1,9 @@
 var database = require("../database/config")
 
-function cadastrar(titulo, descricao, localidade, dt_investigacao) {
+function cadastrar(titulo, descricao, localidade, dt_investigacao, fkRegiao) {
     var instrucaoSql = `
-        INSERT INTO investigacao (titulo, descricao, localidade, dt_investigacao, status_atual) 
-            VALUES ('${titulo}', '${descricao}', '${localidade}', '${dt_investigacao}', 'pendente');
+        INSERT INTO investigacao (titulo, descricao, localidade, dt_investigacao, fkRegiao ,status_atual) 
+            VALUES ('${titulo}', '${descricao}', '${localidade}', '${dt_investigacao}', ${fkRegiao}, 'pendente');
     `;
 
     return database.executar(instrucaoSql);
@@ -50,19 +50,28 @@ function visualizarInvestigacoes(fkUsuario) {
 
 
 function excluirInvestigacao(id_investigacao) {
-    var instrucaoSql = `
-        DELETE FROM investigacao
-        WHERE id = ${id_investigacao};
-    `;
+    var instrucaoSqlHistorico = `
+        DELETE FROM historico_investigacao
+        WHERE fkInvestigacao = ${id_investigacao};
+    `
+    database.executar(instrucaoSqlHistorico)
+        .then((resultado) => {
+            if (resultado.length > 0) {
+                var instrucaoSqlInvestigacao = `
+                DELETE FROM investigacao
+                WHERE idInvestigacao = ${id_investigacao};
+                `;
 
-    return database.executar(instrucaoSql);
+                return database.executar(instrucaoSqlInvestigacao);
+            }
+        });
 }
 
 function editarInvestigacao(id_investigacao, titulo, descricao, localidade, dt_investigacao, status_atual) {
     var instrucaoSql = `
         UPDATE investigacao
         SET titulo = '${titulo}', descricao = '${descricao}', localidade = '${localidade}', dt_investigacao = '${dt_investigacao}', status_atual = '${status_atual}'
-        WHERE id = ${id_investigacao};
+        WHERE idInvestigacao = ${id_investigacao};
     `;
 
     return database.executar(instrucaoSql);
@@ -70,12 +79,12 @@ function editarInvestigacao(id_investigacao, titulo, descricao, localidade, dt_i
 
 function visualizarInvestigacaoPorId(id_investigacao) {
     var instrucaoSql = `
-        SELECT titulo, descricao, localidade, dt_investigacao, status_atual,
+        SELECT idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
         (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais 
         FROM investigacao AS inv 
         JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao
-        WHERE id = ${id_investigacao};
+        WHERE idInvestigacao = ${id_investigacao};
     `;
 
     return database.executar(instrucaoSql);
@@ -92,6 +101,54 @@ function visualizarInvestigacaoPolicial(fkUsuario) {
 	        hist.fkUsuario = ${fkUsuario} AND hist.criador = 0;
     `;
 
+    return database.executar(instrucaoSql);
+}
+
+function visualizarInvestigacaoPorStatus(status, fkUsuario) {
+    var instrucaoSql = `
+        SELECT idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
+        (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais 
+        FROM investigacao AS inv 
+        JOIN historico_investigacao AS hist 
+            ON inv.idInvestigacao = hist.fkInvestigacao
+        WHERE status_atual = '${status}' AND hist.fkUsuario = ${fkUsuario};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
+function visualizarQtdInvestigacaoPorStatus(fkUsuario) {
+    var instrucaoSql = `
+    SELECT 
+        (SELECT COUNT(idInvestigacao) FROM investigacao AS inv
+        JOIN historico_investigacao AS hist 
+		ON inv.idInvestigacao = hist.fkInvestigacao 
+		WHERE hist.fkUsuario = ${fkUsuario}) AS qtd_total,
+
+		(SELECT COUNT(idInvestigacao) FROM investigacao AS inv
+        JOIN historico_investigacao AS hist 
+		ON inv.idInvestigacao = hist.fkInvestigacao 
+		WHERE hist.fkUsuario = ${fkUsuario} AND status_atual = "Pendente") AS qtd_pendente,
+        
+        (SELECT COUNT(idInvestigacao) FROM investigacao AS inv
+        JOIN historico_investigacao AS hist 
+            ON inv.idInvestigacao = hist.fkInvestigacao 
+         WHERE 
+	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Em andamento") AS qtd_andamento,
+            
+        (SELECT COUNT(idInvestigacao) FROM investigacao AS inv
+        JOIN historico_investigacao AS hist 
+            ON inv.idInvestigacao = hist.fkInvestigacao 
+         WHERE 
+	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Esclarecida") AS qtd_esclarecida,
+            
+        (SELECT COUNT(idInvestigacao) FROM investigacao AS inv 
+        JOIN historico_investigacao AS hist 
+            ON inv.idInvestigacao = hist.fkInvestigacao 
+         WHERE 
+	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Não esclarecida") AS qtd_nao_esclarecida,
+            
+            (SELECT qtd_nao_esclarecida + qtd_esclarecida) AS total_concluido;`
     return database.executar(instrucaoSql);
 }
 
@@ -139,6 +196,8 @@ module.exports = {
     visualizarInvestigacaoPolicial,
     visualizarInvestigacaoPorId,
     editarInvestigacao,
+    visualizarQtdInvestigacaoPorStatus,
+    visualizarInvestigacaoPorStatus,
     visualizarHistoricoPorMes,
     visualizarDesempenhoPolicial
 };

@@ -186,7 +186,25 @@
             </div>
             <div class="card info-investigacao">
                 <span class="card-header">Total de Investigações</span>
-                <span class="card-conteudo">127</span>
+                <span id="card_total" class="card-conteudo"></span>
+            </div>
+        </div>
+        <div class="card pai yellow">
+            <div class="img-card">
+                <img src="../assets/icons/tempo-amarelo.svg" alt="">
+            </div>
+            <div class="card info-investigacao">
+                <div class="card-header">Pendente</div>
+                <span id="card_pendente" class="card-conteudo"></span>
+            </div>
+        </div>
+        <div class="card pai blue">
+            <div class="img-card">
+                <img src="../assets/icons/tempo-azul.svg" alt="">
+            </div>
+            <div class="card info-investigacao">
+                <div class="card-header">Em andamento</div>
+                <span id="card_andamento" class="card-conteudo"></span>
             </div>
         </div>
         <div class="card pai green">
@@ -195,25 +213,7 @@
             </div>
             <div class="card info-investigacao">
                 <div class="card-header">Concluídas</div>
-                <div class="card-conteudo">127</div>
-            </div>
-        </div>
-        <div class="card pai yellow">
-            <div class="img-card">
-                <img src="../assets/icons/icon-time.svg" alt="">
-            </div>
-            <div class="card info-investigacao">
-                <div class="card-header">Em andamento</div>
-                <div class="card-conteudo">127</div>
-            </div>
-        </div>
-        <div class="card pai red">
-            <div class="img-card">
-                <img src="../assets/icons/icon-warning-triangle.svg" alt="">
-            </div>
-            <div class="card info-investigacao">
-                <div class="card-header">Urgentes</div>
-                <div class="card-conteudo">127</div>
+                <span id="card_concluido" class="card-conteudo"></span>
             </div>
         </div>
     </div>
@@ -237,21 +237,12 @@
                 </div>
             </div>
 
-            <div class="investigations-header">
-                <input type="text" id="ipt_pesquisa" placeholder="Buscar Investigações..." class="search-input" />
-                <div class="filters">
-                    <button class="btn filter-btn"><img src="../assets/icons/icon-filter.svg">
-                        Filtrar</button>
-                    <button class="btn sort-btn"><img src="../assets/icons/icon-reorder.svg">
-                        Ordenar</button>
-                </div>
-            </div>
             <div class="filter-tabs">
-                <button class="tab active">Todos</button>
-                <button class="tab">Pendentes</button>
-                <button class="tab">Em Andamento</button>
-                <button class="tab">Concluídos</button>
-                <button class="tab">Urgentes</button>
+                <button id="btn_todos" onclick="carregarInvestigacoes()" class="tab">Todos</button>
+                <button id="btn_Pendente" onclick="visualizarInvestigacaoPorStatus('Pendente')" class="tab">Pendentes</button>
+                <button id="btn_EmAndamento" onclick="visualizarInvestigacaoPorStatus('EmAndamento')" class="tab">Em Andamento</button>
+                <button id="btn_Esclarecida" onclick="visualizarInvestigacaoPorStatus('Esclarecida')" class="tab">Esclarecidas</button>
+                <button id="btn_NaoEsclarecida" onclick="visualizarInvestigacaoPorStatus('NaoEsclarecida')" class="tab">Não esclarecidas</button>
             </div>
 
             <table class="investigation-table">
@@ -269,14 +260,6 @@
                 <tbody id="tabela_investigacoes">
                 </tbody>
             </table>
-
-            <div class="pagination">
-                <span>Mostrando 1 de 1 Investigações</span>
-                <div>
-                    <button class="btn">Anterior</button>
-                    <button class="btn">Próximo</button>
-                </div>
-            </div>
         </div>
 
         <!-- modal de nova investigação -->
@@ -309,15 +292,108 @@
                     <div class="form-group">
                         <label for="localizacao_investigacao">Localização</label>
                         <input type="text" id="localizacao_investigacao" required placeholder="Digite a localização">
+                        
+                        <label for="regiao_investigacao">Região</label>
+                        <select id="regiao_investigacao">
+                            <option value="1">Zona Norte</option>
+                            <option value="2">Zona Oeste</option>
+                            <option value="3">Zona Leste</option>
+                            <option value="4">Centro</option>
+                            <option value="5">Zona Sul</option>
+                        </select>
                     </div>
+                    <div class="form-group">
+                    <label for="policiais_investigacao">Policiais*</label>
+                    <select class="role-select" id="policiais_investigacao" onchange="selecionarPolicialInvestigacao()">
+                    </select>
+                    <div id="lista_policiais_selecionados_inv">
+                        <h4>Policiais Selecionados:</h4>
+                        <ul id="ul_policiais_selecionados_investigacao" style="max-height: 40px; overflow-y: auto; margin: 0; padding: 0;"></ul>
+                    </div>
+                </div>
 
                     <div class="modal-actions">
-                        <button type="button" class="btn-cancel" onclick="mudarModalNovaInvestigacao()">Cancelar</button>
+                        <button type="button" class="btn-cancel"
+                            onclick="mudarModalNovaInvestigacao()">Cancelar</button>
                         <button type="submit" class="btn-save">Cadastrar</button>
                     </div>
                 </form>
             </div>
         </div>
+
+        <!-- modal de editar investigação -->
+
+        <div id="modal_editar_investigacao" class="modal-criacao">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Editar Investigação</h3>
+                    <button type="button" class="close-modal" onclick="mudarModalEditarInvestigacao()">&times;</button>
+                </div>
+
+                <form id="form_investigacao" onsubmit="event.preventDefault(); editarInvestigacao();">
+                    
+                    <div class="form-group">
+                        <input type="text" id="editar_id_investigacao" style="display: none;">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="editar_titulo_investigacao">Título da Investigação</label>
+                        <input type="text" id="editar_titulo_investigacao" required
+                            placeholder="Digite o título da investigação">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editar_descricao_investigacao">Descrição</label>
+                        <input type="text" id="editar_descricao_investigacao" maxlength="200" required
+                            placeholder="Descreva os detalhes da investigação">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editar_data_investigacao">Data</label>
+                        <input type="date" id="editar_data_investigacao" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editar_localizacao_investigacao">Localização</label>
+                        <input type="text" id="editar_localizacao_investigacao" required
+                            placeholder="Digite a localização">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editar_status_investigacao">Status atual</label>
+
+                        <select id="editar_status_investigacao" required>
+                            <option>Pendente</option>
+                            <option>Em andamento</option>
+                            <option>Esclarecida</option>
+                            <option>Não esclarecida</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-excluir" onclick="abrirConfirmacaoExclusaoInvestigacao()">
+                            <i class="fas fa-trash-alt"></i> Excluir investigação
+                        </button>
+
+                        <button type="button" class="btn-cancel"
+                            onclick="mudarModalEditarInvestigacao()">Cancelar</button>
+                        <button type="submit" class="btn-save">Salvar</button>
+                    </div>
+
+                    <!-- Modal de confirmação de exclusão -->
+                    <div id="modal_confirmacao_exclusao_investigacao" class="modal-confirmacao oculto">
+                        <div class="caixa-confirmacao">
+                            <p>Tem certeza que deseja excluir esta investigação?</p>
+                            <div class="btn-modal">
+                                <button class="btn-cancel" onclick="fecharConfirmacaoExclusaoInvestigacao()">Cancelar</button>
+                                <button class="btn-confirm" onclick="confirmarExclusaoInvestigacao()">Confirmar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 </body>
 
