@@ -39,4 +39,8 @@ router.put("/visualizarHistoricoPorMes", function (req, res) {
     investigacaoController.visualizarHistoricoPorMes(req, res);
 });
 
+router.get("/visualizarDesempenhoPolicial/:idUsuario", function (req, res) {
+    investigacaoController.visualizarDesempenhoPolicial(req, res);
+});
+
 module.exports = router;

@@ -25,7 +25,7 @@
                 </div>
                 <div class="menu">
                     <div class="navbar">
-                        <a href="investigacoes.html">
+                        <a href="investigacoes.html" id="a_investigacoes">
                             <button class="botao botao-azul-claro">
                                 <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -41,7 +41,7 @@
                             </button>
                         </a>
 
-                        <a href="usuarios.html">
+                        <a href="usuarios.html" id="a_usuarios">
                             <button class="botao botao-azul-claro">
                                 <svg height="27px" viewBox="0 -0.5 25 25" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -70,7 +70,7 @@
                             </button>
                         </a>
 
-                        <a href="notificacoes.html">
+                        <a href="notificacoes.html" id="a_notificacoes">
                             <button class="botao botao-azul-claro">
                                 <svg fill="#ffffff" width="20px" height="20px" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -257,11 +257,11 @@
         </div>
 
         <!-- modal de editar notificação -->
-        <div id="modal_editar_notificacao" class="modal-edicao">
+        <div id="modal_editar_alerta" class="modal-edicao">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Editar Notificação</h3>
-                    <button class="close-modal" onclick="mudarModalEditarNotificacao()">&times;</button>
+                    <h3>Editar Alerta</h3>
+                    <button class="close-modal" onclick="mudarModalEditarAlerta()">&times;</button>
                 </div>
                 <input type="hidden" id="id_notificacao_editar">
                 <div class="form-group">
@@ -282,33 +282,21 @@
                         <option value="sucesso">Sucesso</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="destinatario_editar_notificacao">Destinatário*</label>
-                    <input type="text" id="destinatario_editar_notificacao" required
-                        placeholder="Selecione um destinatário">
-                </div>
-                <div class="form-group">
-                    <label for="status_editar_notificacao">Status*</label>
-                    <select id="status_editar_notificacao" required>
-                        <option value="ativo">Ativo</option>
-                        <option value="inativo">Inativo</option>
-                    </select>
-                </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-excluir" onclick="abrirConfirmacaoExclusao()">
                         <i class="fas fa-trash-alt"></i> Excluir notificação
                     </button>
                     <button type="button" class="btn-cancel" onclick="mudarModalEditarNotificacao()">Cancelar</button>
-                    <button type="submit" class="btn-save" onclick="editarNotificacao()">Salvar</button>
+                    <button type="submit" class="btn-save" onclick="editarAlerta()">Salvar</button>
                 </div>
 
                 <!-- Modal de confirmação de exclusão -->
-                <div id="modal_confirmacao_exclusao_notificacao" class="modal-confirmacao oculto">
+                <div id="modal_confirmacao_exclusao" class="modal-confirmacao oculto">
                     <div class="caixa-confirmacao">
                         <p>Tem certeza que deseja excluir esta notificação?</p>
                         <div class="btn-modal">
                             <button class="btn-cancel" onclick="fecharConfirmacaoExclusao()">Cancelar</button>
-                            <button class="btn-confirm" onclick="confirmarExclusaoNotificacao()">Confirmar</button>
+                            <button class="btn-confirm" onclick="confirmarExclusaoAlerta()">Confirmar</button>
                         </div>
                     </div>
                 </div>

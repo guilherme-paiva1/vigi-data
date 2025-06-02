@@ -38,6 +38,25 @@ function excluirNotificacao(idNotificacao) {
     return database.executar(instrucaoSql);
 }
 
+function excluirAlerta(idAlerta) {
+    var instrucaoSql = `
+        DELETE FROM alerta
+        WHERE idAlerta = ${idAlerta};
+    `;
+  
+    return database.executar(instrucaoSql);
+}
+
+function visualizarNotificacao(idNotificacao) {
+    var instrucaoSql = `
+        UPDATE notificacao
+        SET visualizado = 1
+        WHERE idNotificacao = ${idNotificacao};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 function editarNotificacao(id_notificacao, titulo, descricao, tipo){
     var instrucaoSql =`
     UPDATE alerta
@@ -86,11 +105,28 @@ function listarAlertaDelegado(id_usuario) {
     return database.executar(instrucaoSql);
 }
 
+function listarPorId(idAlerta) {
+    var instrucaoSql = `
+    SELECT 
+    a.idAlerta,
+    a.titulo,
+    a.descricao,
+    a.tipo
+    FROM alerta a
+    WHERE a.idAlerta = ${idAlerta};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     excluirNotificacao,
+    excluirAlerta,
     editarNotificacao,
     listarNotificacao,
     listarAlertaDelegado,
+    listarPorId,
     cadastrar,
     cadastrarNotificacaoAssociativa,
+    visualizarNotificacao
 }

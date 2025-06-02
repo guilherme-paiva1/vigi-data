@@ -167,6 +167,27 @@ function visualizarHistoricoPorMes(id) {
     return database.executar(instrucaoSql);
 }
 
+function visualizarDesempenhoPolicial(idUsuario) {
+    var instrucaoSql = `
+    SELECT
+        COUNT(*) AS totalInvestigacoes,
+        COALESCE(SUM(CASE WHEN i.status_atual = 'Resolvida' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesResolvidas,
+        COALESCE(SUM(CASE WHEN i.status_atual = 'Pendente' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesPendentes,
+        COALESCE(SUM(CASE WHEN i.status_atual = 'Em andamento' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesEmAndamento,
+        COALESCE(SUM(CASE WHEN r.nome = 'norte' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasNorte,
+        COALESCE(SUM(CASE WHEN r.nome = 'leste' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasLeste,
+        COALESCE(SUM(CASE WHEN r.nome = 'sul' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasSul,
+        COALESCE(SUM(CASE WHEN r.nome = 'oeste' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasOeste,
+        COALESCE(SUM(CASE WHEN r.nome = 'centro' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasCentro
+    FROM historico_investigacao h
+    JOIN investigacao i ON h.fkInvestigacao = i.idInvestigacao
+    JOIN regiao r ON i.fkRegiao = r.idRegiao
+    WHERE h.fkUsuario = ${idUsuario};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     cadastrar,
     registrarHistoricoDoDelegado,
@@ -177,5 +198,6 @@ module.exports = {
     editarInvestigacao,
     visualizarQtdInvestigacaoPorStatus,
     visualizarInvestigacaoPorStatus,
-    visualizarHistoricoPorMes
+    visualizarHistoricoPorMes,
+    visualizarDesempenhoPolicial
 };

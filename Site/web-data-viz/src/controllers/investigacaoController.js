@@ -181,7 +181,7 @@ function visualizarHistoricoPorMes(req, res) {
     if (id == undefined) {
         res.status(400).send("id inválido.");
     } else {
-        investigacoesModel.visualizarHistoricoPorMes(id)
+        investigacaoModel.visualizarHistoricoPorMes(id)
             .then(
                 function (resultadoInvestigacoesPorMes) {
                     if (resultadoInvestigacoesPorMes.length >= 1) {
@@ -248,6 +248,41 @@ function visualizarQtdInvestigacaoPorStatus(req, res) {
         );
 }
 
+function visualizarDesempenhoPolicial (req, res){
+    var id_usuario = req.params.idUsuario;
+
+    if (id_usuario == undefined) {
+        res.status(204).send("id inválido.");
+    } else {
+
+        investigacaoModel.visualizarDesempenhoPolicial(id_usuario)
+            .then(
+                function (resultadoDesempenhoPolicial) {
+                    if (resultadoDesempenhoPolicial.length >= 1) {
+                        res.json({
+                            totalInvestigacoes: Number(resultadoDesempenhoPolicial[0].totalInvestigacoes),
+                            totalInvestigacoesResolvidas: Number(resultadoDesempenhoPolicial[0].totalInvestigacoesResolvidas),
+                            investigacoesAtendidasNorte: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasNorte),
+                            investigacoesAtendidasLeste: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasLeste),
+                            investigacoesAtendidasSul: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasSul),
+                            investigacoesAtendidasOeste: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasOeste),
+                            investigacoesAtendidasCentro: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasCentro),
+                        });
+                    } else if (resultadoDesempenhoPolicial.length == 0) {
+                        res.status(403).send("id inválido ou não há investigações nesse mês.");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao exibir o desempenho! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+
+}
+
 
 module.exports = {
     cadastrar,
@@ -258,5 +293,7 @@ module.exports = {
     editarInvestigacao,
     visualizarInvestigacaoPorStatus,
     visualizarQtdInvestigacaoPorStatus,
-    visualizarHistoricoPorMes
+    visualizarHistoricoPorMes,
+    visualizarHistoricoPorMes,
+    visualizarDesempenhoPolicial
 }
