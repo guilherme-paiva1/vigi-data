@@ -1,7 +1,11 @@
 window.onload = function () {
     carregarInvestigacoes();
+    carregarPoliciaisInvestigacao();
     visualizarQtdInvestigacaoPorStatus();
 }
+
+let listaIDsPoliciais = [];
+let listaPoliciaisSelecionados = [];
 
 function abrirConfirmacaoExclusaoInvestigacao() {
     document.getElementById('modal_confirmacao_exclusao_investigacao').classList.remove('oculto');
@@ -40,6 +44,7 @@ function adicionarInvestigacao() {
     var descricao = document.getElementById("descricao_investigacao").value;
     var dt_investigacao = document.getElementById("data_investigacao").value;
     var localidade = document.getElementById("localizacao_investigacao").value;
+    var regiao = document.getElementById("regiao_investigacao").value;
     var id = sessionStorage.ID_USUARIO;
 
     fetch("/investigacao/cadastrar", {
@@ -52,7 +57,8 @@ function adicionarInvestigacao() {
             tituloServer: titulo,
             descricaoServer: descricao,
             dt_investigacaoServer: dt_investigacao,
-            localidadeServer: localidade
+            localidadeServer: localidade,
+            regiaoServer: regiao
         }),
     })
         .then(function (resposta) {
@@ -171,11 +177,12 @@ function carregarInvestigacoes() {
                     var idInvestigacao = json[i].idInvestigacao;
                     var titulo = json[i].titulo;
                     var localidade = json[i].localidade;
-                    var dt_investigacao = json[i].dt_investigacao.slice(0, 10);
+                    var data_separada = json[i].dt_investigacao.slice(0, 10).split("-");
                     var status_atual = json[i].status_atual.charAt(0).toUpperCase() + json[i].status_atual.slice(1);;
                     var qtd_policiais = json[i].qtd_policiais;
 
-
+                    dt_investigacao = `${data_separada[2]}/${data_separada[1]}/${data_separada[0]}`
+                    
                     var tag_status = ``;
                     if (status_atual == 'Em andamento') {
                         tag_status = 'andamento';
@@ -331,4 +338,84 @@ function visualizarInvestigacaoPorStatus(status) {
             })
         }
     })
+}
+
+function carregarPoliciaisInvestigacao() {
+    var idSuperior = sessionStorage.ID_USUARIO;
+    fetch("../usuarios/listar", {
+        method: "POST",
+        headers: {
+            "Content-type": "application/json"
+        },
+        body: JSON.stringify({
+            idSuperiorServer: idSuperior   
+        })
+    })
+    .then(function (resposta) {
+        if (resposta.ok) {
+            resposta.text().then(function (text) {
+                var selectPoliciais = document.getElementById('policiais_investigacao');
+                if (text) {
+                    var usuarios = JSON.parse(text);
+                    selectPoliciais.innerHTML = ''; 
+                    var option = document.createElement('option');
+                    option.value = "";
+                    option.disabled = true;
+                    option.selected = true;
+                    option.textContent = "Selecione os policiais";
+                    selectPoliciais.appendChild(option);
+
+                    usuarios.forEach(function (usuario) {
+                        var option = document.createElement('option');
+                        option.value = usuario.idUsuario; 
+                        option.textContent = usuario.nome;
+                        selectPoliciais.appendChild(option);
+                    });
+                } else {
+                    selectPoliciais.innerHTML = '';
+                    var option = document.createElement('option');
+                    option.value = "";
+                    option.disabled = true;
+                    option.selected = true;
+                    option.textContent = "Você não possui policiais vinculados, cadastre um policial primeiro";
+                    selectPoliciais.appendChild(option);
+                }
+            });
+        }
+    })
+    .catch(function (erro) {
+        console.error('Erro:', erro);
+    });
+}
+
+function selecionarPolicialInvestigacao() {
+    var selectPoliciais = document.getElementById('policiais_investigacao');
+    var listaPoliciais = document.getElementById('ul_policiais_selecionados_investigacao');
+    var idSelecionado = selectPoliciais.value;
+
+    if (idSelecionado && !listaIDsPoliciais.includes(idSelecionado)) {
+        listaIDsPoliciais.push(idSelecionado);
+        listaPoliciaisSelecionados.push(selectPoliciais.options[selectPoliciais.selectedIndex].text);
+
+        var li = document.createElement('li');
+        li.textContent = selectPoliciais.options[selectPoliciais.selectedIndex].text + " ";
+        var img = document.createElement('img');
+        img.src = "../assets/icons/icon-trash.svg";
+        img.alt = "Remover";
+        img.onclick = function() {
+            var index = listaIDsPoliciais.indexOf(idSelecionado);
+            if (index > -1) {
+                listaIDsPoliciais.splice(index, 1);
+                listaPoliciaisSelecionados.splice(index, 1);
+                li.remove();
+            }
+        };
+        img.style.cursor = "pointer";
+        img.style.width = "1rem";
+        li.appendChild(img);
+        listaPoliciais.appendChild(li);
+    }
+    console.log("IDs Policiais Selecionados:", listaIDsPoliciais);
+    console.log("Nomes Policiais Selecionados:", listaPoliciaisSelecionados);
+    selectPoliciais.value = "";
 }

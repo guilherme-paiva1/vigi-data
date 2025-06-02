@@ -676,7 +676,7 @@ button {
 
 .status.nao-esclarecida {
     background-color: #e98050;
-    color: black;
+    color: rgb(255, 255, 255);
 }
 
 .risco.medio {
@@ -2097,7 +2097,7 @@ button {
 /* Corpo do formulário */
 .modal-criacao .form-group,
 .modal-edicao .form-group {
-    padding: 10px;
+    padding: 15px 20px;
 }
 
 .modal-criacao .form-group label,
@@ -2336,7 +2336,7 @@ button {
 }
 
 .btn-edit:hover {
-    background-color: #45abff;
+    background-color: #bbdefb;
 }
 
 .btn-delete {

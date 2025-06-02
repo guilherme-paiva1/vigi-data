@@ -291,7 +291,25 @@
                     <div class="form-group">
                         <label for="localizacao_investigacao">Localização</label>
                         <input type="text" id="localizacao_investigacao" required placeholder="Digite a localização">
+                        
+                        <label for="regiao_investigacao">Região</label>
+                        <select id="regiao_investigacao">
+                            <option value="1">Zona Norte</option>
+                            <option value="2">Zona Oeste</option>
+                            <option value="3">Zona Leste</option>
+                            <option value="4">Centro</option>
+                            <option value="5">Zona Sul</option>
+                        </select>
                     </div>
+                    <div class="form-group">
+                    <label for="policiais_investigacao">Policiais*</label>
+                    <select class="role-select" id="policiais_investigacao" onchange="selecionarPolicialInvestigacao()">
+                    </select>
+                    <div id="lista_policiais_selecionados_inv">
+                        <h4>Policiais Selecionados:</h4>
+                        <ul id="ul_policiais_selecionados_investigacao" style="max-height: 40px; overflow-y: auto; margin: 0; padding: 0;"></ul>
+                    </div>
+                </div>
 
                     <div class="modal-actions">
                         <button type="button" class="btn-cancel"

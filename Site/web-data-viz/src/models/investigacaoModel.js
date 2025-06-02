@@ -1,9 +1,9 @@
 var database = require("../database/config")
 
-function cadastrar(titulo, descricao, localidade, dt_investigacao) {
+function cadastrar(titulo, descricao, localidade, dt_investigacao, fkRegiao) {
     var instrucaoSql = `
-        INSERT INTO investigacao (titulo, descricao, localidade, dt_investigacao, status_atual) 
-            VALUES ('${titulo}', '${descricao}', '${localidade}', '${dt_investigacao}', 'pendente');
+        INSERT INTO investigacao (titulo, descricao, localidade, dt_investigacao, fkRegiao ,status_atual) 
+            VALUES ('${titulo}', '${descricao}', '${localidade}', '${dt_investigacao}', ${fkRegiao}, 'pendente');
     `;
 
     return database.executar(instrucaoSql);

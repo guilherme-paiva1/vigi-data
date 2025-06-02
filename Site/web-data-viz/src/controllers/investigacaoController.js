@@ -7,6 +7,7 @@ function cadastrar(req, res) {
     var localidade = req.body.localidadeServer
     var dt_investigacao = req.body.dt_investigacaoServer
     var fkDelegado = req.body.fkDelegadoServer
+    var fkRegiao = req.body.regiaoServer
 
     if (titulo == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
@@ -16,8 +17,10 @@ function cadastrar(req, res) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else if (dt_investigacao == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else if (fkRegiao == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
-        investigacaoModel.cadastrar(titulo, descricao, localidade, dt_investigacao)
+        investigacaoModel.cadastrar(titulo, descricao, localidade, dt_investigacao, fkRegiao)
             .then(
                 function (resultado) {
                     res.json(resultado);
