@@ -12,6 +12,5 @@ public class App {
 
         Slack.sendMessage(json);
 
-
     }
 }

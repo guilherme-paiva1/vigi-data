@@ -9,10 +9,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class Slack {
-    // cliente HTTP que vai realizarm as requisições e obter as respostas
+    // cliente HTTP que vai realizar as requisições e obter as respostas
     private static HttpClient client = HttpClient.newHttpClient();
 
-    private static final String URL = "https://hooks.slack.com/services/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";
+    private static final String URL = "https://hooks.slack.com/services/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";
 
     public static void sendMessage(JSONObject content) throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder(
@@ -23,6 +23,7 @@ public class Slack {
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+        System.out.printf("SLACK:");
         System.out.printf("Status: %s%n", response.statusCode());
         System.out.printf("Response: %s%n", response.body());
 
