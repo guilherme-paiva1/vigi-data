@@ -181,7 +181,7 @@ function visualizarHistoricoPorMes(req, res) {
                     if (resultadoInvestigacoesPorMes.length >= 1) {
                         res.json(resultadoInvestigacoesPorMes);
                     } else if (resultadoInvestigacoesPorMes.length == 0) {
-                        res.status(403).send("id inválido ou não há investigações nesse mês.");
+                        res.status(204).send("id inválido ou não há investigações nesse mês.");
                     }
                 }
             ).catch(
@@ -244,7 +244,7 @@ function visualizarDesempenhoPolicial(req, res) {
     var id_usuario = req.params.idUsuario;
 
     if (id_usuario == undefined) {
-        res.status(204).send("id inválido.");
+        res.status(400).send("id inválido.");
     } else {
 
         investigacaoModel.visualizarDesempenhoPolicial(id_usuario)
@@ -258,7 +258,7 @@ function visualizarDesempenhoPolicial(req, res) {
                         }
                         res.json(resultadoNumerico);
                     } else if (resultadoDesempenhoPolicial.length == 0) {
-                        res.status(403).send("id inválido ou não há investigações nesse mês.");
+                        res.status(204).send("id inválido ou não há investigações nesse mês.");
                     }
                 }
             ).catch(
