@@ -219,7 +219,6 @@ function carregarInvestigacoesDelegado() {
                         <td>
                             <div class="actions">
                                 <button class="botao botao-azul-claro hiddeable" onclick="mudarModalEditarInvestigacao(${idInvestigacao})">Editar</button>
-                                <a href="#" class="botao botao-secundario">Ver Detalhes</a>
                             </div>
                         </td>
                     </tr>   

@@ -188,13 +188,13 @@
                     <p class="subtitle">Gerencie todos os policiais</p>
                 </div>
                 <div>
-                <button type="button" class="btn-new-user" onclick="mudarModalNovoUsuario()">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    Novo Policial
-                </button>
+                    <button type="button" class="btn-new-user" onclick="mudarModalNovoUsuario()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                        Novo Policial
+                    </button>
                 </div>
             </div>
 
@@ -223,7 +223,8 @@
                 </div>
                 <div class="form-group">
                     <label for="matricula_novo_usuario">Matrícula*</label>
-                    <input type="text" id="matricula_novo_usuario" maxlength="7" required placeholder="Digite o número da matrícula">
+                    <input type="text" id="matricula_novo_usuario" maxlength="7" required
+                        placeholder="Digite o número da matrícula">
                 </div>
                 <div class="form-group">
                     <label for="email_novo_usuario">E-mail Institucional*</label>
@@ -298,6 +299,61 @@
                 <h3>Desempenho do Policial</h3>
                 <button class="close-modal" onclick="mudarModalDesempenhoUsuario()">&times;</button>
             </div>
+
+            <div class="dashboard-container">
+                <div class="dashboard-main">
+                    <div class="dashboard-left">
+                        <h1>Desempenho Policial</h1>
+                        <div class="chart-row">
+                            <div class="chart-wrapper">
+                                <canvas id="investigacoes_por_mes"></canvas>
+                            </div>
+
+                            <div class="chart-wrapper">
+                                <canvas id="ocorrencias_por_zona"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="div-eficiencia">
+                            <div class="div-linha-eficiencia">
+                                <div class="div-card">
+                                    <strong>Total de ocorrências:</strong> <span id="total_ocorrencias"></span>
+                                </div>
+                            </div>
+                            <div class="div-linha-eficiencia">
+                                <div class="div-card">
+                                    <strong>Total de ocorrências pendentes:</strong> <span
+                                        id="total_ocorrencias_pendentes"></span>
+                                </div>
+                                <div class="div-card">
+                                    <strong>Total de ocorrências em andamento:</strong> <span
+                                        id="total_ocorrencias_ea"></span>
+                                </div>
+                                <div class="div-card">
+                                    <strong>Total de ocorrências solucionadas:</strong> <span
+                                        id="total_ocorrencias_su"></span>
+                                </div>
+                                <div class="div-card">
+                                    <strong>Total de ocorrências não solucionadas:</strong> <span
+                                        id="total_ocorrencias_ns"></span>
+                                </div>
+                            </div>
+
+                            <div class="div-porcentagem-ocorrencia">
+                                <div class="progress-bar-container">
+                                    <label for="progress-bar">Eficiência (% de ocorrências solucionadas):</label>
+                                    <div class="progress-bar-bg">
+                                        <div id="progress-bar"></div>
+                                    </div>
+                                    <span id="progress-bar-label">0%</span>
+                                </div>
+                                <script>
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="modal-actions">
                 <button type="button" class="btn-cancel" onclick="mudarModalDesempenhoUsuario()">Fechar</button>
             </div>
@@ -309,4 +365,5 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
+
 </html>

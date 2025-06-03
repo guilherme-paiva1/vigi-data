@@ -56,7 +56,8 @@ function visualizarInvestigacoes(fkUsuario) {
         JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao 
         WHERE 
-            hist.fkUsuario = ${fkUsuario} AND hist.criador = 1;
+            hist.fkUsuario = ${fkUsuario} AND hist.criador = 1
+        ORDER BY idInvestigacao DESC;
     `;
 
     return database.executar(instrucaoSql);
@@ -112,7 +113,8 @@ function excluirInvestigacao(id_investigacao) {
          JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao 
          WHERE 
-	        hist.fkUsuario = ${fkUsuario} AND hist.criador = 0;
+	        hist.fkUsuario = ${fkUsuario} AND hist.criador = 0
+        ORDER BY idInvestigacao DESC;
     `;
 
         return database.executar(instrucaoSql);
@@ -129,7 +131,8 @@ function excluirInvestigacao(id_investigacao) {
         FROM investigacao AS inv 
         JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao
-        WHERE status_atual = '${status}' AND hist.fkUsuario = ${fkUsuario};
+        WHERE status_atual = '${status}' AND hist.fkUsuario = ${fkUsuario}
+        ORDER BY idInvestigacao DESC;
     `;
 
         return database.executar(instrucaoSql);
