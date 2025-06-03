@@ -183,7 +183,7 @@
     </div>
 
 
-    <div class="linha-cards" id="linha_cards">
+    <div class="linha-cards hiddeable" id="linha_cards">
         <div class="card pai blue">
             <div class="img-card">
                 <img src="../assets/icons/icon-file.svg" alt="">
@@ -228,10 +228,10 @@
             <div class="header-section">
                 <div class="header-text">
                     <h2>Lista de Investigações</h2>
-                    <p class="subtitle">Gerencie todas as investigações do departamento</p>
+                    <p class="subtitle" id="subtitle">Gerencie todas as investigações do departamento</p>
                 </div>
                 <div>
-                    <button type="button" class="btn-new-investigation" onclick="mudarModalNovaInvestigacao()">
+                    <button type="button" class="btn-new-investigation hiddeable" onclick="mudarModalNovaInvestigacao()">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" />
@@ -242,7 +242,7 @@
             </div>
 
             <div class="filter-tabs">
-                <button id="btn_todos" onclick="carregarInvestigacoes()" class="tab">Todos</button>
+                <button id="btn_todos" onclick="sessionStorage.PERFIL_USUARIO == 'delegado' ? carregarInvestigacoesDelegado() : carregarInvestigacoesPolicial()" class="tab">Todos</button>
                 <button id="btn_Pendente" onclick="visualizarInvestigacaoPorStatus('Pendente')" class="tab">Pendentes</button>
                 <button id="btn_EmAndamento" onclick="visualizarInvestigacaoPorStatus('EmAndamento')" class="tab">Em Andamento</button>
                 <button id="btn_Esclarecida" onclick="visualizarInvestigacaoPorStatus('Esclarecida')" class="tab">Esclarecidas</button>
@@ -258,7 +258,7 @@
                         <th>DATA</th>
                         <th>STATUS</th>
                         <th>POLICIAIS</th>
-                        <th>AÇÕES</th>
+                        <th class="hiddeable">AÇÕES</th>
                     </tr>
                 </thead>
                 <tbody id="tabela_investigacoes">

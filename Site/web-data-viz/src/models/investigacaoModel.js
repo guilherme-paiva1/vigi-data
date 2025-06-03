@@ -94,7 +94,7 @@ function excluirInvestigacao(id_investigacao) {
 
     function visualizarInvestigacaoPolicial(fkUsuario) {
         var instrucaoSql = `
-    SELECT titulo, descricao, localidade, dt_investigacao, status_atual,
+    SELECT inv.idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
         (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais
          FROM investigacao AS inv 
          JOIN historico_investigacao AS hist 
