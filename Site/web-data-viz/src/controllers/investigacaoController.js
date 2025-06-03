@@ -7,6 +7,7 @@ function cadastrar(req, res) {
     var localidade = req.body.localidadeServer
     var dt_investigacao = req.body.dt_investigacaoServer
     var fkDelegado = req.body.fkDelegadoServer
+    var fkPoliciais = req.body.fkPoliciaisServer
     var fkRegiao = req.body.regiaoServer
 
     if (titulo == undefined) {
@@ -21,38 +22,31 @@ function cadastrar(req, res) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
         investigacaoModel.cadastrar(titulo, descricao, localidade, dt_investigacao, fkRegiao)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-
-                    investigacaoModel.registrarHistoricoDoDelegado(fkDelegado, titulo, descricao, localidade, dt_investigacao)
-                        .then(
-                            function (resultado) {
-                                res.json(resultado);
-                            }
-                        ).catch(
-                            function (erro) {
-                                console.log(erro);
-                                console.log(
-                                    "\nHouve um erro ao criar a investigação! Erro: ",
-                                    erro.sqlMessage
-                                );
-                                res.status(500).json(erro.sqlMessage);
-                            }
+                    .then(function (resultadoCadastro) {
+                    const idInvestigacao = resultadoCadastro[0].idInvestigacao;
+                    const promises = [
+                        investigacaoModel.registrarHistoricoDoDelegado(fkDelegado, idInvestigacao),
+                        ...fkPoliciais.map(fkPolicial => {
+                            return investigacaoModel.registrarHistoricoDoPolicial(fkPolicial, idInvestigacao);
+                        })
+                    ];
+                    Promise.all(promises)
+                        .then(results => {
+                        res.json({ idInvestigacao, message: "Investigação cadastrada com sucesso!" });
+                        })
+                        .catch(function (erro) {
+                        console.log(erro);
+                        console.log(
+                            "\nHouve um erro ao criar as associações da investigação! Erro: ",
+                            erro.sqlMessage
                         );
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao criar a investigação! Erro: ",
-                        erro.sqlMessage
-                    );
+                        res.status(500).json(erro.sqlMessage);
+                        });
+                    })
+                    .catch(function (erro) {
+                    console.log("Erro ao cadastrar investigação:", erro);
                     res.status(500).json(erro.sqlMessage);
-                }
-            );
-
-
+                    });
     }
 }
 
@@ -248,7 +242,7 @@ function visualizarQtdInvestigacaoPorStatus(req, res) {
         );
 }
 
-function visualizarDesempenhoPolicial (req, res){
+function visualizarDesempenhoPolicial(req, res) {
     var id_usuario = req.params.idUsuario;
 
     if (id_usuario == undefined) {

@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/style-response.css">
     <link rel="shortcut icon" href="../assets/logo-branco-simples.ico" type="image/x-icon">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <title>Investigações</title>
 </head>
 
@@ -367,10 +371,10 @@
                         <label for="editar_status_investigacao">Status atual</label>
 
                         <select id="editar_status_investigacao" required>
-                            <option>Pendente</option>
-                            <option>Em andamento</option>
-                            <option>Esclarecida</option>
-                            <option>Não esclarecida</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="em andamento">Em andamento</option>
+                            <option value="esclarecida">Esclarecida</option>
+                            <option value="não esclarecida">Não esclarecida</option>
                         </select>
                     </div>
 

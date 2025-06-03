@@ -39,9 +39,6 @@ function adicionarNotificacao() {
 
                     // Recarregar a lista de notificações
                     carregarAlertas();
-
-                    // Mostrar mensagem de sucesso
-                    alert('Notificação cadastrada com sucesso!');
                 });
             }
         })
@@ -75,22 +72,28 @@ function carregarAlertas() {
                 resposta.json().then(function (notificacoes) {
                     var listaNotificacoes = document.getElementById('div_lista_notificacoes');
                     listaNotificacoes.innerHTML = ''; // Limpa a lista antes de adicionar novas notificações
-                    console.log("Notificações recebidas:", notificacoes);
                     let estruturaHTML = "";
-                    notificacoes.forEach(function (notificacao) {
-                        let icon = "";
-                        switch (notificacao.tipo) {
-                            case "urgente":
-                                icon = icon_urgente;
-                                break;
-                            case "informativa":
-                                icon = icon_informativo;
-                                break;
-                            case "sucesso":
-                                icon = icon_sucesso;
-                                break;
-                        }
-                        estruturaHTML += `
+
+                    if (notificacoes.length == 0) {
+                        estruturaHTML = `
+                        <div class="notificacao-listagem">
+                            <p>Nenhuma notificação encontrada.</p>
+                        </div>`;
+                    } else {
+                        notificacoes.forEach(function (notificacao) {
+                            let icon = "";
+                            switch (notificacao.tipo) {
+                                case "urgente":
+                                    icon = icon_urgente;
+                                    break;
+                                case "informativa":
+                                    icon = icon_informativo;
+                                    break;
+                                case "sucesso":
+                                    icon = icon_sucesso;
+                                    break;
+                            }
+                            estruturaHTML += `
                         <div class="notificacao-listagem notification-type.${notificacao.tipo}" id="notificacao_${notificacao.idAlerta}">
                             <div class="icon">
                                 <img src="${icon}" alt="${notificacao.tipo}" style="width:32px;height:32px;">
@@ -99,18 +102,19 @@ function carregarAlertas() {
                                 <h4>${notificacao.titulo}</h4>
                                 <p>${notificacao.descricao}</p>
                                 <p class="notification-date">${new Date(notificacao.dtHoraAlerta).toLocaleDateString("pt-BR", {
-                            day: '2-digit',
-                            month: '2-digit',
-                            year: 'numeric',
-                            hour: '2-digit',
-                            minute: '2-digit'
-                        })}</p>
+                                day: '2-digit',
+                                month: '2-digit',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            })}</p>
                             </div>
                             <div class="notification-actions">
                                 <button class="btn" onclick="mudarModalEditarAlerta(${notificacao.idAlerta})">Editar</button>
                             </div>
                         </div>`;
-                    });
+                        });
+                    }
                     listaNotificacoes.innerHTML = estruturaHTML;
                 });
             }
@@ -303,7 +307,6 @@ function confirmarExclusaoAlerta() {
             fecharConfirmacaoExclusao();
             mudarModalEditarAlerta();
             carregarAlertas();
-            alert('Alerta excluído com sucesso!');
         } else {
             console.error("Erro ao excluir alerta");
         }
