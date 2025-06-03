@@ -4,6 +4,7 @@ window.onload = function () {
         carregarPoliciaisInvestigacao();
         visualizarQtdInvestigacaoPorStatus();
     } else {
+        document.getElementById("subtitle").innerHTML = "Veja as investigações que você está participando";
         permitirVisualizacaoPorPerfil();
         carregarInvestigacoesPolicial();
     }
