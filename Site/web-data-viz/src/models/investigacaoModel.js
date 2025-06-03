@@ -47,12 +47,17 @@ function visualizarInvestigacoes(fkUsuario) {
 
     var instrucaoSql = `
         SELECT idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
-        (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais
-         FROM investigacao AS inv 
-         JOIN historico_investigacao AS hist 
+        (
+            SELECT COUNT(DISTINCT fkUsuario)
+            FROM historico_investigacao
+            WHERE criador = 0 AND fkInvestigacao = inv.idInvestigacao
+        ) AS qtd_policiais
+        FROM investigacao AS inv 
+        JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao 
-         WHERE 
-	        hist.fkUsuario = ${fkUsuario} AND hist.criador = 1;
+        WHERE 
+            hist.fkUsuario = ${fkUsuario} AND hist.criador = 1
+        ORDER BY idInvestigacao DESC;
     `;
 
     return database.executar(instrucaoSql);
@@ -82,7 +87,11 @@ function excluirInvestigacao(id_investigacao) {
     function visualizarInvestigacaoPorId(id_investigacao) {
         var instrucaoSql = `
         SELECT idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
-        (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais 
+        (
+            SELECT COUNT(DISTINCT fkUsuario)
+            FROM historico_investigacao
+            WHERE criador = 0 AND fkInvestigacao = inv.idInvestigacao
+        ) AS qtd_policiais
         FROM investigacao AS inv 
         JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao
@@ -94,13 +103,18 @@ function excluirInvestigacao(id_investigacao) {
 
     function visualizarInvestigacaoPolicial(fkUsuario) {
         var instrucaoSql = `
-    SELECT inv.idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
-        (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais
+        SELECT inv.idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
+        (
+            SELECT COUNT(DISTINCT fkUsuario)
+            FROM historico_investigacao
+            WHERE criador = 0 AND fkInvestigacao = inv.idInvestigacao
+        ) AS qtd_policiais
          FROM investigacao AS inv 
          JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao 
          WHERE 
-	        hist.fkUsuario = ${fkUsuario} AND hist.criador = 0;
+	        hist.fkUsuario = ${fkUsuario} AND hist.criador = 0
+        ORDER BY idInvestigacao DESC;
     `;
 
         return database.executar(instrucaoSql);
@@ -109,11 +123,16 @@ function excluirInvestigacao(id_investigacao) {
     function visualizarInvestigacaoPorStatus(status, fkUsuario) {
         var instrucaoSql = `
         SELECT idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
-        (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais 
+        (
+            SELECT COUNT(DISTINCT fkUsuario)
+            FROM historico_investigacao
+            WHERE criador = 0 AND fkInvestigacao = inv.idInvestigacao
+        ) AS qtd_policiais
         FROM investigacao AS inv 
         JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao
-        WHERE status_atual = '${status}' AND hist.fkUsuario = ${fkUsuario};
+        WHERE status_atual = '${status}' AND hist.fkUsuario = ${fkUsuario}
+        ORDER BY idInvestigacao DESC;
     `;
 
         return database.executar(instrucaoSql);
@@ -156,15 +175,15 @@ function excluirInvestigacao(id_investigacao) {
 
     function visualizarHistoricoPorMes(id) {
         var instrucaoSql = `
-    SELECT 
-    MONTH(i.dt_investigacao) AS mes,
-    COUNT(*) AS total_investigacoes
-    FROM historico_investigacao hi
-    JOIN investigacao i ON hi.fkInvestigacao = i.idInvestigacao
-    WHERE hi.fkUsuario = ${id}
-    GROUP BY mes
-    ORDER BY mes;
-    `;
+            SELECT 
+            MONTH(i.dt_investigacao) AS mes,
+            COUNT(*) AS total_investigacoes
+            FROM historico_investigacao hi
+            JOIN investigacao i ON hi.fkInvestigacao = i.idInvestigacao
+            WHERE hi.fkUsuario = ${id}
+            GROUP BY mes
+            ORDER BY mes;
+            `;
 
         return database.executar(instrucaoSql);
     }
@@ -173,9 +192,10 @@ function excluirInvestigacao(id_investigacao) {
         var instrucaoSql = `
     SELECT
         COUNT(*) AS totalInvestigacoes,
-        COALESCE(SUM(CASE WHEN i.status_atual = 'Resolvida' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesResolvidas,
-        COALESCE(SUM(CASE WHEN i.status_atual = 'Pendente' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesPendentes,
-        COALESCE(SUM(CASE WHEN i.status_atual = 'Em andamento' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesEmAndamento,
+        COALESCE(SUM(CASE WHEN i.status_atual = 'nao esclarecida' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesNaoResolvidas,
+        COALESCE(SUM(CASE WHEN i.status_atual = 'esclarecida' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesResolvidas,
+        COALESCE(SUM(CASE WHEN i.status_atual = 'pendente' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesPendentes,
+        COALESCE(SUM(CASE WHEN i.status_atual = 'em andamento' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesEmAndamento,
         COALESCE(SUM(CASE WHEN r.nome = 'norte' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasNorte,
         COALESCE(SUM(CASE WHEN r.nome = 'leste' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasLeste,
         COALESCE(SUM(CASE WHEN r.nome = 'sul' THEN 1 ELSE 0 END), 0) AS investigacoesAtendidasSul,

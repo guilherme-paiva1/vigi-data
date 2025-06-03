@@ -27,7 +27,8 @@ function listar(idSuperior) {
             idUsuario, nome, email, matricula, ativo
         FROM
             usuario 
-        WHERE fkSupervisor = ${idSuperior} AND perfil = 'policial';
+        WHERE fkSupervisor = ${idSuperior} AND perfil = 'policial'
+        ORDER BY nome;
     `;
     
     return database.executar(instrucaoSql);

@@ -285,26 +285,28 @@ async function carregarNotificacoes() {
               icon = icon_sucesso;
               break;
           }
-          estruturaHTML += `
+            estruturaHTML += `
               <div class="notificacao ${visualizadoClass}" id="notificacao_${notificacao.idNotificacao}">
+              <div class="notificacao-header">
                 <div class="icon">
-                  <img src="${icon}" alt="${notificacao.tipo}" style="width:32px;height:32px;">
+                <img src="${icon}" alt="${notificacao.tipo}" style="width:32px;height:32px;">
                 </div>
                 <div class="notificacao-texto">
-                  <h4>${notificacao.titulo}</h4>
-                  <p>${notificacao.descricao}</p>
-                  <p class="notification-date">${new Date(notificacao.dtHoraAlerta).toLocaleDateString("pt-BR", {
-                    day: '2-digit',
-                    month: '2-digit',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                  })}</p>
+                <h4>${notificacao.titulo}</h4>
+                <p>${notificacao.descricao}</p>
+                <p class="notification-date">${new Date(notificacao.dtHoraAlerta).toLocaleDateString("pt-BR", {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}</p>
                 </div>
-                <div class="notificacao-acoes">
-                  <button class="btn" onclick="visualizarNotificacao(${notificacao.idNotificacao})">Visualizar</button>
-                  <button class="btn btn-excluir" onclick="excluirNotificacao(${notificacao.idNotificacao})">Excluir</button>
-                </div>
+              </div>
+              <div class="notificacao-acoes">
+                ${notificacao.visualizado == 0 ? `<button onclick="visualizarNotificacao(${notificacao.idNotificacao})"><img src="../assets/icons/view.png"> Visualizar</button>` : ""}
+                <button onclick="excluirNotificacao(${notificacao.idNotificacao})"><img src="../assets/icons/icon-trash.svg"> Excluir</button>
+              </div>
               </div>`;
           if (notificacao.visualizado == 0) contagemNotificacoesNaoVistas++;
         });

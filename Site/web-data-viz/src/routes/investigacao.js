@@ -35,7 +35,7 @@ router.put("/editarInvestigacao", function (req, res) {
     investigacaoController.editarInvestigacao(req, res);
 });
 
-router.put("/visualizarHistoricoPorMes", function (req, res) {
+router.post("/visualizarHistoricoPorMes", function (req, res) {
     investigacaoController.visualizarHistoricoPorMes(req, res);
 });
 

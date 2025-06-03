@@ -170,7 +170,7 @@ function editarInvestigacao(req, res) {
 }
 
 function visualizarHistoricoPorMes(req, res) {
-    var id = req.body.idServer;
+    var id = req.body.idUsuarioServer;
 
     if (id == undefined) {
         res.status(400).send("id inválido.");
@@ -179,11 +179,9 @@ function visualizarHistoricoPorMes(req, res) {
             .then(
                 function (resultadoInvestigacoesPorMes) {
                     if (resultadoInvestigacoesPorMes.length >= 1) {
-                        res.json({
-                            qtdPorMes: resultadoInvestigacoesPorMes[0].qtdPorMes
-                        });
+                        res.json(resultadoInvestigacoesPorMes);
                     } else if (resultadoInvestigacoesPorMes.length == 0) {
-                        res.status(403).send("id inválido ou não há investigações nesse mês.");
+                        res.status(204).send("id inválido ou não há investigações nesse mês.");
                     }
                 }
             ).catch(
@@ -246,24 +244,21 @@ function visualizarDesempenhoPolicial(req, res) {
     var id_usuario = req.params.idUsuario;
 
     if (id_usuario == undefined) {
-        res.status(204).send("id inválido.");
+        res.status(400).send("id inválido.");
     } else {
 
         investigacaoModel.visualizarDesempenhoPolicial(id_usuario)
             .then(
                 function (resultadoDesempenhoPolicial) {
                     if (resultadoDesempenhoPolicial.length >= 1) {
-                        res.json({
-                            totalInvestigacoes: Number(resultadoDesempenhoPolicial[0].totalInvestigacoes),
-                            totalInvestigacoesResolvidas: Number(resultadoDesempenhoPolicial[0].totalInvestigacoesResolvidas),
-                            investigacoesAtendidasNorte: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasNorte),
-                            investigacoesAtendidasLeste: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasLeste),
-                            investigacoesAtendidasSul: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasSul),
-                            investigacoesAtendidasOeste: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasOeste),
-                            investigacoesAtendidasCentro: Number(resultadoDesempenhoPolicial[0].investigacoesAtendidasCentro),
-                        });
+                        // Transforma todos os valores do objeto em números antes de enviar
+                        const resultadoNumerico = {};
+                        for (const chave in resultadoDesempenhoPolicial[0]) {
+                            resultadoNumerico[chave] = Number(resultadoDesempenhoPolicial[0][chave]);
+                        }
+                        res.json(resultadoNumerico);
                     } else if (resultadoDesempenhoPolicial.length == 0) {
-                        res.status(403).send("id inválido ou não há investigações nesse mês.");
+                        res.status(204).send("id inválido ou não há investigações nesse mês.");
                     }
                 }
             ).catch(
@@ -287,7 +282,6 @@ module.exports = {
     editarInvestigacao,
     visualizarInvestigacaoPorStatus,
     visualizarQtdInvestigacaoPorStatus,
-    visualizarHistoricoPorMes,
     visualizarHistoricoPorMes,
     visualizarDesempenhoPolicial
 }
