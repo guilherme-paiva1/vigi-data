@@ -1,37 +1,47 @@
 var database = require("../database/config")
 
-function cadastrar(titulo, descricao, localidade, dt_investigacao, fkRegiao) {
+async function cadastrar(titulo, descricao, localidade, dt_investigacao, fkRegiao) {
     var instrucaoSql = `
-        INSERT INTO investigacao (titulo, descricao, localidade, dt_investigacao, fkRegiao ,status_atual) 
+        INSERT INTO investigacao (titulo, descricao, localidade, dt_investigacao, fkRegiao, status_atual) 
             VALUES ('${titulo}', '${descricao}', '${localidade}', '${dt_investigacao}', ${fkRegiao}, 'pendente');
     `;
 
-    return database.executar(instrucaoSql);
-}
+    await database.executar(instrucaoSql);
 
-function registrarHistoricoDoDelegado(fkDelegado, titulo, descricao, localidade, dt_investigacao) {
-    var intrucaoSqlInvestigacao = `
-        SELECT idInvestigacao FROM investigacao 
-            WHERE 
-                dt_investigacao = '${dt_investigacao}' 
-                AND status_atual = 'pendente'
-                AND titulo = '${titulo}'
-                AND descricao = '${descricao}'
-                AND localidade = '${localidade}';
+    var instrucaoSqlIdInvestigacao = `
+        SELECT idInvestigacao
+        FROM investigacao
+        WHERE titulo = '${titulo}'
+        AND descricao = '${descricao}'
+        AND localidade = '${localidade}'
+        AND dt_investigacao = '${dt_investigacao}'
+        AND fkRegiao = ${fkRegiao}
+        AND status_atual = 'pendente'
+        ORDER BY idInvestigacao DESC
+        LIMIT 1;
     `;
-
-    database.executar(intrucaoSqlInvestigacao)
-        .then((resultado) => {
-            if (resultado.length > 0) {
-                var idInvestigacao = resultado[0].idInvestigacao;
-                var queryHistorico = `
-                    INSERT INTO historico_investigacao (fkUsuario, fkInvestigacao, criador) 
-                        VALUES (${fkDelegado}, ${idInvestigacao}, 1);
-                `;
-                return database.executar(queryHistorico);
-            }
-        });
+    return database.executar(instrucaoSqlIdInvestigacao);
 }
+
+function registrarHistoricoDoDelegado(fkDelegado, idInvestigacao) {
+
+    var queryHistorico = `
+        INSERT INTO historico_investigacao (fkUsuario, fkInvestigacao, criador) 
+            VALUES (${fkDelegado}, ${idInvestigacao}, 1);
+    `;
+    return database.executar(queryHistorico);
+}
+
+
+function registrarHistoricoDoPolicial(fkPolicial, idInvestigacao) {
+
+    var queryHistorico = `
+        INSERT INTO historico_investigacao (fkUsuario, fkInvestigacao, criador) 
+            VALUES (${fkPolicial}, ${idInvestigacao}, 0);
+    `;
+    return database.executar(queryHistorico);
+}
+
 
 function visualizarInvestigacoes(fkUsuario) {
 
@@ -50,35 +60,27 @@ function visualizarInvestigacoes(fkUsuario) {
 
 
 function excluirInvestigacao(id_investigacao) {
-    var instrucaoSqlHistorico = `
-        DELETE FROM historico_investigacao
-        WHERE fkInvestigacao = ${id_investigacao};
-    `
-    database.executar(instrucaoSqlHistorico)
-        .then((resultado) => {
-            if (resultado.length > 0) {
-                var instrucaoSqlInvestigacao = `
+
+    var instrucaoSqlInvestigacao = `
                 DELETE FROM investigacao
                 WHERE idInvestigacao = ${id_investigacao};
                 `;
 
-                return database.executar(instrucaoSqlInvestigacao);
-            }
-        });
+    return database.executar(instrucaoSqlInvestigacao);
 }
 
-function editarInvestigacao(id_investigacao, titulo, descricao, localidade, dt_investigacao, status_atual) {
-    var instrucaoSql = `
+    function editarInvestigacao(id_investigacao, titulo, descricao, localidade, dt_investigacao, status_atual) {
+        var instrucaoSql = `
         UPDATE investigacao
         SET titulo = '${titulo}', descricao = '${descricao}', localidade = '${localidade}', dt_investigacao = '${dt_investigacao}', status_atual = '${status_atual}'
         WHERE idInvestigacao = ${id_investigacao};
     `;
 
-    return database.executar(instrucaoSql);
-}
+        return database.executar(instrucaoSql);
+    }
 
-function visualizarInvestigacaoPorId(id_investigacao) {
-    var instrucaoSql = `
+    function visualizarInvestigacaoPorId(id_investigacao) {
+        var instrucaoSql = `
         SELECT idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
         (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais 
         FROM investigacao AS inv 
@@ -87,11 +89,11 @@ function visualizarInvestigacaoPorId(id_investigacao) {
         WHERE idInvestigacao = ${id_investigacao};
     `;
 
-    return database.executar(instrucaoSql);
-}
+        return database.executar(instrucaoSql);
+    }
 
-function visualizarInvestigacaoPolicial(fkUsuario) {
-    var instrucaoSql = `
+    function visualizarInvestigacaoPolicial(fkUsuario) {
+        var instrucaoSql = `
     SELECT titulo, descricao, localidade, dt_investigacao, status_atual,
         (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais
          FROM investigacao AS inv 
@@ -101,11 +103,11 @@ function visualizarInvestigacaoPolicial(fkUsuario) {
 	        hist.fkUsuario = ${fkUsuario} AND hist.criador = 0;
     `;
 
-    return database.executar(instrucaoSql);
-}
+        return database.executar(instrucaoSql);
+    }
 
-function visualizarInvestigacaoPorStatus(status, fkUsuario) {
-    var instrucaoSql = `
+    function visualizarInvestigacaoPorStatus(status, fkUsuario) {
+        var instrucaoSql = `
         SELECT idInvestigacao, titulo, descricao, localidade, dt_investigacao, status_atual,
         (SELECT COUNT (fkUsuario) FROM historico_investigacao WHERE criador = 0) AS qtd_policiais 
         FROM investigacao AS inv 
@@ -114,11 +116,11 @@ function visualizarInvestigacaoPorStatus(status, fkUsuario) {
         WHERE status_atual = '${status}' AND hist.fkUsuario = ${fkUsuario};
     `;
 
-    return database.executar(instrucaoSql);
-}
+        return database.executar(instrucaoSql);
+    }
 
-function visualizarQtdInvestigacaoPorStatus(fkUsuario) {
-    var instrucaoSql = `
+    function visualizarQtdInvestigacaoPorStatus(fkUsuario) {
+        var instrucaoSql = `
     SELECT 
         (SELECT COUNT(idInvestigacao) FROM investigacao AS inv
         JOIN historico_investigacao AS hist 
@@ -128,32 +130,32 @@ function visualizarQtdInvestigacaoPorStatus(fkUsuario) {
 		(SELECT COUNT(idInvestigacao) FROM investigacao AS inv
         JOIN historico_investigacao AS hist 
 		ON inv.idInvestigacao = hist.fkInvestigacao 
-		WHERE hist.fkUsuario = ${fkUsuario} AND status_atual = "Pendente") AS qtd_pendente,
+		WHERE hist.fkUsuario = ${fkUsuario} AND status_atual = "pendente") AS qtd_pendente,
         
         (SELECT COUNT(idInvestigacao) FROM investigacao AS inv
         JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao 
          WHERE 
-	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Em andamento") AS qtd_andamento,
+	        hist.fkUsuario = ${fkUsuario} AND status_atual = "em andamento") AS qtd_andamento,
             
         (SELECT COUNT(idInvestigacao) FROM investigacao AS inv
         JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao 
          WHERE 
-	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Esclarecida") AS qtd_esclarecida,
+	        hist.fkUsuario = ${fkUsuario} AND status_atual = "esclarecida") AS qtd_esclarecida,
             
         (SELECT COUNT(idInvestigacao) FROM investigacao AS inv 
         JOIN historico_investigacao AS hist 
             ON inv.idInvestigacao = hist.fkInvestigacao 
          WHERE 
-	        hist.fkUsuario = ${fkUsuario} AND status_atual = "Não esclarecida") AS qtd_nao_esclarecida,
+	        hist.fkUsuario = ${fkUsuario} AND status_atual = "não esclarecida") AS qtd_nao_esclarecida,
             
             (SELECT qtd_nao_esclarecida + qtd_esclarecida) AS total_concluido;`
-    return database.executar(instrucaoSql);
-}
+        return database.executar(instrucaoSql);
+    }
 
-function visualizarHistoricoPorMes(id) {
-    var instrucaoSql = `
+    function visualizarHistoricoPorMes(id) {
+        var instrucaoSql = `
     SELECT 
     MONTH(i.dt_investigacao) AS mes,
     COUNT(*) AS total_investigacoes
@@ -164,11 +166,11 @@ function visualizarHistoricoPorMes(id) {
     ORDER BY mes;
     `;
 
-    return database.executar(instrucaoSql);
-}
+        return database.executar(instrucaoSql);
+    }
 
-function visualizarDesempenhoPolicial(idUsuario) {
-    var instrucaoSql = `
+    function visualizarDesempenhoPolicial(idUsuario) {
+        var instrucaoSql = `
     SELECT
         COUNT(*) AS totalInvestigacoes,
         COALESCE(SUM(CASE WHEN i.status_atual = 'Resolvida' THEN 1 ELSE 0 END), 0) AS totalInvestigacoesResolvidas,
@@ -185,19 +187,20 @@ function visualizarDesempenhoPolicial(idUsuario) {
     WHERE h.fkUsuario = ${idUsuario};
     `;
 
-    return database.executar(instrucaoSql);
-}
+        return database.executar(instrucaoSql);
+    }
 
-module.exports = {
-    cadastrar,
-    registrarHistoricoDoDelegado,
-    excluirInvestigacao,
-    visualizarInvestigacoes,
-    visualizarInvestigacaoPolicial,
-    visualizarInvestigacaoPorId,
-    editarInvestigacao,
-    visualizarQtdInvestigacaoPorStatus,
-    visualizarInvestigacaoPorStatus,
-    visualizarHistoricoPorMes,
-    visualizarDesempenhoPolicial
-};
+    module.exports = {
+        cadastrar,
+        registrarHistoricoDoDelegado,
+        registrarHistoricoDoPolicial,
+        excluirInvestigacao,
+        visualizarInvestigacoes,
+        visualizarInvestigacaoPolicial,
+        visualizarInvestigacaoPorId,
+        editarInvestigacao,
+        visualizarQtdInvestigacaoPorStatus,
+        visualizarInvestigacaoPorStatus,
+        visualizarHistoricoPorMes,
+        visualizarDesempenhoPolicial
+    };

@@ -346,6 +346,7 @@ body {
     padding: 0px;
     align-self: flex-start;
     justify-self: end;
+    z-index: 5000;
 }
 
 #modal_usuario {
@@ -1155,8 +1156,8 @@ button {
 }
 
 .btn-cancel {
-    background-color: #ddd;
-    color: #333;
+    background-color: #ffffff;
+    color: #000000;
 }
 
 .btn-save {
@@ -1170,8 +1171,8 @@ button {
 }
 
 .btn-cancel:hover {
-    background: #6e6e6e;
-    color: #fff;
+    background: #d7d7d7;
+    color: #000000;
 }
 
 .modal-confirmacao {
@@ -2036,9 +2037,6 @@ button {
 }
 
 /* Corpo do formulário */
-#modal_nova_investigacao .form-group {
-    padding: 15px 20px;
-}
 
 #modal_nova_investigacao .form-group label {
     display: block;
@@ -2201,10 +2199,6 @@ button {
     transition: background-color 0.2s;
 }
 
-.btn-cancel:hover {
-    background-color: #e9e9e9;
-}
-
 .btn-save {
     padding: 8px 16px;
     background-color: #4a90e2;
@@ -2274,7 +2268,6 @@ button {
 
 .btn-confirm {
     padding: 8px 16px;
-    background-color: #4CAF50;
     border: none;
     border-radius: 4px;
     color: white;
@@ -2283,7 +2276,7 @@ button {
 }
 
 .btn-confirm:hover {
-    background-color: #388E3C;
+    background-color: #ef4444;
 }
 
 /* Estilos para os cards de notificação */
@@ -2410,10 +2403,6 @@ button {
     background-color: #e3f2fd;
     border: 1px solid #bbdefb;
     color: #1976D2;
-}
-
-.btn-edit:hover {
-    background-color: #bbdefb;
 }
 
 .btn-delete {
