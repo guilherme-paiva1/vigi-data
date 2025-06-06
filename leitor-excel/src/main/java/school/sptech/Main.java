@@ -1,11 +1,12 @@
 package school.sptech;
 
+import org.json.JSONObject;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.io.IOException;
 
-import school.sptech.exceptions.SemNovasOcorrenciasException;
-import school.sptech.s3.S3Downloader;
-import school.sptech.s3.S3Provider;
+import school.sptech.exceptions.*;
+import school.sptech.s3.*;
+import school.sptech.slack.*;
 import software.amazon.awssdk.services.s3.S3Client;
 import java.io.InputStream;
 import java.net.UnknownHostException;
@@ -14,13 +15,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Main {
-    public static void main(String[] args) throws SQLException, UnknownHostException {
+    public static void main(String[] args) throws SQLException, IOException, InterruptedException {
         try {
             System.out.println("Estabelecendo conexão com o Banco de Dados...");
             Conexao conexao = new Conexao();
             Connection conn = conexao.criarConexao(conexao);
             JdbcTemplate template = conexao.criarTemplate(conexao);
+
+            JSONObject msg_json = new JSONObject();
 
             System.out.println("Conexão bem sucedida!");
             // Nome do bucket e do arquivo
@@ -76,12 +80,16 @@ public class Main {
             }
 
             String mensagem = "Extração finalizada, " + ocorrencias.size() + " ocorrências registradas";
+
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "sucesso");
 
+            msg_json.put("text", mensagem);
+            Slack.sendMessage(msg_json);
 
             // Commitar as alterações
             conn.commit();
             System.out.println("Inserção no banco de dados realizada com sucesso!");
+
 
             // Fechar os streams após uso
             for (InputStream arquivo : arquivos) {
@@ -92,17 +100,27 @@ public class Main {
             System.out.println("Finalizando processo. Status: Sucesso.");
 
         } catch (SQLException e) {
+            JSONObject msg_json = new JSONObject();
 
             System.out.println("Conexão com o banco de dados falhou!");
             System.out.println("Finalizando processo. Status: Erro.");
             System.out.println(e.getMessage());
+
+            msg_json.put("text", "Erro de conexão com o banco de dados, entre em contato conosco.");
+            Slack.sendMessage(msg_json);
+
         } catch (IOException e) {
             Conexao conexao = new Conexao();
             JdbcTemplate template = conexao.criarTemplate(conexao);
             Connection conn = conexao.criarConexao(conexao);
 
+            JSONObject msg_json = new JSONObject();
+
             String mensagem = "Erro ao acessar os arquivos! Finalizando processo. Status: Erro. " + e.getMessage();
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "erro");
+
+            msg_json.put("text", mensagem);
+            Slack.sendMessage(msg_json);
 
             conn.commit();
             System.out.println(mensagem);
@@ -118,8 +136,4 @@ public class Main {
             System.out.println(mensagem);
         }
     }
-
-
-
-
 }
