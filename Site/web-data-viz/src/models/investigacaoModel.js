@@ -177,7 +177,8 @@ function excluirInvestigacao(id_investigacao) {
         var instrucaoSql = `
             SELECT 
             MONTH(i.dt_investigacao) AS mes,
-            COUNT(*) AS total_investigacoes
+            COUNT(*) AS total_investigacoes,
+            COUNT(CASE WHEN i.status_atual = 'esclarecida' THEN 1 END) AS total_esclarecidas
             FROM historico_investigacao hi
             JOIN investigacao i ON hi.fkInvestigacao = i.idInvestigacao
             WHERE hi.fkUsuario = ${id}
