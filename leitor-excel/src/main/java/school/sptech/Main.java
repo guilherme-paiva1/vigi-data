@@ -1,6 +1,7 @@
 package school.sptech;
 
 import org.json.JSONObject;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.io.IOException;
 
@@ -82,6 +83,21 @@ public class Main {
             String mensagem = "Extração finalizada, " + ocorrencias.size() + " ocorrências registradas";
 
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "sucesso");
+            template.update("INSERT INTO alerta (titulo, descricao, tipo) values (?, ?, ?)", "Sucesso!", mensagem, "informativa");
+
+            List<Integer> idsDelegados = template.query(
+                    "SELECT idUsuario FROM usuario WHERE perfil = 'delegado'",
+                    new BeanPropertyRowMapper<>(Integer.class)
+            );
+
+            Integer idAlerta = template.queryForObject(
+                    "SELECT idAlerta FROM alerta WHERE titulo = 'Sucesso!' AND mensagem = '" + mensagem + "' AND tipo = 'informativa'",
+                    Integer.class
+            );
+
+            for (Integer idsDelegado : idsDelegados) {
+                template.update("INSERT INTO notificacao (fkAlerta, fkUsuario, visualizado) values (?, ?, ?)", idAlerta, idsDelegado, 0);
+            }
 
             msg_json.put("text", mensagem);
             Slack.sendMessage(msg_json);
@@ -118,6 +134,7 @@ public class Main {
 
             String mensagem = "Erro ao acessar os arquivos! Finalizando processo. Status: Erro. " + e.getMessage();
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "erro");
+            template.update("INSERT INTO alerta (titulo, descricao, tipo) values (?, ?)", "Erro ao acessar arquivos", mensagem, "urgente");
 
             msg_json.put("text", mensagem);
             Slack.sendMessage(msg_json);
