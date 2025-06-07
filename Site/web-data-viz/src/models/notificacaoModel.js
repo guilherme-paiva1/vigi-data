@@ -5,7 +5,7 @@ async function cadastrar(titulo, descricao, tipo, fkCriador) {
         INSERT INTO alerta (titulo, descricao, tipo, fkCriador) 
         VALUES ('${titulo}', '${descricao}', '${tipo}', ${fkCriador});
     `;
-    
+
     await database.executar(instrucaoSql);
 
     var instrucaoSqlIdNotificacao = `
@@ -34,12 +34,34 @@ function excluirNotificacao(idNotificacao) {
         DELETE FROM notificacao
         WHERE idNotificacao = ${idNotificacao};
     `;
-  
+
     return database.executar(instrucaoSql);
 }
 
-function editarNotificacao(id_notificacao, titulo, descricao, tipo){
-    var instrucaoSql =`
+function excluirAlerta(idAlerta) {
+    return database.executar(`
+            DELETE FROM notificacao
+            WHERE fkAlerta = ${idAlerta};
+        `).then(() => {
+        return database.executar(`
+                DELETE FROM alerta
+                WHERE idAlerta = ${idAlerta};
+            `);
+    });
+}
+
+function visualizarNotificacao(idNotificacao) {
+    var instrucaoSql = `
+        UPDATE notificacao
+        SET visualizado = 1
+        WHERE idNotificacao = ${idNotificacao};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
+function editarNotificacao(id_notificacao, titulo, descricao, tipo) {
+    var instrucaoSql = `
     UPDATE alerta
     SET
     titulo = '${titulo}',
@@ -86,11 +108,28 @@ function listarAlertaDelegado(id_usuario) {
     return database.executar(instrucaoSql);
 }
 
+function listarPorId(idAlerta) {
+    var instrucaoSql = `
+    SELECT 
+    a.idAlerta,
+    a.titulo,
+    a.descricao,
+    a.tipo
+    FROM alerta a
+    WHERE a.idAlerta = ${idAlerta};
+    `;
+
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     excluirNotificacao,
+    excluirAlerta,
     editarNotificacao,
     listarNotificacao,
     listarAlertaDelegado,
+    listarPorId,
     cadastrar,
     cadastrarNotificacaoAssociativa,
+    visualizarNotificacao
 }

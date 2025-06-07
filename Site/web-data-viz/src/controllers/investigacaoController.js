@@ -6,8 +6,9 @@ function cadastrar(req, res) {
     var descricao = req.body.descricaoServer
     var localidade = req.body.localidadeServer
     var dt_investigacao = req.body.dt_investigacaoServer
-    // var incidencia = req.body.incidenciaServer
     var fkDelegado = req.body.fkDelegadoServer
+    var fkPoliciais = req.body.fkPoliciaisServer
+    var fkRegiao = req.body.regiaoServer
 
     if (titulo == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
@@ -17,40 +18,35 @@ function cadastrar(req, res) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
     } else if (dt_investigacao == undefined) {
         res.status(400).send("Erro. Tente novamente mais tarde.");
+    } else if (fkRegiao == undefined) {
+        res.status(400).send("Erro. Tente novamente mais tarde.");
     } else {
-        investigacaoModel.cadastrar(titulo, descricao, localidade, dt_investigacao)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-
-                    investigacaoModel.registrarHistoricoDoDelegado(fkDelegado, titulo, descricao, localidade, dt_investigacao)
-                        .then(
-                            function (resultado) {
-                                res.json(resultado);
-                            }
-                        ).catch(
-                            function (erro) {
-                                console.log(erro);
-                                console.log(
-                                    "\nHouve um erro ao criar a investigação! Erro: ",
-                                    erro.sqlMessage
-                                );
-                                res.status(500).json(erro.sqlMessage);
-                            }
+        investigacaoModel.cadastrar(titulo, descricao, localidade, dt_investigacao, fkRegiao)
+                    .then(function (resultadoCadastro) {
+                    const idInvestigacao = resultadoCadastro[0].idInvestigacao;
+                    const promises = [
+                        investigacaoModel.registrarHistoricoDoDelegado(fkDelegado, idInvestigacao),
+                        ...fkPoliciais.map(fkPolicial => {
+                            return investigacaoModel.registrarHistoricoDoPolicial(fkPolicial, idInvestigacao);
+                        })
+                    ];
+                    Promise.all(promises)
+                        .then(results => {
+                        res.json({ idInvestigacao, message: "Investigação cadastrada com sucesso!" });
+                        })
+                        .catch(function (erro) {
+                        console.log(erro);
+                        console.log(
+                            "\nHouve um erro ao criar as associações da investigação! Erro: ",
+                            erro.sqlMessage
                         );
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao criar a investigação! Erro: ",
-                        erro.sqlMessage
-                    );
+                        res.status(500).json(erro.sqlMessage);
+                        });
+                    })
+                    .catch(function (erro) {
+                    console.log("Erro ao cadastrar investigação:", erro);
                     res.status(500).json(erro.sqlMessage);
-                }
-            );
-
-
+                    });
     }
 }
 
@@ -158,7 +154,7 @@ function editarInvestigacao(req, res) {
     } else if (status_atual == undefined) {
         res.status(400).send("status_atual inválido.");
     } else {
-        investigacoesModel.editarInvestigacao(id, titulo, descricao, localidade, dt_investigacao, status_atual)
+        investigacaoModel.editarInvestigacao(id, titulo, descricao, localidade, dt_investigacao, status_atual)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -173,28 +169,102 @@ function editarInvestigacao(req, res) {
     }
 }
 
-function visualizarHistoricoPorMes (req, res){
-    var id = req.body.idServer;
+function visualizarHistoricoPorMes(req, res) {
+    var id = req.body.idUsuarioServer;
 
     if (id == undefined) {
         res.status(400).send("id inválido.");
     } else {
-
-        investigacoesModel.visualizarHistoricoPorMes(id)
+        investigacaoModel.visualizarHistoricoPorMes(id)
             .then(
                 function (resultadoInvestigacoesPorMes) {
                     if (resultadoInvestigacoesPorMes.length >= 1) {
-                        res.json({
-                            qtdPorMes: resultadoInvestigacoesPorMes[0].qtdPorMes
-                        });
+                        res.json(resultadoInvestigacoesPorMes);
                     } else if (resultadoInvestigacoesPorMes.length == 0) {
-                        res.status(403).send("id inválido ou não há investigações nesse mês.");
+                        res.status(204).send("id inválido ou não há investigações nesse mês.");
                     }
                 }
             ).catch(
                 function (erro) {
                     console.log(erro);
-                    console.log("\nHouve um erro ao exibir as investigações por mês! Erro: ", erro.sqlMessage);
+                    console.log("\nHouve um erro ao visualizar o histórico por mês! Erro: ", erro.sqlMessage);
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function visualizarInvestigacaoPorStatus(req, res) {
+    var id = req.body.idServer;
+    var status_atual = req.body.status_atualServer;
+
+    if (id == undefined) {
+        res.status(400).send("id inválido.");
+    } else if (status_atual == undefined) {
+        res.status(400).send("status_atual inválido.");
+    } else {
+        investigacaoModel.visualizarInvestigacaoPorStatus(status_atual, id)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao visualizar as investigações! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function visualizarQtdInvestigacaoPorStatus(req, res) {
+    id = req.body.idServer;
+    investigacaoModel.visualizarQtdInvestigacaoPorStatus(id)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao visualizar as investigações! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
+function visualizarDesempenhoPolicial(req, res) {
+    var id_usuario = req.params.idUsuario;
+
+    if (id_usuario == undefined) {
+        res.status(400).send("id inválido.");
+    } else {
+
+        investigacaoModel.visualizarDesempenhoPolicial(id_usuario)
+            .then(
+                function (resultadoDesempenhoPolicial) {
+                    if (resultadoDesempenhoPolicial.length >= 1) {
+                        // Transforma todos os valores do objeto em números antes de enviar
+                        const resultadoNumerico = {};
+                        for (const chave in resultadoDesempenhoPolicial[0]) {
+                            resultadoNumerico[chave] = Number(resultadoDesempenhoPolicial[0][chave]);
+                        }
+                        res.json(resultadoNumerico);
+                    } else if (resultadoDesempenhoPolicial.length == 0) {
+                        res.status(204).send("id inválido ou não há investigações nesse mês.");
+                    }
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log("\nHouve um erro ao exibir o desempenho! Erro: ", erro.sqlMessage);
                     res.status(500).json(erro.sqlMessage);
                 }
             );
@@ -210,5 +280,8 @@ module.exports = {
     visualizarInvestigacaoPolicial,
     visualizarInvestigacaoPorId,
     editarInvestigacao,
-    visualizarHistoricoPorMes
+    visualizarInvestigacaoPorStatus,
+    visualizarQtdInvestigacaoPorStatus,
+    visualizarHistoricoPorMes,
+    visualizarDesempenhoPolicial
 }

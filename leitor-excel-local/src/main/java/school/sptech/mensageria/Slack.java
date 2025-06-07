@@ -1,4 +1,4 @@
-package school.sptech.slack;
+package school.sptech.mensageria;
 
 import org.json.JSONObject;
 

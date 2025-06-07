@@ -97,6 +97,7 @@
                                     </path>
                                 </g>
                             </svg>
+                            <div id="badge_notificacoes"><span id="span_qtd_not"></span></div>
                         </div>
 
                         <div id="btn_usuario" onclick="mudarModalUsuario()" class="icon icon-usuario" id="icon_usuario">
@@ -200,6 +201,7 @@
                 </div>
             </div>
 
+            <!-- Se der tempo eu implemento 
             <div class="search-and-select">
                 <input type="text" placeholder="Buscar policiais..." class="search-input" id="input_filtro_nome">
                 <select class="role-select" id="input_filtro_status">
@@ -208,7 +210,7 @@
                     <option value="informativa">Informativa</option>
                     <option value="sucesso">Sucesso</option>
                 </select>
-            </div>
+            </div> -->
             <div id="div_lista_notificacoes"></div>
         </div>
 
@@ -228,7 +230,7 @@
                 </div>
                 <div class="form-group">
                     <label for="descricao_notificacao">Descrição*</label>
-                    <input type="text" id="descricao_notificacao" maxlength="7" required
+                    <input type="text" id="descricao_notificacao" maxlength="100" required
                         placeholder="Digite a descrição da notificação">
                 </div>
                 <div class="form-group">
@@ -257,11 +259,11 @@
         </div>
 
         <!-- modal de editar notificação -->
-        <div id="modal_editar_notificacao" class="modal-edicao">
+        <div id="modal_editar_alerta" class="modal-edicao">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3>Editar Notificação</h3>
-                    <button class="close-modal" onclick="mudarModalEditarNotificacao()">&times;</button>
+                    <h3>Editar Alerta</h3>
+                    <button class="close-modal" onclick="mudarModalEditarAlerta()">&times;</button>
                 </div>
                 <input type="hidden" id="id_notificacao_editar">
                 <div class="form-group">
@@ -271,7 +273,7 @@
                 </div>
                 <div class="form-group">
                     <label for="descricao_editar_notificacao">Descrição*</label>
-                    <input type="text" id="descricao_editar_notificacao" required
+                    <input type="text" id="descricao_editar_notificacao" maxlength="100" required
                         placeholder="Digite a descrição da notificação">
                 </div>
                 <div class="form-group">
@@ -282,33 +284,21 @@
                         <option value="sucesso">Sucesso</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="destinatario_editar_notificacao">Destinatário*</label>
-                    <input type="text" id="destinatario_editar_notificacao" required
-                        placeholder="Selecione um destinatário">
-                </div>
-                <div class="form-group">
-                    <label for="status_editar_notificacao">Status*</label>
-                    <select id="status_editar_notificacao" required>
-                        <option value="ativo">Ativo</option>
-                        <option value="inativo">Inativo</option>
-                    </select>
-                </div>
                 <div class="modal-actions">
                     <button type="button" class="btn-excluir" onclick="abrirConfirmacaoExclusao()">
                         <i class="fas fa-trash-alt"></i> Excluir notificação
                     </button>
                     <button type="button" class="btn-cancel" onclick="mudarModalEditarNotificacao()">Cancelar</button>
-                    <button type="submit" class="btn-save" onclick="editarNotificacao()">Salvar</button>
+                    <button type="submit" class="btn-save" onclick="editarAlerta()">Salvar</button>
                 </div>
 
                 <!-- Modal de confirmação de exclusão -->
-                <div id="modal_confirmacao_exclusao_notificacao" class="modal-confirmacao oculto">
+                <div id="modal_confirmacao_exclusao" class="modal-confirmacao oculto">
                     <div class="caixa-confirmacao">
                         <p>Tem certeza que deseja excluir esta notificação?</p>
                         <div class="btn-modal">
                             <button class="btn-cancel" onclick="fecharConfirmacaoExclusao()">Cancelar</button>
-                            <button class="btn-confirm" onclick="confirmarExclusaoNotificacao()">Confirmar</button>
+                            <button class="btn-confirm" onclick="confirmarExclusaoAlerta()">Confirmar</button>
                         </div>
                     </div>
                 </div>

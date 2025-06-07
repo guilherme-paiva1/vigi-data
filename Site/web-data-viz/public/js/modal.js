@@ -1,4 +1,4 @@
-var modalNotificacao, modalUsuario, conteudoModal, modalNovoUsuario, modalEditarUsuario, modalDesempenhoUsuario;
+var modalNotificacao, modalUsuario, conteudoModal, modalNovoUsuario, modalEditarUsuario, modalDesempenhoUsuario, modalEditarAlerta;
 
 modalNotificacao = document.getElementById("modal_notificacao");
 modalUsuario = document.getElementById("modal_usuario");
@@ -6,6 +6,8 @@ conteudoModal = document.getElementById("modal_conteudo");
 modalNovoUsuario = document.getElementById("modal_novo_usuario");
 modalEditarUsuario = document.getElementById("modal_editar_usuario");
 modalDesempenhoUsuario = document.getElementById("modal_desempenho_usuario");
+modalExclusaoInvestigacao = document.getElementById("modal_confirmacao_exclusao_investigacao");
+modalEditarAlerta = document.getElementById("modal_editar_alerta");
 
 nomeSession();
 distintivoSession();
@@ -69,6 +71,7 @@ function mudarModalNovoUsuario() {
   }
 }
 
+
 function mudarModalNovaInvestigacao() {
   const modalNovaInvestigacao = document.getElementById('modal_nova_investigacao');
 
@@ -82,6 +85,26 @@ function mudarModalNovaInvestigacao() {
     modalNovaInvestigacao.style.display = "flex";
     setTimeout(function () {
       modalNovaInvestigacao.style.opacity = "1";
+    }, 100);
+  }
+}
+
+function mudarModalEditarInvestigacao(idInvestigacao) {
+  const modalEditarInvestigacao = document.getElementById('modal_editar_investigacao');
+
+  if (modalEditarInvestigacao.style.display == "flex") {
+    modalEditarInvestigacao.style.opacity = "0";
+
+    setTimeout(function () {
+      modalEditarInvestigacao.style.display = "none";
+    }, 100);
+  } else {
+    carregarInformacoesEditarInvestigacao(idInvestigacao);
+
+    modalEditarInvestigacao.style.display = "flex";
+    setTimeout(function () {
+      fecharConfirmacaoExclusaoInvestigacao();
+      modalEditarInvestigacao.style.opacity = "1";
     }, 100);
   }
 }
@@ -224,6 +247,7 @@ async function carregarNotificacoes() {
   const icon_urgente = "../assets/icons/icon-alert.svg";
   const icon_informativo = "../assets/icons/icon-time.svg";
   const icon_sucesso = "../assets/icons/icon-done.svg";
+  let contagemNotificacoesNaoVistas = 0;
 
   try {
     const resposta = await fetch("../notificacao/listarNotificacao", {
@@ -248,8 +272,8 @@ async function carregarNotificacoes() {
             </div>`;
       } else {
         json.forEach(notificacao => {
-          console.log(notificacao);
           let icon = "";
+          let visualizadoClass = notificacao.visualizado == 0 ? "nao-visualizada" : "";
           switch (notificacao.tipo) {
             case "urgente":
               icon = icon_urgente;
@@ -261,16 +285,30 @@ async function carregarNotificacoes() {
               icon = icon_sucesso;
               break;
           }
-          estruturaHTML += `
-              <div class="notificacao" id="notificacao_${notificacao.idNotificacao}">
+            estruturaHTML += `
+              <div class="notificacao ${visualizadoClass}" id="notificacao_${notificacao.idNotificacao}">
+              <div class="notificacao-header">
                 <div class="icon">
-                  <img src="${icon}" alt="${notificacao.tipo}" style="width:32px;height:32px;">
+                <img src="${icon}" alt="${notificacao.tipo}" style="width:32px;height:32px;">
                 </div>
                 <div class="notificacao-texto">
-                  <h4>${notificacao.titulo}</h4>
-                  <p>${notificacao.descricao}</p>
+                <h4>${notificacao.titulo}</h4>
+                <p>${notificacao.descricao}</p>
+                <p class="notification-date">${new Date(notificacao.dtHoraAlerta).toLocaleDateString("pt-BR", {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}</p>
                 </div>
+              </div>
+              <div class="notificacao-acoes">
+                ${notificacao.visualizado == 0 ? `<button onclick="visualizarNotificacao(${notificacao.idNotificacao})"><img src="../assets/icons/view.png"> Visualizar</button>` : ""}
+                <button onclick="excluirNotificacao(${notificacao.idNotificacao})"><img src="../assets/icons/icon-trash.svg"> Excluir</button>
+              </div>
               </div>`;
+          if (notificacao.visualizado == 0) contagemNotificacoesNaoVistas++;
         });
       }
     } else {
@@ -280,11 +318,65 @@ async function carregarNotificacoes() {
   } catch (error) {
     console.error("Erro ao carregar notificações:", error);
   }
-  return estruturaHTML;
+  return [estruturaHTML, contagemNotificacoesNaoVistas];
 }
 
 async function mostrarNotificacoes() {
   var notificacoesHTML = await carregarNotificacoes();
   var div_notificacoes = document.getElementById("div_notificacoes");
-  div_notificacoes.innerHTML = notificacoesHTML;
+  var badge = document.getElementById("badge_notificacoes");
+  var span_qtd_not = document.getElementById("span_qtd_not");
+  div_notificacoes.innerHTML = "";
+  div_notificacoes.innerHTML = notificacoesHTML[0];
+
+  if (notificacoesHTML[1] > 0) {
+    badge.style.display = "block";
+    span_qtd_not.innerHTML = notificacoesHTML[1];
+  } else {
+    badge.style.display = "none";
+  }
+}
+
+function excluirNotificacao(idNotificacao) {
+  fetch(`../notificacao/excluir`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      idNotificacaoServer: idNotificacao
+    })
+  })
+    .then(function (resposta) {
+      if (resposta.ok) {
+        mostrarNotificacoes();
+      } else {
+        console.error("Erro ao excluir notificação:", resposta.statusText);
+      }
+    })
+    .catch(function (erro) {
+      console.error("Erro:", erro.message);
+    });
+}
+
+function visualizarNotificacao(idNotificacao) {
+  fetch(`../notificacao/visualizar`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      idNotificacaoServer: idNotificacao
+    })
+  })
+    .then(function (resposta) {
+      if (resposta.ok) {
+        mostrarNotificacoes();
+      } else {
+        console.error("Erro ao visualizar notificação:", resposta.statusText);
+      }
+    })
+    .catch(function (erro) {
+      console.error("Erro:", erro.message);
+    });
 }

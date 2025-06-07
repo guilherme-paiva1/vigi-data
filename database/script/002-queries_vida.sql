@@ -2,6 +2,9 @@ INSERT INTO usuario (nome, email, matricula, perfil, fkSupervisor, ativo, senha)
 	('Paulo Roberto', 'paulo@gmail.com', '1234567', 'delegado', 1, 1,  '123');
     
 INSERT INTO usuario (nome, email, matricula, perfil, fkSupervisor, ativo, senha) VALUES
+	('Delegado 2', 'delegado@gmail.com', '1231231', 'delegado', 2, 1,  '123');
+    
+INSERT INTO usuario (nome, email, matricula, perfil, fkSupervisor, ativo, senha) VALUES
 	('João Paulo', 'joao@gmail.com', '7654321', 'policial', 1, 1, '123');
 
 INSERT INTO regiao (nome, populacao) VALUES 
@@ -10,7 +13,4 @@ INSERT INTO regiao (nome, populacao) VALUES
 	("Leste", 3991262),
 	("Centro", 423536),
 	("Sul", 3735554);
-    
-    select * from notificacao;
-    select * from alerta;
     
