@@ -4,6 +4,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -12,10 +13,10 @@ public class Conexao {
     private Connection conn;
     private JdbcTemplate template;
 
-    public Conexao(String ip) throws SQLException {
+    public Conexao() throws SQLException, UnknownHostException {
 
         conn = DriverManager.getConnection(
-                "jdbc:mysql://" + ip + ":3306/vida",
+                "jdbc:mysql://localhost:3306/vida",
                 "svc_vida",
                 "urubu100"
         );

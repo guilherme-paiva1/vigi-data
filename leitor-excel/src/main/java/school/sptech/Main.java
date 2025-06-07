@@ -7,10 +7,9 @@ import java.io.IOException;
 
 import school.sptech.exceptions.*;
 import school.sptech.s3.*;
-import school.sptech.slack.*;
+import school.sptech.mensageria.*;
 import software.amazon.awssdk.services.s3.S3Client;
 import java.io.InputStream;
-import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -76,28 +75,16 @@ public class Main {
             // Inserindo os dados extraídos no Banco
             System.out.println("Inserindo as ocorrências extraídas do S3 no Banco de dados...");
             for (Ocorrencia ocorrencia : ocorrencias) {
-            template.update("INSERT INTO ocorrencia (rubrica, latitude, longitude, data_hora_crime, bairro, fkRegiao) VALUES (?, ?, ?, ?, ?, ?)",
-                    ocorrencia.getRubrica(), ocorrencia.getLatitude(), ocorrencia.getLongitude(), ocorrencia.getDataHoraCrime(), ocorrencia.getBairro(), ocorrencia.getRegiao());
+                template.update("INSERT INTO ocorrencia (rubrica, latitude, longitude, data_hora_crime, bairro, fkRegiao) VALUES (?, ?, ?, ?, ?, ?)",
+                        ocorrencia.getRubrica(), ocorrencia.getLatitude(), ocorrencia.getLongitude(), ocorrencia.getDataHoraCrime(), ocorrencia.getBairro(), ocorrencia.getRegiao());
             }
 
             String mensagem = "Extração finalizada, " + ocorrencias.size() + " ocorrências registradas";
 
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "sucesso");
-            template.update("INSERT INTO alerta (titulo, descricao, tipo) values (?, ?, ?)", "Sucesso!", mensagem, "informativa");
 
-            List<Integer> idsDelegados = template.query(
-                    "SELECT idUsuario FROM usuario WHERE perfil = 'delegado'",
-                    new BeanPropertyRowMapper<>(Integer.class)
-            );
-
-            Integer idAlerta = template.queryForObject(
-                    "SELECT idAlerta FROM alerta WHERE titulo = 'Sucesso!' AND mensagem = '" + mensagem + "' AND tipo = 'informativa'",
-                    Integer.class
-            );
-
-            for (Integer idsDelegado : idsDelegados) {
-                template.update("INSERT INTO notificacao (fkAlerta, fkUsuario, visualizado) values (?, ?, ?)", idAlerta, idsDelegado, 0);
-            }
+            Alerta alerta = new Alerta();
+            alerta.enviarAlertaSucesso(template, mensagem);
 
             msg_json.put("text", mensagem);
             Slack.sendMessage(msg_json);
@@ -134,7 +121,9 @@ public class Main {
 
             String mensagem = "Erro ao acessar os arquivos! Finalizando processo. Status: Erro. " + e.getMessage();
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "erro");
-            template.update("INSERT INTO alerta (titulo, descricao, tipo) values (?, ?)", "Erro ao acessar arquivos", mensagem, "urgente");
+
+            Alerta alerta = new Alerta();
+            alerta.enviarAlertaFalha(template, mensagem);
 
             msg_json.put("text", mensagem);
             Slack.sendMessage(msg_json);
