@@ -48,13 +48,6 @@ public class LeitorExcel {
                     continue;
                 }
 
-                if (row.getRowNum() == 167868) {
-                    System.out.println("Linha com valor de bairro quebrado");
-                }
-                if (row.getRowNum() == 1) {
-                    System.out.println("Linha com valor de bairro correto");
-                }
-
                 Cell celulaRubrica = row.getCell(indexRubrica);
                 Cell celulaLatitude  = row.getCell(indexLatitude);
                 Cell celulaLongitude = row.getCell(indexLongitude);

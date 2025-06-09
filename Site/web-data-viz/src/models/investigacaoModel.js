@@ -66,12 +66,15 @@ function visualizarInvestigacoes(fkUsuario) {
 
 function excluirInvestigacao(id_investigacao) {
 
-    var instrucaoSqlInvestigacao = `
-                DELETE FROM investigacao
-                WHERE idInvestigacao = ${id_investigacao};
-                `;
-
-    return database.executar(instrucaoSqlInvestigacao);
+    return database.executar(`
+        DELETE FROM historico_investigacao
+        WHERE fkInvestigacao = ${id_investigacao};
+    `).then(() => {
+        return database.executar(`
+            DELETE FROM investigacao
+            WHERE idInvestigacao = ${id_investigacao};
+        `);
+    });
 }
 
     function editarInvestigacao(id_investigacao, titulo, descricao, localidade, dt_investigacao, status_atual) {

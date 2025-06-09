@@ -1,28 +1,28 @@
 package school.sptech;
 
 import org.json.JSONObject;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import java.io.IOException;
+
+import school.sptech.exceptions.*;
+import school.sptech.s3.*;
+import school.sptech.mensageria.*;
 import software.amazon.awssdk.services.s3.S3Client;
 import java.io.InputStream;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import school.sptech.slack.*;
+
 
 public class Main {
     public static void main(String[] args) throws SQLException, IOException, InterruptedException {
         try {
             System.out.println("Estabelecendo conexão com o Banco de Dados...");
-            InetAddress ip = InetAddress.getLocalHost();
-            String ipAddress = ip.getHostAddress();
-
-            Conexao conexao = new Conexao(ipAddress);
+            Conexao conexao = new Conexao();
             Connection conn = conexao.criarConexao(conexao);
             JdbcTemplate template = conexao.criarTemplate(conexao);
 
@@ -30,7 +30,7 @@ public class Main {
 
             System.out.println("Conexão bem sucedida!");
             // Nome do bucket e do arquivo
-            System.out.println("Estabelecendo conexão com o Bucket S3...");
+//            System.out.println("Estabelecendo conexão com o Bucket S3...");
 //            String bucketName = "s3-vida";
             String[] objectKeys = {"SPDadosCriminais_2025.xlsx", "Dados_PI_99Bairros.xlsx", "Dados_PI_99Bairros.xlsx"};
 
@@ -85,22 +85,24 @@ public class Main {
 
             String mensagem = "Extração finalizada, " + ocorrencias.size() + " ocorrências registradas";
 
+            template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "sucesso");
+
+            Alerta alerta = new Alerta();
+            alerta.enviarAlertaSucesso(template, mensagem);
 
             msg_json.put("text", mensagem);
             Slack.sendMessage(msg_json);
-
-
-            template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "sucesso");
-
 
             // Commitar as alterações
             conn.commit();
             System.out.println("Inserção no banco de dados realizada com sucesso!");
 
+
             // Fechar os streams após uso
             for (InputStream arquivo : arquivos) {
                 arquivo.close();
             }
+
 
             System.out.println("Finalizando processo. Status: Sucesso.");
 
@@ -114,35 +116,30 @@ public class Main {
             msg_json.put("text", "Erro de conexão com o banco de dados, entre em contato conosco.");
             Slack.sendMessage(msg_json);
 
-
-
         } catch (IOException e) {
-            InetAddress ip = InetAddress.getLocalHost();
-            String ipAddress = ip.getHostAddress();
-            Conexao conexao = new Conexao(ipAddress);
+            Conexao conexao = new Conexao();
             JdbcTemplate template = conexao.criarTemplate(conexao);
             Connection conn = conexao.criarConexao(conexao);
 
             JSONObject msg_json = new JSONObject();
 
             String mensagem = "Erro ao acessar os arquivos! Finalizando processo. Status: Erro. " + e.getMessage();
+            template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "erro");
+
+            Alerta alerta = new Alerta();
+            alerta.enviarAlertaFalha(template, mensagem);
 
             msg_json.put("text", mensagem);
             Slack.sendMessage(msg_json);
 
-            template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "erro");
-
             conn.commit();
             System.out.println(mensagem);
         } catch (SemNovasOcorrenciasException e) {
-            InetAddress ip = InetAddress.getLocalHost();
-            String ipAddress = ip.getHostAddress();
-            Conexao conexao = new Conexao(ipAddress);
+            Conexao conexao = new Conexao();
             JdbcTemplate template = conexao.criarTemplate(conexao);
             Connection conn = conexao.criarConexao(conexao);
 
             String mensagem = e.getMessage();
-
             template.update("INSERT INTO log (mensagem, categoria) values (?, ?)", mensagem, "sucesso");
 
             conn.commit();

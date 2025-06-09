@@ -5,7 +5,7 @@ async function cadastrar(titulo, descricao, tipo, fkCriador) {
         INSERT INTO alerta (titulo, descricao, tipo, fkCriador) 
         VALUES ('${titulo}', '${descricao}', '${tipo}', ${fkCriador});
     `;
-    
+
     await database.executar(instrucaoSql);
 
     var instrucaoSqlIdNotificacao = `
@@ -34,17 +34,20 @@ function excluirNotificacao(idNotificacao) {
         DELETE FROM notificacao
         WHERE idNotificacao = ${idNotificacao};
     `;
-  
+
     return database.executar(instrucaoSql);
 }
 
 function excluirAlerta(idAlerta) {
-    var instrucaoSql = `
-        DELETE FROM alerta
-        WHERE idAlerta = ${idAlerta};
-    `;
-  
-    return database.executar(instrucaoSql);
+    return database.executar(`
+            DELETE FROM notificacao
+            WHERE fkAlerta = ${idAlerta};
+        `).then(() => {
+        return database.executar(`
+                DELETE FROM alerta
+                WHERE idAlerta = ${idAlerta};
+            `);
+    });
 }
 
 function visualizarNotificacao(idNotificacao) {
@@ -57,8 +60,8 @@ function visualizarNotificacao(idNotificacao) {
     return database.executar(instrucaoSql);
 }
 
-function editarNotificacao(id_notificacao, titulo, descricao, tipo){
-    var instrucaoSql =`
+function editarNotificacao(id_notificacao, titulo, descricao, tipo) {
+    var instrucaoSql = `
     UPDATE alerta
     SET
     titulo = '${titulo}',

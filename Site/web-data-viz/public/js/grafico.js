@@ -140,7 +140,14 @@ function renderizarHistoricoDeInvestigacoes() {
       idUsuarioServer: sessionStorage.ID_USUARIO
     })
   }).then(function (resposta) {
-    resposta.json().then(json => {
+    resposta.text().then(text => {
+      if (!text) {
+        var investigation_chart = document.getElementById('investigation-chart').parentElement;
+        investigation_chart.innerHTML = "<p class='text-center'>Nenhum dado disponível para o gráfico. Comece a criar investigações.</p>";
+        return;
+      }
+
+      json = JSON.parse(text);
       let meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
       let esclarecidas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       let naoEsclarecidas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
