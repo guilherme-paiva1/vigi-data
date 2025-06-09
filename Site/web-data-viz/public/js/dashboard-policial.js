@@ -38,7 +38,7 @@ function gerarGraficoPorZona(dados) {
         data: {
             labels: ['Centro', 'Leste', 'Oeste', 'Norte', 'Sul'],
             datasets: [{
-                label: 'Ocorrências',
+                label: 'Investigações',
                 data: [investigacoesCentro, investigacoesLeste, investigacoesOeste, investigacoesNorte, investigacoesSul],
                 backgroundColor: ['#1E90FF', '#007BFF', '#20c997', '#ffc107', '#dc3545'],
                 borderColor: ['#1a7acc', '#0069d9', '#1aa179', '#d39e00', '#c82333'],
@@ -54,7 +54,7 @@ function gerarGraficoPorZona(dados) {
                 },
                 title: {
                     display: true,
-                    text: 'Ocorrências por Zona'
+                    text: 'Investigações por Zona'
                 },
                 tooltip: {
                     enabled: true,
