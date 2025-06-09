@@ -1,9 +1,93 @@
-@media (max-width: 620px) {
+/* Estilos gerais e responsivos */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Eliminar rolagem vertical */
+}
 
-    .container-navbar {
-        align-items: start;
+.container-navbar {
+    display: flex;
+    align-items: center;
+}
+
+/* Adiciona regras para o container principal */
+.dashboard-container {
+    max-width: 100%; /* Garante que o container não exceda a largura da tela */
+    padding: 10px;   /* Ajuste conforme necessário */
+    box-sizing: border-box; /* Inclui padding na largura total */
+}
+
+.dashboard-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* Responsividade da dashboard */
+@media (max-width: 768px) {
+    .dashboard-left {
+        flex-direction: column;
+        padding: 10px; /* Ajusta padding para telas menores */
     }
 
+    .chart-row {
+        flex-direction: column; /* Alinha os gráficos verticalmente */
+    }
+
+    .chart-wrapper {
+        width: 100%; /* Ajusta a largura dos gráficos */
+        height: auto; /* Permite que a altura se ajuste automaticamente */
+        margin-bottom: 20px; /* Espaçamento entre os gráficos */
+    }
+
+    .div-eficiencia {
+        display: flex;
+        flex-direction: column; /* Organiza os cards verticalmente */
+        gap: 10px; /* Espaçamento entre os cards */
+    }
+
+    .div-linha-eficiencia {
+        display: flex;
+        flex-direction: column; /* Organiza os cards verticalmente */
+        gap: 10px; /* Espaçamento entre os cards */
+    }
+
+    .div-card {
+        width: 100%; /* Ajusta os cards para ocupar a largura total */
+        text-align: center; /* Centraliza o texto */
+    }
+
+    .progress-bar-container {
+        width: 100%; /* Ajusta a largura da barra de progresso */
+    }
+}
+
+/* Tela de dispositivos menores */
+@media (max-width: 480px) {
+    .dashboard-left {
+        padding: 5px; /* Reduz padding em telas menores */
+    }
+
+    .div-eficiencia {
+        display: flex;
+        flex-direction: column; /* Organiza os cards verticalmente */
+    }
+
+    .div-card {
+        font-size: 14px; /* Ajusta o tamanho da fonte */
+    }
+
+    .progress-bar-bg {
+        height: 20px; /* Ajusta a altura da barra de progresso */
+    }
+
+    #progress-bar-label {
+        font-size: 12px; /* Ajusta o tamanho da fonte para o label */
+    }
+}
+
+/* Estilos adicionais para outras seções */
+@media (max-width: 620px) {
     .menu {
         flex-direction: column;
         justify-content: center;
@@ -12,27 +96,28 @@
     .investigations-container {
         font-family: sans-serif;
         background: #fff;
-        padding: 20px;
+        padding: 10px; /* Ajuste do padding */
         border-radius: 10px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         width: 100%;
-        overflow-x: scroll;
+        overflow-x: auto; /* Permitir rolagem horizontal */
     }
 
     .investigation-table {
-        width: 1200px;
+        width: 100%; /* Ajuste a largura para 100% */
         border-collapse: collapse;
+        overflow-x: auto; /* Permitir rolagem horizontal */
+        display: block; /* Para permitir a rolagem */
     }
 
     .investigation-table th,
     .investigation-table td {
-        white-space: nowrap;
-        /* Impede quebra de linha */
+        white-space: nowrap; /* Impede quebra de linha */
         text-align: center;
-        padding: 8px;
+        padding: 5px; /* Reduzir o padding */
+        font-size: 14px; /* Ajuste o tamanho da fonte */
     }
 
-    /* Tela inicial */
     .banner-home {
         height: 400px;
     }
@@ -75,7 +160,6 @@
         text-align: center;
     }
 
-    /* Login */
     .conteudo-login {
         flex-direction: column;
         padding: 20px;
@@ -110,12 +194,12 @@
         grid-template-columns: 1fr;
     }
 
-    .role-select {
-        width: 100%;
+    .role-select,
+    .modal-content {
+        width: 100%; /* Ajuste para 100% */
     }
 
     .modal-content {
-        width: 95%;
         padding: 15px;
     }
 
@@ -130,7 +214,7 @@
         justify-content: center;
     }
 
-    /* responsividade da navbar */
+    /* Responsividade da navbar */
     #btn_menu {
         display: flex;
         justify-content: center;
@@ -152,10 +236,8 @@
         position: absolute;
         flex-direction: column-reverse;
         gap: 10px;
-        top: 8%;
-        /* Posiciona abaixo do ícone */
-        left: 80%;
-        /* Centraliza horizontalmente */
+        top: 8%; /* Posiciona abaixo do ícone */
+        left: 80%; /* Centraliza horizontalmente */
         transform: translateX(-50%);
         z-index: 1000;
         background-color: rgb(25, 43, 115);
@@ -172,27 +254,24 @@
 
     .modal {
         position: fixed;
-        width: 50%;
+        width: 80%; /* Ajusta a largura do modal */
         padding: 20px;
         overflow: visible;
-        top: 300px;
+        top: 70px; /* Posição logo abaixo da barra de navegação */
+        left: 50%; /* Centraliza horizontalmente */
+        transform: translateX(-50%); /* Centraliza */
+        z-index: 1000; /* Garante que fique acima de outros elementos */
     }
 
-    #modal_usuario {
-        z-index: 1000;
-        overflow: visible;
-    }
-
+    #modal_usuario,
     #modal_notificacao {
         z-index: 1000;
         overflow: visible;
     }
 }
 
+/* Tela de dispositivos menores */
 @media (max-width: 480px) {
-
-
-    /* Tela inicial */
     .navbar,
     .navbar a {
         gap: 10px;
@@ -227,7 +306,6 @@
     .div-input {
         margin-bottom: 10px;
         display: flex;
-        margin-bottom: 10px;
         align-items: center;
     }
 
@@ -246,25 +324,23 @@
     .container-campos {
         display: flex;
         justify-content: center;
-        padding: 0px 20px 0px 20px;
+        padding: 0px 20px;
         align-self: center;
     }
 
     /* Tela de Usuários */
-    @media (min-width: 500px) and (max-width: 999px) {
-        #div_lista_usuarios>div {
-            flex: 1 1 calc(50% - 20px);
-        }
+    #div_lista_usuarios > div {
+        flex: 1 1 calc(50% - 20px);
     }
 
     /* Desktop (1000px ou mais) - 3 cards por linha */
     @media (min-width: 1000px) {
-        #div_lista_usuarios>div {
+        #div_lista_usuarios > div {
             flex: 1 1 calc(33.333% - 20px);
         }
     }
 
-    /* Tela de Dashbaord */
+    /* Tela de Dashboard */
     /* Tablet (1024px) */
     @media (max-width: 1024px) {
         .linha-cards {
@@ -288,65 +364,57 @@
     }
 
     /* Mobile (480px) */
-    @media (max-width: 480px) {
-        .linha-cards {
-            flex-direction: column;
-            align-items: center;
-            margin: 1rem;
-            height: auto;
-        }
-
-        .card.pai {
-            width: 100%;
-            max-width: 18rem;
-        }
+    .linha-cards {
+        flex-direction: column;
+        align-items: center;
+        margin: 1rem;
+        height: auto;
     }
 
-    /* Responsive Adjustments */
-    @media (max-width: 1024px) {
-        .dashboard-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .dashboard-main {
-            flex-direction: column;
-        }
-
-        .dashboard-left,
-        .dashboard-right {
-            width: 100%;
-        }
-
-        .dashboard-filters {
-            flex-direction: column;
-            width: 100%;
-        }
-
-        .legend {
-            flex-direction: column;
-            gap: 8px;
-        }
+    .card.pai {
+        width: 100%;
+        max-width: 18rem;
     }
 
-    @media (max-width: 480px) {
-        .dashboard-header h2 {
-            font-size: 1.25rem;
-        }
-
-        .legend-item {
-            font-size: 0.875rem;
-            padding: 8px;
-        }
-
-        .crime-card {
-            padding: 16px;
-        }
-
-        .chart-wrapper {
-            height: 200px;
-        }
+    /* Ajustes Responsivos */
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
     }
 
+    .dashboard-main {
+        flex-direction: column;
+    }
 
+    .dashboard-left,
+    .dashboard-right {
+        width: 100%;
+    }
+
+    .dashboard-filters {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .legend {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .dashboard-header h2 {
+        font-size: 1.25rem;
+    }
+
+    .legend-item {
+        font-size: 0.875rem;
+        padding: 8px;
+    }
+
+    .crime-card {
+        padding: 16px;
+    }
+
+    .chart-wrapper {
+        height: 200px; /* Ajusta a altura dos gráficos */
+    }
 }
