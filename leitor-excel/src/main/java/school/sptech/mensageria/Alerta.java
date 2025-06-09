@@ -17,7 +17,7 @@ public class Alerta {
         );
 
         Integer idAlerta = template.queryForObject(
-                "SELECT idAlerta FROM alerta WHERE titulo = 'Sucesso!' AND descricao = '" + mensagem + "' AND tipo = 'informativa'",
+                "SELECT idAlerta FROM alerta WHERE titulo = 'Sucesso!' AND descricao = '" + mensagem + "' AND tipo = 'informativa' ORDER BY idAlerta DESC LIMIT 1",
                 Integer.class
         );
 
